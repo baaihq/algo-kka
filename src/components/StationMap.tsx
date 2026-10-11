@@ -1,0 +1,499 @@
+import React, { useState } from 'react';
+import { DAFTAR_LEVEL } from '../data/levels';
+import { ProgresLevel, TimProfil } from '../types/game';
+import { pilihVarianUntukTim } from '../utils/hash';
+import { samarkanOperator } from '../utils/format';
+import {
+  ambilGagalPerLevel,
+  ambilKegagalanTotal,
+  ambilPernahGagalPerLevel,
+  ambilStatusTutorial,
+  simpanStatusTutorial,
+  ambilLeaderboard
+} from '../services/storage';
+import { ambilStatusBadgeTim } from '../data/badges';
+import { BadgeListModal } from './BadgeListModal';
+import { InteractiveTutorial } from './InteractiveTutorial';
+import { LeaderboardModal } from './LeaderboardModal';
+import {
+  Star,
+  Lock,
+  Play,
+  Users,
+  RotateCcw,
+  ShieldCheck,
+  Cpu,
+  Sparkles,
+  Award,
+  Trophy,
+  BookOpen
+} from 'lucide-react';
+
+interface StationMapProps {
+  tim: TimProfil;
+  progresMap: Record<string, ProgresLevel>;
+  onPilihLevel: (levelId: string) => void;
+  onGantiTim: (namaTimBaru: string) => void;
+  onResetProgres: () => void;
+}
+
+export const StationMap: React.FC<StationMapProps> = ({
+  tim,
+  progresMap,
+  onPilihLevel,
+  onGantiTim,
+  onResetProgres
+}) => {
+  const [isBadgeModalOpen, setIsBadgeModalOpen] = useState(false);
+  const [isTutorialOpen, setIsTutorialOpen] = useState(false);
+  const [isLeaderboardOpen, setIsLeaderboardOpen] = useState(false);
+  const [tutorialSelesai, setTutorialSelesai] = useState<boolean>(() => ambilStatusTutorial());
+
+  // Modal Ganti Tim & Reset Progres (In-App Modals Pastel)
+  const [isGantiTimModalOpen, setIsGantiTimModalOpen] = useState(false);
+  const [namaTimBaruInput, setNamaTimBaruInput] = useState(tim.namaTim);
+  const [errorGantiTim, setErrorGantiTim] = useState('');
+  const [isResetConfirmOpen, setIsResetConfirmOpen] = useState(false);
+
+  // Hitung total bintang
+  const totalBintang = Object.values(progresMap).reduce((acc, p) => acc + (p.bintang || 0), 0);
+
+  // Hitung badge tim
+  const gagalPerLevel = ambilGagalPerLevel();
+  const kegagalanTotal = ambilKegagalanTotal();
+  const pernahGagal = ambilPernahGagalPerLevel();
+  const badgesTim = ambilStatusBadgeTim(progresMap, gagalPerLevel, kegagalanTotal, pernahGagal);
+  const badgeTerbukaCount = badgesTim.filter((b) => b.terbuka).length;
+
+  // Leaderboard data
+  const leaderboardEntries = ambilLeaderboard({
+    namaTim: tim.namaTim,
+    bintang: totalBintang,
+    badgeCount: badgeTerbukaCount
+  });
+
+  const handleSelesaiTutorial = () => {
+    simpanStatusTutorial(true);
+    setTutorialSelesai(true);
+    setIsTutorialOpen(false);
+  };
+
+  const handleBukaGantiTim = () => {
+    setNamaTimBaruInput(tim.namaTim);
+    setErrorGantiTim('');
+    setIsGantiTimModalOpen(true);
+  };
+
+  const handleSimpanNamaTimBaru = (e: React.FormEvent) => {
+    e.preventDefault();
+    const bersih = namaTimBaruInput.trim();
+    if (!bersih) {
+      setErrorGantiTim('Nama tim tidak boleh kosong.');
+      return;
+    }
+    if (bersih.length < 2) {
+      setErrorGantiTim('Nama tim minimal 2 karakter.');
+      return;
+    }
+    if (bersih.length > 30) {
+      setErrorGantiTim('Nama tim maksimal 30 karakter.');
+      return;
+    }
+    onGantiTim(bersih);
+    setIsGantiTimModalOpen(false);
+  };
+
+  const handleKonfirmasiReset = () => {
+    onResetProgres();
+    setTutorialSelesai(false);
+    setIsResetConfirmOpen(false);
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-sky-100 via-sky-50 to-amber-50/40 text-slate-800 flex flex-col p-4 md:p-6 max-w-4xl mx-auto select-none">
+      {/* Header Bar Stasiun Pastel */}
+      <header className="bg-white/95 border-2 border-sky-200 rounded-3xl p-4 shadow-sm mb-6 flex flex-col sm:flex-row items-center justify-between gap-4 backdrop-blur-md">
+        <div className="flex items-center gap-3 w-full sm:w-auto min-w-0">
+          <div className="w-12 h-12 rounded-2xl bg-amber-100 border-2 border-amber-300 flex items-center justify-center shrink-0 shadow-2xs">
+            <Users className="w-6 h-6 text-amber-700" />
+          </div>
+          <div className="min-w-0">
+            <div className="text-[11px] font-mono font-bold uppercase text-slate-500">Tim Penjelajah</div>
+            <h2
+              className="text-base md:text-lg font-black text-slate-900 truncate max-w-[200px] sm:max-w-[280px]"
+              title={tim.namaTim}
+            >
+              {tim.namaTim}
+            </h2>
+          </div>
+        </div>
+
+        {/* Bintang, Badge, Leaderboard & Tombol Header Chunky */}
+        <div className="flex items-center justify-between sm:justify-end gap-2 w-full sm:w-auto flex-wrap">
+          {/* Badge Total Bintang */}
+          <div className="flex items-center gap-1.5 bg-amber-100 px-3 py-2 rounded-2xl border-2 border-amber-300 border-b-4 border-b-amber-400">
+            <Star className="w-4 h-4 fill-amber-500 text-amber-600" />
+            <span className="font-mono font-black text-amber-950 text-xs md:text-sm">
+              {totalBintang} / 18 ⭐
+            </span>
+          </div>
+
+          {/* Tombol Koleksi Badge Tim */}
+          <button
+            type="button"
+            onClick={() => setIsBadgeModalOpen(true)}
+            className="flex items-center gap-1.5 bg-yellow-100 hover:bg-yellow-200 border-2 border-yellow-300 border-b-4 border-b-yellow-400 active:border-b-0 active:translate-y-1 px-3 py-2 rounded-2xl text-xs font-black text-yellow-950 transition-all cursor-pointer shadow-xs"
+            title="Lihat koleksi badge pencapaian tim"
+          >
+            <Award className="w-4 h-4 text-amber-600" />
+            <span>Badge ({badgeTerbukaCount}/{badgesTim.length})</span>
+          </button>
+
+          {/* Tombol Leaderboard */}
+          <button
+            type="button"
+            onClick={() => setIsLeaderboardOpen(true)}
+            className="flex items-center gap-1.5 bg-sky-100 hover:bg-sky-200 border-2 border-sky-300 border-b-4 border-b-sky-400 active:border-b-0 active:translate-y-1 px-3 py-2 rounded-2xl text-xs font-black text-sky-950 transition-all cursor-pointer shadow-xs"
+            title="Lihat Papan Peringkat Tim"
+          >
+            <Trophy className="w-4 h-4 text-sky-700" />
+            <span>Top Tim</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={handleBukaGantiTim}
+            className="min-h-[42px] px-3 py-2 bg-slate-100 hover:bg-slate-200 border-2 border-slate-300 rounded-2xl text-xs font-black text-slate-700 transition-colors cursor-pointer"
+            title="Ganti tim"
+          >
+            Ganti Tim
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setIsResetConfirmOpen(true)}
+            className="min-h-[42px] px-3 py-2 bg-rose-100 hover:bg-rose-200 border-2 border-rose-300 rounded-2xl text-xs font-black text-rose-800 flex items-center gap-1 transition-colors cursor-pointer"
+            title="Reset progres level"
+          >
+            <RotateCcw className="w-3.5 h-3.5" />
+            <span>Reset</span>
+          </button>
+        </div>
+      </header>
+
+      {/* Hero Peta Stasiun Menara Bug */}
+      <div className="mb-6 text-center sm:text-left">
+        <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-sky-100 border-2 border-sky-300 text-sky-900 text-xs font-mono font-black uppercase mb-2">
+          <Sparkles className="w-3.5 h-3.5 text-sky-600" />
+          <span>Peta Ekspedisi: Sektor Stasiun Logika ALGO</span>
+        </div>
+        <h1 className="text-2xl md:text-3xl font-black text-slate-900 font-fredoka">
+          Peta Misi Pembelajaran
+        </h1>
+        <p className="text-xs md:text-sm text-slate-600 mt-1 max-w-xl leading-relaxed">
+          Selesaikan setiap stasiun secara berurutan. Robot ALGO membutuhkan logika percabanganmu untuk membuka pintu gerbang stasiun berikutnya!
+        </p>
+      </div>
+
+      {/* Modul Tutorial Interaktif Pastel */}
+      <div className="mb-6 p-4 md:p-5 rounded-3xl bg-indigo-50 border-2 border-indigo-200 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="flex items-start gap-3 w-full sm:w-auto min-w-0 flex-1">
+          <div className="w-12 h-12 rounded-2xl bg-indigo-100 border-2 border-indigo-300 flex items-center justify-center text-indigo-700 shrink-0 shadow-2xs">
+            <BookOpen className="w-6 h-6 text-indigo-700" />
+          </div>
+          <div className="min-w-0 flex-1">
+            <div className="flex flex-wrap items-center gap-2 mb-1">
+              <span className="text-[10px] font-mono uppercase bg-indigo-600 text-white font-black px-2 py-0.5 rounded-full shrink-0">
+                Pelatihan Awal
+              </span>
+              {tutorialSelesai ? (
+                <span className="text-[10px] font-mono text-emerald-700 flex items-center gap-1 font-black whitespace-nowrap bg-emerald-100 px-2 py-0.5 rounded-full border border-emerald-300">
+                  ✓ Telah Dipelajari
+                </span>
+              ) : (
+                <span className="text-[10px] font-mono text-amber-800 font-black whitespace-nowrap bg-amber-100 px-2 py-0.5 rounded-full border border-amber-300">
+                  ★ Disarankan Sebelum Misi 1
+                </span>
+              )}
+            </div>
+            <h3 className="text-base md:text-lg font-black text-slate-900 leading-snug">
+              Tutorial Interaktif: Cara Kerja JIKA–MAKA–SELAIN ITU
+            </h3>
+            <p className="text-xs md:text-sm text-slate-600 leading-relaxed max-w-xl mt-1">
+              Pelajari alur keputusan logika robot ALGO melalui simulasi visual 1-arah dan 2-arah sebelum memulai ekspedisi stasiun.
+            </p>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => setIsTutorialOpen(true)}
+          className="w-full sm:w-auto min-h-[46px] px-5 py-2.5 rounded-2xl bg-indigo-500 hover:bg-indigo-400 active:border-b-0 active:translate-y-1 text-white font-black text-xs md:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer border-2 border-indigo-600 border-b-4 border-b-indigo-700 shadow-md shrink-0"
+        >
+          <Sparkles className="w-4 h-4 text-yellow-200" />
+          <span>{tutorialSelesai ? 'Buka Kembali Tutorial' : 'Mulai Tutorial Interaktif'}</span>
+        </button>
+      </div>
+
+      {/* Grid Level Stasiun (Pastel Floating Island Cards) */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 flex-1">
+        {DAFTAR_LEVEL.map((lvl, idx) => {
+          const progres = progresMap[lvl.id];
+          const levelSebelumnya = idx > 0 ? DAFTAR_LEVEL[idx - 1] : null;
+          const levelSebelumnyaSelesai = levelSebelumnya
+            ? progresMap[levelSebelumnya.id]?.selesai
+            : true;
+
+          const terbuka = idx === 0 || levelSebelumnyaSelesai;
+          const sudahSelesai = Boolean(progres?.selesai);
+          const bintangDiperoleh = progres?.bintang || 0;
+
+          const varianIndex = pilihVarianUntukTim(tim.namaTim, lvl.id, lvl.varian.length);
+          const varianAktif = lvl.varian[varianIndex];
+
+          const gagalCount = ambilGagalPerLevel()[lvl.id] || 0;
+          const tampilkanOperatorCard = sudahSelesai || gagalCount >= 3;
+
+          return (
+            <div
+              key={lvl.id}
+              className={`relative rounded-3xl p-5 md:p-6 border-2 transition-all flex flex-col justify-between overflow-hidden ${
+                terbuka
+                  ? sudahSelesai
+                    ? 'bg-white/95 border-emerald-300 shadow-sm'
+                    : 'bg-white/95 border-amber-300 shadow-sm'
+                  : 'bg-slate-100/80 border-slate-300 opacity-75'
+              }`}
+            >
+              {/* Badge Status Pojok Kanan Atas */}
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-xs font-mono font-black uppercase tracking-wider text-slate-500">
+                  MISI #{idx + 1}
+                </span>
+
+                {terbuka ? (
+                  sudahSelesai ? (
+                    <div className="flex items-center gap-1 bg-emerald-100 border border-emerald-300 px-3 py-1 rounded-full text-emerald-900 font-black text-xs shadow-2xs">
+                      <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-500" />
+                      <span>{bintangDiperoleh} ⭐ Selesai</span>
+                    </div>
+                  ) : (
+                    <span className="bg-amber-100 border border-amber-300 text-amber-900 font-black text-xs px-3 py-1 rounded-full shadow-2xs">
+                      Tersedia
+                    </span>
+                  )
+                ) : (
+                  <div className="flex items-center gap-1 bg-slate-200 border border-slate-300 px-3 py-1 rounded-full text-slate-600 font-bold text-xs">
+                    <Lock className="w-3.5 h-3.5" />
+                    <span>Terkunci</span>
+                  </div>
+                )}
+              </div>
+
+              {/* Konten Utama Level */}
+              <div className="space-y-2 mb-4">
+                <div className="flex items-center gap-3">
+                  <div
+                    className={`w-11 h-11 rounded-2xl flex items-center justify-center shrink-0 border-2 shadow-2xs ${
+                      terbuka
+                        ? lvl.palet.includes('jika_maka_selain_itu')
+                          ? 'bg-purple-100 border-purple-300 text-purple-700'
+                          : 'bg-sky-100 border-sky-300 text-sky-700'
+                        : 'bg-slate-200 border-slate-300 text-slate-500'
+                    }`}
+                  >
+                    {lvl.ikon === 'Cpu' ? <Cpu className="w-5 h-5" /> : <ShieldCheck className="w-5 h-5" />}
+                  </div>
+                  <div>
+                    <h3 className="text-lg md:text-xl font-black text-slate-900 leading-tight">
+                      {lvl.nama}
+                    </h3>
+                    {varianAktif.ringkasan && (
+                      <span className="inline-block mt-0.5 text-[11px] font-black bg-sky-100 text-sky-900 border border-sky-300 px-2.5 py-0.5 rounded-full">
+                        Skenario: {varianAktif.ringkasan}
+                      </span>
+                    )}
+                    <p className="text-[11px] font-mono text-slate-500 font-bold mt-0.5">
+                      {lvl.palet.includes('jika_maka_selain_itu') ? 'Percabangan 2-Arah (JIKA-MAKA-SELAIN ITU)' : 'Percabangan 1-Arah (JIKA-MAKA)'}
+                    </p>
+                  </div>
+                </div>
+
+                <p className="text-xs md:text-sm text-slate-600 leading-relaxed">
+                  {lvl.cerita}
+                </p>
+
+                {/* Skenario Varian Soal Tim */}
+                <div className="bg-sky-50/70 rounded-2xl p-3 border border-sky-200 text-xs">
+                  <div className="flex items-center justify-between text-[11px] text-slate-500 mb-1">
+                    <span className="font-mono font-bold">Varian Tim #{varianAktif.id}:</span>
+                    <span className="text-amber-800 font-black">{varianAktif.dataUji.length} Kasus Uji</span>
+                  </div>
+                  {varianAktif.aturan && varianAktif.aturan.length > 0 ? (
+                    <div className="space-y-1">
+                      {varianAktif.aturan.map((at, aIdx) => (
+                        <div key={aIdx} className="flex flex-wrap items-center gap-1 text-[11px]">
+                          <span className="text-slate-400 font-mono font-bold text-[10px]">{aIdx + 1}.</span>
+                          <span className="text-amber-800 font-black uppercase text-[10px] bg-amber-100 px-1 py-0.5 rounded border border-amber-300">
+                            JIKA
+                          </span>
+                          <span className="font-mono bg-white border border-emerald-300 text-emerald-800 font-bold px-1.5 py-0.5 rounded text-[10px]">
+                            {tampilkanOperatorCard ? at.jika : samarkanOperator(at.jika)}
+                          </span>
+                          <span className="text-slate-400 text-[10px]">→</span>
+                          <span className="font-mono bg-sky-100 border border-sky-300 text-sky-900 font-bold px-1.5 py-0.5 rounded text-[10px]">
+                            {at.maka}
+                          </span>
+                          {at.selainItu && (
+                            <>
+                              <span className="text-slate-400 text-[10px]">·</span>
+                              <span className="text-rose-800 font-black uppercase text-[10px] bg-rose-100 px-1 py-0.5 rounded border border-rose-300">
+                                SELAIN ITU
+                              </span>
+                              <span className="text-slate-400 text-[10px]">→</span>
+                              <span className="font-mono bg-rose-100 border border-rose-300 text-rose-900 font-bold px-1.5 py-0.5 rounded text-[10px]">
+                                {at.selainItu}
+                              </span>
+                            </>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-slate-600 italic text-[11px] leading-snug">
+                      {varianAktif.konteks}
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              {/* Tombol Aksi Chunky */}
+              {terbuka ? (
+                <button
+                  type="button"
+                  onClick={() => onPilihLevel(lvl.id)}
+                  className={`w-full min-h-[46px] rounded-2xl font-black text-sm flex items-center justify-center gap-2 transition-all cursor-pointer border-2 ${
+                    sudahSelesai
+                      ? 'bg-sky-100 hover:bg-sky-200 active:border-b-0 active:translate-y-1 text-sky-950 border-sky-300 border-b-4 border-b-sky-400 shadow-xs'
+                      : 'bg-amber-400 hover:bg-amber-300 active:border-b-0 active:translate-y-1 text-slate-950 border-amber-500 border-b-4 border-b-amber-600 shadow-md'
+                  }`}
+                >
+                  <Play className="w-4 h-4 fill-current" />
+                  <span>{sudahSelesai ? 'Buka Kembali & Latihan' : 'Mulai Memprogram ALGO'}</span>
+                </button>
+              ) : (
+                <div className="w-full min-h-[46px] rounded-2xl bg-slate-200 border-2 border-slate-300 text-slate-500 font-bold text-xs flex items-center justify-center gap-2 cursor-not-allowed">
+                  <Lock className="w-4 h-4" />
+                  <span>Selesaikan {levelSebelumnya ? levelSebelumnya.nama : 'stasiun sebelumnya'} terlebih dahulu</span>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Modal Koleksi Badge Tim */}
+      <BadgeListModal
+        isOpen={isBadgeModalOpen}
+        onClose={() => setIsBadgeModalOpen(false)}
+        badges={badgesTim}
+        namaTim={tim.namaTim}
+        totalBintang={totalBintang}
+      />
+
+      {/* Modal Tutorial Interaktif */}
+      <InteractiveTutorial
+        isOpen={isTutorialOpen}
+        onClose={() => setIsTutorialOpen(false)}
+        onSelesaiTutorial={handleSelesaiTutorial}
+      />
+
+      {/* Modal Leaderboard */}
+      <LeaderboardModal
+        isOpen={isLeaderboardOpen}
+        onClose={() => setIsLeaderboardOpen(false)}
+        entries={leaderboardEntries}
+        currentTeamName={tim.namaTim}
+      />
+
+      {/* Modal Ganti Tim Pastel */}
+      {isGantiTimModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-sky-950/40 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="bg-white border-2 border-sky-300 rounded-3xl max-w-md w-full shadow-2xl p-6 text-slate-800">
+            <h3 className="text-lg font-black text-slate-900 mb-1 font-fredoka">Ganti Nama Tim</h3>
+            <p className="text-xs text-slate-600 mb-4">
+              Progres bintang tetap tersimpan. Masukkan nama tim baru:
+            </p>
+            <form onSubmit={handleSimpanNamaTimBaru} className="space-y-3">
+              <div>
+                <input
+                  type="text"
+                  maxLength={30}
+                  value={namaTimBaruInput}
+                  onChange={(e) => {
+                    setNamaTimBaruInput(e.target.value);
+                    if (errorGantiTim) setErrorGantiTim('');
+                  }}
+                  placeholder="Nama tim baru (maks. 30 karakter)..."
+                  className="w-full min-h-[46px] px-3.5 py-2 bg-sky-50 border-2 border-sky-300 focus:border-amber-400 focus:bg-white rounded-2xl text-slate-900 font-bold text-sm outline-none placeholder:text-slate-400"
+                />
+                <div className="flex justify-between items-center mt-1 text-[11px] text-slate-500">
+                  {errorGantiTim ? (
+                    <span className="text-rose-600 font-bold">{errorGantiTim}</span>
+                  ) : (
+                    <span>Maksimal 30 karakter</span>
+                  )}
+                  <span className="font-mono font-bold">{namaTimBaruInput.length}/30</span>
+                </div>
+              </div>
+
+              <div className="flex justify-end gap-2 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setIsGantiTimModalOpen(false)}
+                  className="min-h-[44px] px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl border border-slate-300 transition-colors cursor-pointer"
+                >
+                  Batal
+                </button>
+                <button
+                  type="submit"
+                  className="min-h-[44px] px-5 py-2 bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs rounded-xl border-2 border-amber-500 border-b-4 border-b-amber-600 active:border-b-0 active:translate-y-1 transition-all cursor-pointer shadow-sm"
+                >
+                  Simpan Nama Baru
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Modal Konfirmasi Reset Progres Pastel */}
+      {isResetConfirmOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-sky-950/40 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="bg-white border-2 border-rose-300 rounded-3xl max-w-md w-full shadow-2xl p-6 text-slate-800">
+            <h3 className="text-lg font-black text-rose-700 mb-1 font-fredoka">Konfirmasi Reset Progres</h3>
+            <p className="text-xs md:text-sm text-slate-600 leading-relaxed mb-5">
+              Hapus seluruh progres dan bintang ekspedisi? Tindakan ini tidak dapat dibatalkan.
+            </p>
+            <div className="flex justify-end gap-2">
+              <button
+                type="button"
+                onClick={() => setIsResetConfirmOpen(false)}
+                className="min-h-[44px] px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl border border-slate-300 transition-colors cursor-pointer"
+              >
+                Batal
+              </button>
+              <button
+                type="button"
+                onClick={handleKonfirmasiReset}
+                className="min-h-[44px] px-5 py-2 bg-rose-500 hover:bg-rose-600 text-white font-black text-xs rounded-xl border-2 border-rose-600 border-b-4 border-b-rose-700 active:border-b-0 active:translate-y-1 transition-all cursor-pointer shadow-sm"
+              >
+                Ya, Reset Progres
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
