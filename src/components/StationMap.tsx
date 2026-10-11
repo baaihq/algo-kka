@@ -16,6 +16,7 @@ import { BadgeListModal } from './BadgeListModal';
 import { InteractiveTutorial } from './InteractiveTutorial';
 import { LeaderboardModal } from './LeaderboardModal';
 import { ThemeMenu } from './ThemeMenu';
+import { StudentProgressChart } from './StudentProgressChart';
 import {
   Star,
   Lock,
@@ -27,7 +28,11 @@ import {
   Sparkles,
   Award,
   Trophy,
-  BookOpen
+  BookOpen,
+  Zap,
+  AlertCircle,
+  Target,
+  FileText
 } from 'lucide-react';
 
 interface StationMapProps {
@@ -239,6 +244,13 @@ export const StationMap: React.FC<StationMapProps> = ({
         </button>
       </div>
 
+      {/* Grafik Progres Penyelesaian Level Murid (Recharts) */}
+      <StudentProgressChart
+        progresMap={progresMap}
+        namaTim={tim.namaTim}
+        onPilihLevel={onPilihLevel}
+      />
+
       {/* Grid Level Stasiun (Pastel Floating Island Cards) */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 flex-1">
         {DAFTAR_LEVEL.map((lvl, idx) => {
@@ -327,47 +339,97 @@ export const StationMap: React.FC<StationMapProps> = ({
                   {lvl.cerita}
                 </p>
 
-                {/* Skenario Varian Soal Tim */}
-                <div className="bg-sky-50/70 dark:bg-slate-800/60 rounded-2xl p-3 border border-sky-200 dark:border-slate-700 text-xs">
-                  <div className="flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 mb-1">
-                    <span className="font-mono font-bold">Varian Tim #{varianAktif.id}:</span>
-                    <span className="text-amber-800 dark:text-amber-300 font-black">{varianAktif.dataUji.length} Kasus Uji</span>
-                  </div>
-                  {varianAktif.aturan && varianAktif.aturan.length > 0 ? (
-                    <div className="space-y-1">
-                      {varianAktif.aturan.map((at, aIdx) => (
-                        <div key={aIdx} className="flex flex-wrap items-center gap-1 text-[11px]">
-                          <span className="text-slate-400 font-mono font-bold text-[10px]">{aIdx + 1}.</span>
-                          <span className="text-amber-800 dark:text-amber-300 font-black uppercase text-[10px] bg-amber-100 dark:bg-amber-950/60 px-1 py-0.5 rounded border border-amber-300 dark:border-amber-700">
-                            JIKA
-                          </span>
-                          <span className="font-mono bg-white dark:bg-slate-900 border border-emerald-300 dark:border-emerald-700 text-emerald-800 dark:text-emerald-300 font-bold px-1.5 py-0.5 rounded text-[10px]">
-                            {tampilkanOperatorCard ? at.jika : samarkanOperator(at.jika)}
-                          </span>
-                          <span className="text-slate-400 text-[10px]">→</span>
-                          <span className="font-mono bg-sky-100 dark:bg-sky-950/60 border border-sky-300 dark:border-sky-700 text-sky-900 dark:text-sky-200 font-bold px-1.5 py-0.5 rounded text-[10px]">
-                            {at.maka}
-                          </span>
-                          {at.selainItu && (
-                            <>
-                              <span className="text-slate-400 text-[10px]">·</span>
-                              <span className="text-rose-800 dark:text-rose-300 font-black uppercase text-[10px] bg-rose-100 dark:bg-rose-950/60 px-1 py-0.5 rounded border border-rose-300 dark:border-rose-700">
-                                SELAIN ITU
-                              </span>
-                              <span className="text-slate-400 text-[10px]">→</span>
-                              <span className="font-mono bg-rose-100 dark:bg-rose-950/60 border border-rose-300 dark:border-rose-700 text-rose-900 dark:text-rose-200 font-bold px-1.5 py-0.5 rounded text-[10px]">
-                                {at.selainItu}
-                              </span>
-                            </>
-                          )}
-                        </div>
-                      ))}
+                {/* 🌟 KOTAK HIGHLIGHT UTAMA: KETERANGAN MISI & KONDISI WAJIB YANG HARUS DIPENUHI MURID */}
+                <div className="bg-gradient-to-br from-amber-50 via-yellow-50/80 to-amber-100/70 dark:from-slate-800/95 dark:via-amber-950/30 dark:to-slate-800/95 border-2 border-amber-400 dark:border-amber-500/80 rounded-2xl p-3.5 md:p-4 shadow-sm ring-2 ring-amber-300/50 dark:ring-amber-500/20 space-y-2.5 transition-all">
+                  {/* Header Badge Peringatan / Keterangan Kondisi */}
+                  <div className="flex flex-wrap items-center justify-between gap-1.5 border-b border-amber-300/80 dark:border-amber-700/80 pb-2">
+                    <div className="flex items-center gap-1.5">
+                      <span className="flex items-center justify-center w-5 h-5 rounded-full bg-amber-500 text-slate-950 font-black text-xs shrink-0 shadow-xs">
+                        <Zap className="w-3 h-3 fill-slate-950" />
+                      </span>
+                      <span className="font-mono font-black text-xs text-amber-950 dark:text-amber-200 uppercase tracking-wide">
+                        KETERANGAN & KONDISI WAJIB MISI
+                      </span>
                     </div>
-                  ) : (
-                    <p className="text-slate-600 dark:text-slate-400 italic text-[11px] leading-snug">
-                      {varianAktif.konteks}
-                    </p>
+
+                    <div className="flex items-center gap-1.5">
+                      <span className="bg-amber-200/90 dark:bg-amber-900/80 border border-amber-400 dark:border-amber-600 text-amber-950 dark:text-amber-200 text-[10px] font-mono font-bold px-2 py-0.5 rounded-full">
+                        Varian #{varianAktif.id} ({varianAktif.dataUji.length} Uji)
+                      </span>
+                      <span className="bg-rose-500 text-white text-[10px] font-black uppercase px-2 py-0.5 rounded-full shadow-2xs">
+                        Wajib Dipenuhi
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Keterangan Skenario / Konteks Misi */}
+                  {(varianAktif.ringkasan || varianAktif.konteks) && (
+                    <div className="bg-white/90 dark:bg-slate-900/80 border border-amber-300 dark:border-slate-700 rounded-xl p-2.5 text-xs text-slate-700 dark:text-slate-200 shadow-2xs space-y-1">
+                      {varianAktif.ringkasan && (
+                        <div className="flex items-center gap-1.5 font-black text-slate-900 dark:text-slate-100 text-xs">
+                          <Target className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
+                          <span>Skenario: {varianAktif.ringkasan}</span>
+                        </div>
+                      )}
+                      {varianAktif.konteks && (
+                        <p className="text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed font-medium pl-5">
+                          {varianAktif.konteks}
+                        </p>
+                      )}
+                    </div>
                   )}
+
+                  {/* Aturan & Kondisi Logika yang Harus Dipenuhi */}
+                  {varianAktif.aturan && varianAktif.aturan.length > 0 && (
+                    <div className="space-y-1.5">
+                      <div className="flex items-center gap-1 text-[11px] font-black text-amber-900 dark:text-amber-300 uppercase tracking-wide">
+                        <FileText className="w-3 h-3 text-amber-700 dark:text-amber-400" />
+                        <span>Kondisi Logika yang Harus Diprogram Murid:</span>
+                      </div>
+
+                      <div className="space-y-1.5">
+                        {varianAktif.aturan.map((at, aIdx) => (
+                          <div
+                            key={aIdx}
+                            className="bg-white dark:bg-slate-900 border-2 border-amber-300/90 dark:border-amber-600/80 rounded-xl p-2 flex flex-wrap items-center gap-1.5 text-xs shadow-xs"
+                          >
+                            <span className="w-5 h-5 rounded-md bg-amber-400 text-slate-950 font-mono font-black text-[11px] flex items-center justify-center shrink-0">
+                              {aIdx + 1}
+                            </span>
+                            <span className="text-slate-950 font-black uppercase text-[11px] bg-amber-400 px-2 py-0.5 rounded-md shadow-2xs shrink-0">
+                              JIKA
+                            </span>
+                            <span className="font-mono bg-emerald-100 dark:bg-emerald-950/80 border border-emerald-400 dark:border-emerald-600 text-emerald-950 dark:text-emerald-200 font-black px-2 py-0.5 rounded-md text-[11px] shadow-2xs">
+                              {tampilkanOperatorCard ? at.jika : samarkanOperator(at.jika)}
+                            </span>
+                            <span className="text-amber-700 dark:text-amber-400 font-bold text-xs">→</span>
+                            <span className="text-slate-600 dark:text-slate-400 text-[11px] font-bold">MAKA:</span>
+                            <span className="font-mono bg-sky-100 dark:bg-sky-950/80 border border-sky-400 dark:border-sky-600 text-sky-950 dark:text-sky-200 font-black px-2 py-0.5 rounded-md text-[11px] shadow-2xs">
+                              {at.maka}
+                            </span>
+                            {at.selainItu && (
+                              <>
+                                <span className="text-slate-300 dark:text-slate-600 mx-0.5">|</span>
+                                <span className="text-white font-black uppercase text-[11px] bg-rose-500 px-2 py-0.5 rounded-md shadow-2xs shrink-0">
+                                  SELAIN ITU
+                                </span>
+                                <span className="text-rose-700 dark:text-rose-400 font-bold text-xs">→</span>
+                                <span className="font-mono bg-rose-100 dark:bg-rose-950/80 border border-rose-400 dark:border-rose-600 text-rose-950 dark:text-rose-200 font-black px-2 py-0.5 rounded-md text-[11px] shadow-2xs">
+                                  {at.selainItu}
+                                </span>
+                              </>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Keterangan Peringatan Murid */}
+                  <div className="pt-1 flex items-center gap-1.5 text-[11px] font-bold text-amber-900 dark:text-amber-300 italic">
+                    <AlertCircle className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
+                    <span>Catatan: Pastikan balok perintah yang disusun memenuhi kondisi di atas agar robot ALGO berhasil!</span>
+                  </div>
                 </div>
               </div>
 

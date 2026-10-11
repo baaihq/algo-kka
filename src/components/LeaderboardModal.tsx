@@ -218,12 +218,32 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
                     </div>
                   </div>
 
-                  {/* Skor Bintang */}
-                  <div className="flex items-center gap-1.5 bg-amber-100 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-700 px-3 py-1.5 rounded-2xl shadow-2xs shrink-0">
-                    <Star className="w-4 h-4 fill-amber-500 text-amber-600 dark:text-amber-400" />
-                    <span className="font-mono font-black text-amber-950 dark:text-amber-200 text-sm md:text-base">
-                      {entry.bintang}
-                    </span>
+                  {/* Skor Bintang & Tombol Share */}
+                  <div className="flex items-center gap-2 shrink-0">
+                    <div className="flex items-center gap-1.5 bg-amber-100 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-700 px-3 py-1.5 rounded-2xl shadow-2xs">
+                      <Star className="w-4 h-4 fill-amber-500 text-amber-600 dark:text-amber-400" />
+                      <span className="font-mono font-black text-amber-950 dark:text-amber-200 text-sm md:text-base">
+                        {entry.bintang}
+                      </span>
+                    </div>
+
+                    {/* Tombol Share per Entry Papan Peringkat */}
+                    <button
+                      type="button"
+                      onClick={handleShareLeaderboard}
+                      disabled={loadingShare}
+                      className="min-h-[34px] px-2.5 py-1 rounded-xl font-black text-xs flex items-center gap-1.5 transition-all cursor-pointer bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white border border-emerald-500 shadow-xs"
+                      title={`Bagikan papan peringkat dan prestasi ${entry.namaTim} ke WhatsApp`}
+                    >
+                      {loadingShare ? (
+                        <Loader2 className="w-3.5 h-3.5 animate-spin text-white" />
+                      ) : (
+                        <>
+                          <WhatsAppIcon className="w-3.5 h-3.5 text-white shrink-0" />
+                          <span className="whitespace-nowrap">Share</span>
+                        </>
+                      )}
+                    </button>
                   </div>
                 </div>
               );

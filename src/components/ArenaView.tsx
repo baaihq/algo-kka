@@ -117,23 +117,23 @@ export const ArenaView: React.FC<ArenaViewProps> = ({
       </div>
 
       {/* 2. KARTU HIGHLIGHT UTAMA: KETERANGAN SKENARIO & KONDISI WAJIB YANG HARUS DIPENUHI MURID */}
-      <div className="bg-gradient-to-r from-sky-50 via-indigo-50/70 to-amber-50/70 dark:from-slate-900/90 dark:via-slate-800/80 dark:to-slate-900/90 border-2 border-sky-300 dark:border-sky-600/80 rounded-3xl p-3.5 md:p-4 shadow-sm ring-2 ring-sky-200/60 dark:ring-sky-500/20 transition-all select-none">
+      <div className="bg-gradient-to-r from-amber-50 via-yellow-50/70 to-amber-50 dark:from-slate-900/95 dark:via-amber-950/30 dark:to-slate-900/95 border-3 border-amber-400 dark:border-amber-500 rounded-3xl p-3.5 md:p-4 shadow-md ring-4 ring-amber-300/40 dark:ring-amber-500/20 transition-all select-none">
         {/* Header Badge & Judul Misi */}
-        <div className="flex flex-wrap items-center justify-between gap-2 border-b-2 border-sky-200/80 dark:border-slate-700/80 pb-2.5">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b-2 border-amber-300/80 dark:border-amber-700/80 pb-2.5">
           <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-100 dark:bg-sky-950/80 border border-sky-300 dark:border-sky-600 text-sky-900 dark:text-sky-300 font-mono font-black text-xs uppercase tracking-wide">
-              <Info className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400 shrink-0" />
+            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 dark:bg-amber-950/80 border-2 border-amber-400 dark:border-amber-600 text-amber-950 dark:text-amber-200 font-mono font-black text-xs uppercase tracking-wide shadow-2xs">
+              <Info className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400 shrink-0" />
               <span>MISI STASIUN: {level.nama}</span>
             </div>
             {/* Attention Pill */}
             <span className="flex items-center gap-1 bg-amber-400 dark:bg-amber-500 text-slate-950 font-black text-[11px] px-2.5 py-0.5 rounded-full border border-amber-500 shadow-2xs">
               <Zap className="w-3 h-3 fill-slate-950 text-slate-950" />
-              <span>KONDISI WAJIB</span>
+              <span>KONDISI WAJIB DIPENUHI</span>
             </span>
           </div>
 
-          <span className="text-[11px] font-mono font-bold text-slate-500 dark:text-slate-400 hidden sm:inline">
-            Baca dan terapkan logika ini pada Area Koding Robot ALGO
+          <span className="text-[11px] font-mono font-bold text-amber-900 dark:text-amber-300 hidden sm:inline bg-amber-200/80 dark:bg-amber-900/60 px-2.5 py-0.5 rounded-lg border border-amber-300 dark:border-amber-700">
+            ⚠️ Perhatikan keterangan & kondisi di bawah ini untuk koding Robot ALGO
           </span>
         </div>
 
@@ -141,19 +141,22 @@ export const ArenaView: React.FC<ArenaViewProps> = ({
         <div className="mt-2.5 space-y-2">
           {varian.ringkasan && (
             <h2 className="text-slate-900 dark:text-slate-100 font-black text-base md:text-lg tracking-tight font-fredoka flex items-center gap-2">
-              <Target className="w-4 h-4 text-sky-600 dark:text-sky-400 shrink-0" />
+              <Target className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" />
               <span>{varian.ringkasan}</span>
             </h2>
           )}
 
           {/* Kalimat skenario (konteks) dengan latar highlight kontras */}
           {varian.konteks && (
-            <div className="bg-white/90 dark:bg-slate-950/70 p-2.5 md:p-3 rounded-2xl border-2 border-sky-200 dark:border-slate-700 text-xs md:text-sm text-slate-700 dark:text-slate-300 font-medium leading-relaxed shadow-2xs flex items-start gap-2.5">
-              <div className="w-6 h-6 rounded-lg bg-sky-100 dark:bg-slate-800 flex items-center justify-center shrink-0 mt-0.5 border border-sky-300 dark:border-slate-600">
-                <FileText className="w-3.5 h-3.5 text-sky-700 dark:text-sky-400" />
+            <div className="bg-white/95 dark:bg-slate-950/80 p-3 rounded-2xl border-2 border-amber-300 dark:border-amber-700/80 text-xs md:text-sm text-slate-800 dark:text-slate-200 font-medium leading-relaxed shadow-xs flex items-start gap-2.5">
+              <div className="w-7 h-7 rounded-xl bg-amber-100 dark:bg-amber-950/80 flex items-center justify-center shrink-0 mt-0.5 border border-amber-300 dark:border-amber-600 shadow-2xs">
+                <FileText className="w-4 h-4 text-amber-800 dark:text-amber-300" />
               </div>
               <div className="flex-1 min-w-0">
-                <span className="font-bold text-slate-900 dark:text-slate-100">{varian.konteks}</span>
+                <div className="text-[11px] font-mono font-bold text-amber-800 dark:text-amber-400 uppercase mb-0.5">
+                  Keterangan Kondisi Stasiun:
+                </div>
+                <span className="font-bold text-slate-900 dark:text-slate-100 leading-normal">{varian.konteks}</span>
               </div>
             </div>
           )}

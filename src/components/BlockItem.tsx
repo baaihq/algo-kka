@@ -59,8 +59,8 @@ export const BlockItem: React.FC<BlockItemProps> = ({
             : ''
         }`}
       >
-        <div className="flex items-center gap-2 flex-wrap">
-          <div className="cursor-grab active:cursor-grabbing text-slate-400 p-1 rounded hover:bg-black/5 touch-none">
+        <div className="flex-1 min-w-0 flex items-center gap-2 flex-wrap">
+          <div className="shrink-0 cursor-grab active:cursor-grabbing text-slate-400 p-1 rounded hover:bg-black/5 touch-none">
             <MoveVertical className="w-4 h-4" />
           </div>
           {renderIkonAksi(block.tipeAksi)}
@@ -69,14 +69,14 @@ export const BlockItem: React.FC<BlockItemProps> = ({
           <select
             value={block.tipeAksi || ''}
             onChange={(e) => onUpdateTipeAksi && onUpdateTipeAksi(block.id, e.target.value as BlokAksi['tipeAksi'])}
-            className={`min-h-[40px] px-3 py-1 font-mono font-black text-xs md:text-sm rounded-xl cursor-pointer shadow-xs transition-all ${
+            className={`min-h-[40px] max-w-full min-w-0 px-3 py-1 font-mono font-black text-xs md:text-sm rounded-xl cursor-pointer shadow-xs transition-all ${
               aksiBelumDipilih
                 ? 'bg-amber-100 dark:bg-amber-950/80 border-2 border-dashed border-amber-600 text-amber-950 dark:text-amber-200 ring-2 ring-amber-400 animate-pulse'
                 : 'bg-white/95 dark:bg-slate-800 border-2 border-slate-300 dark:border-slate-600 text-slate-900 dark:text-slate-100'
             }`}
             title="Pilih jenis aksi perintah"
           >
-            <option value="">-- Pilih Aksi (Izinkan / Tolak / Buka / Pesan) --</option>
+            <option value="">-- Pilih Aksi --</option>
             <option value="izinkan">Izinkan Masuk</option>
             <option value="tolak">Tolak Masuk</option>
             <option value="buka">Buka Gerbang</option>
@@ -85,12 +85,12 @@ export const BlockItem: React.FC<BlockItemProps> = ({
 
           {/* Jika aksi adalah pesan, tampilkan pemilih pesan (default kosong jika belum dipilih) */}
           {block.tipeAksi === 'pesan' && (
-            <div className="flex items-center gap-1.5 ml-1">
+            <div className="flex items-center gap-1.5 ml-1 min-w-0 max-w-full">
               <span className="text-xs text-purple-700 dark:text-purple-400 font-bold">:</span>
               <select
                 value={block.nilai || ''}
                 onChange={(e) => onUpdatePesanNilai && onUpdatePesanNilai(block.id, e.target.value)}
-                className={`min-h-[40px] px-3 py-1 font-mono font-black text-xs md:text-sm rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-400 cursor-pointer shadow-xs transition-all ${
+                className={`min-h-[40px] max-w-full min-w-0 px-3 py-1 font-mono font-black text-xs md:text-sm rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-400 cursor-pointer shadow-xs transition-all ${
                   pesanBelumDipilih
                     ? 'bg-purple-100 dark:bg-purple-950/80 border-2 border-dashed border-purple-500 text-purple-900 dark:text-purple-200 ring-2 ring-purple-300 animate-pulse'
                     : 'bg-white dark:bg-slate-800 border-2 border-purple-300 dark:border-purple-600 text-purple-900 dark:text-purple-200'
@@ -274,9 +274,9 @@ export const BlockItem: React.FC<BlockItemProps> = ({
               return (
                 <div
                   key={aksi.id}
-                  className={`rounded-xl p-2.5 flex items-center justify-between gap-2 shadow-xs border-2 border-b-4 ${ambilGayaAksi(aksi.tipeAksi)}`}
+                  className={`rounded-xl p-2.5 flex items-center justify-between gap-2 shadow-xs border-2 border-b-4 min-w-0 max-w-full overflow-hidden ${ambilGayaAksi(aksi.tipeAksi)}`}
                 >
-                  <div className="flex items-center gap-2 flex-wrap">
+                  <div className="flex-1 min-w-0 flex items-center gap-2 flex-wrap">
                     {renderIkonAksi(aksi.tipeAksi)}
 
                     {/* Pemilih Tipe Aksi Manual: Izinkan / Tolak / Buka / Pesan */}
@@ -286,14 +286,14 @@ export const BlockItem: React.FC<BlockItemProps> = ({
                         onUpdateNestedTipeAksi &&
                         onUpdateNestedTipeAksi(jikaBlock.id, 'maka', aksi.id, e.target.value as BlokAksi['tipeAksi'])
                       }
-                      className={`min-h-[38px] px-2.5 py-1 font-mono font-black text-xs md:text-sm rounded-xl cursor-pointer shadow-xs transition-all ${
+                      className={`min-h-[38px] max-w-full min-w-0 px-2.5 py-1 font-mono font-black text-xs md:text-sm rounded-xl cursor-pointer shadow-xs transition-all ${
                         !aksi.tipeAksi
                           ? 'bg-amber-100 dark:bg-amber-950/80 border-2 border-dashed border-amber-600 text-amber-950 dark:text-amber-200 ring-2 ring-amber-400 animate-pulse'
                           : 'bg-white dark:bg-slate-800 border-2 border-slate-300 dark:border-slate-600 text-slate-900 dark:text-slate-100'
                       }`}
                       title="Pilih jenis aksi perintah stasiun"
                     >
-                      <option value="">-- Pilih Aksi (Izinkan / Tolak / Buka / Pesan) --</option>
+                      <option value="">-- Pilih Aksi --</option>
                       <option value="izinkan">Izinkan Masuk</option>
                       <option value="tolak">Tolak Masuk</option>
                       <option value="buka">Buka Gerbang</option>
@@ -307,7 +307,7 @@ export const BlockItem: React.FC<BlockItemProps> = ({
                           onUpdateNestedPesan &&
                           onUpdateNestedPesan(jikaBlock.id, 'maka', aksi.id, e.target.value)
                         }
-                        className={`min-h-[38px] px-2.5 py-1 font-mono font-bold text-xs rounded-xl transition-all cursor-pointer shadow-xs ${
+                        className={`min-h-[38px] max-w-full min-w-0 px-2.5 py-1 font-mono font-bold text-xs rounded-xl transition-all cursor-pointer shadow-xs ${
                           pesanBelumDipilih
                             ? 'bg-purple-100 dark:bg-purple-950/80 border-2 border-dashed border-purple-500 text-purple-900 dark:text-purple-200 ring-2 ring-purple-300 animate-pulse'
                             : 'bg-white dark:bg-slate-800 border-2 border-purple-300 dark:border-purple-600 text-purple-900 dark:text-purple-200'
@@ -330,7 +330,7 @@ export const BlockItem: React.FC<BlockItemProps> = ({
                       onDeleteNestedAction &&
                       onDeleteNestedAction(jikaBlock.id, 'maka', aksi.id)
                     }
-                    className="min-h-[38px] min-w-[38px] flex items-center justify-center text-rose-700 hover:bg-rose-100 rounded-xl p-1.5 transition-colors cursor-pointer"
+                    className="min-h-[38px] min-w-[38px] shrink-0 flex items-center justify-center text-rose-700 hover:bg-rose-100 rounded-xl p-1.5 transition-colors cursor-pointer"
                     title="Hapus aksi dari rongga MAKA"
                     aria-label="Hapus aksi"
                   >
@@ -383,9 +383,9 @@ export const BlockItem: React.FC<BlockItemProps> = ({
                   return (
                     <div
                       key={aksi.id}
-                      className={`rounded-xl p-2.5 flex items-center justify-between gap-2 shadow-xs border-2 border-b-4 ${ambilGayaAksi(aksi.tipeAksi)}`}
+                      className={`rounded-xl p-2.5 flex items-center justify-between gap-2 shadow-xs border-2 border-b-4 min-w-0 max-w-full overflow-hidden ${ambilGayaAksi(aksi.tipeAksi)}`}
                     >
-                      <div className="flex items-center gap-2 flex-wrap">
+                      <div className="flex-1 min-w-0 flex items-center gap-2 flex-wrap">
                         {renderIkonAksi(aksi.tipeAksi)}
 
                         {/* Pemilih Tipe Aksi Manual: Izinkan / Tolak / Buka / Pesan */}
@@ -395,14 +395,14 @@ export const BlockItem: React.FC<BlockItemProps> = ({
                             onUpdateNestedTipeAksi &&
                             onUpdateNestedTipeAksi(jikaBlock.id, 'selainItu', aksi.id, e.target.value as BlokAksi['tipeAksi'])
                           }
-                          className={`min-h-[38px] px-2.5 py-1 font-mono font-black text-xs md:text-sm rounded-xl cursor-pointer shadow-xs transition-all ${
+                          className={`min-h-[38px] max-w-full min-w-0 px-2.5 py-1 font-mono font-black text-xs md:text-sm rounded-xl cursor-pointer shadow-xs transition-all ${
                             !aksi.tipeAksi
                               ? 'bg-amber-100 dark:bg-amber-950/80 border-2 border-dashed border-amber-600 text-amber-950 dark:text-amber-200 ring-2 ring-amber-400 animate-pulse'
                               : 'bg-white dark:bg-slate-800 border-2 border-slate-300 dark:border-slate-600 text-slate-900 dark:text-slate-100'
                           }`}
                           title="Pilih jenis aksi perintah stasiun"
                         >
-                          <option value="">-- Pilih Aksi (Izinkan / Tolak / Buka / Pesan) --</option>
+                          <option value="">-- Pilih Aksi --</option>
                           <option value="izinkan">Izinkan Masuk</option>
                           <option value="tolak">Tolak Masuk</option>
                           <option value="buka">Buka Gerbang</option>
@@ -416,7 +416,7 @@ export const BlockItem: React.FC<BlockItemProps> = ({
                               onUpdateNestedPesan &&
                               onUpdateNestedPesan(jikaBlock.id, 'selainItu', aksi.id, e.target.value)
                             }
-                            className={`min-h-[38px] px-2.5 py-1 font-mono font-bold text-xs rounded-lg transition-all cursor-pointer shadow-xs ${
+                            className={`min-h-[38px] max-w-full min-w-0 px-2.5 py-1 font-mono font-bold text-xs rounded-xl transition-all cursor-pointer shadow-xs ${
                               pesanBelumDipilih
                                 ? 'bg-purple-100 dark:bg-purple-950/80 border-2 border-dashed border-purple-500 text-purple-900 dark:text-purple-200 ring-2 ring-purple-300 animate-pulse'
                                 : 'bg-white dark:bg-slate-800 border-2 border-purple-300 dark:border-purple-600 text-purple-900 dark:text-purple-200'
@@ -439,7 +439,7 @@ export const BlockItem: React.FC<BlockItemProps> = ({
                           onDeleteNestedAction &&
                           onDeleteNestedAction(jikaBlock.id, 'selainItu', aksi.id)
                         }
-                        className="min-h-[38px] min-w-[38px] flex items-center justify-center text-rose-700 hover:bg-rose-100 rounded-xl p-1.5 transition-colors cursor-pointer"
+                        className="min-h-[38px] min-w-[38px] shrink-0 flex items-center justify-center text-rose-700 hover:bg-rose-100 rounded-xl p-1.5 transition-colors cursor-pointer"
                         title="Hapus aksi dari rongga SELAIN ITU"
                         aria-label="Hapus aksi"
                       >
