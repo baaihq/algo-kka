@@ -73,7 +73,7 @@ export const TeamScreen: React.FC<TeamScreenProps> = ({
         {/* Badge Kurikulum */}
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-700 text-amber-900 dark:text-amber-200 text-xs font-mono font-black uppercase tracking-wider mb-3">
           <Sparkles className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
-          <span>Koding &amp; Kecerdasan Artifisial • SMA Kelas X</span>
+          <span>Koding &amp; Kecerdasan Artifisial • SMA/MA Kelas X</span>
         </div>
 
         {/* Robot ALGO Hero (Chubby Cute Design) */}
