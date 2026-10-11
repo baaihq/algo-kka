@@ -13,6 +13,7 @@ import {
   X
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import { CelebrationConfetti } from './CelebrationConfetti';
 
 interface InteractiveTutorialProps {
   isOpen: boolean;
@@ -120,7 +121,9 @@ export const InteractiveTutorial: React.FC<InteractiveTutorialProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 md:p-4 bg-sky-950/60 backdrop-blur-sm animate-in fade-in duration-200 select-none">
+    <>
+      <CelebrationConfetti isActive={Boolean(isOpen && hasilUjiMini?.lulus)} durationMs={5000} />
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-3 md:p-4 bg-sky-950/60 backdrop-blur-sm animate-in fade-in duration-200 select-none">
       <div className="bg-white dark:bg-slate-900 border-2 border-indigo-200 dark:border-indigo-800 rounded-3xl max-w-2xl w-full shadow-2xl overflow-hidden flex flex-col max-h-[92vh] text-slate-800 dark:text-slate-100 transition-colors">
         {/* Header Modal Tutorial Pastel */}
         <div className="bg-gradient-to-r from-indigo-500 via-blue-500 to-indigo-600 dark:from-indigo-900 dark:via-blue-900 dark:to-indigo-950 p-4 text-white flex items-center justify-between border-b-2 border-indigo-300 dark:border-indigo-700">
@@ -585,5 +588,6 @@ export const InteractiveTutorial: React.FC<InteractiveTutorialProps> = ({
         </div>
       </div>
     </div>
+    </>
   );
 };

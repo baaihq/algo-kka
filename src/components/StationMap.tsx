@@ -16,7 +16,6 @@ import { BadgeListModal } from './BadgeListModal';
 import { InteractiveTutorial } from './InteractiveTutorial';
 import { LeaderboardModal } from './LeaderboardModal';
 import { ThemeMenu } from './ThemeMenu';
-import { StudentProgressChart } from './StudentProgressChart';
 import {
   Star,
   Lock,
@@ -243,13 +242,6 @@ export const StationMap: React.FC<StationMapProps> = ({
           <span>{tutorialSelesai ? 'Buka Kembali Tutorial' : 'Mulai Tutorial Interaktif'}</span>
         </button>
       </div>
-
-      {/* Grafik Progres Penyelesaian Level Murid (Recharts) */}
-      <StudentProgressChart
-        progresMap={progresMap}
-        namaTim={tim.namaTim}
-        onPilihLevel={onPilihLevel}
-      />
 
       {/* Grid Level Stasiun (Pastel Floating Island Cards) */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 flex-1">

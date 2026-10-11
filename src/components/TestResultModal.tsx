@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { HasilUjiLevel, Level } from '../types/game';
 import {
   CheckCircle2,
@@ -10,10 +11,12 @@ import {
   Award,
   Lightbulb,
   Share2,
-  Loader2
+  Loader2,
+  PartyPopper
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { bagikanSkorKeWhatsApp } from '../utils/scoreCardImage';
+import { CelebrationConfetti } from './CelebrationConfetti';
 
 // WhatsApp SVG Icon
 const WhatsAppIcon: React.FC<{ className?: string }> = ({ className = "w-4 h-4" }) => (
@@ -165,59 +168,88 @@ export const TestResultModal: React.FC<TestResultModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-sky-950/45 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="bg-white border-2 border-sky-300 rounded-3xl max-w-lg w-full shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
-        {/* Header Modal Pastel Ceria */}
-        <div
-          className={`p-5 text-white flex items-center gap-3 border-b-2 ${
-            hasilUji.semuaLulus
-              ? 'bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 border-emerald-400'
-              : 'bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 border-amber-400'
-          }`}
+    <>
+      {/* 🎊 Efek Perayaan Konfeti & Partikel Ceria Menggunakan Framer-Motion */}
+      <CelebrationConfetti
+        isActive={isOpen && hasilUji.semuaLulus}
+        durationMs={7000}
+        showTriggerButton={hasilUji.semuaLulus}
+      />
+
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-sky-950/45 backdrop-blur-sm">
+        <motion.div
+          initial={{ scale: 0.88, opacity: 0, y: 20 }}
+          animate={{ scale: 1, opacity: 1, y: 0 }}
+          transition={{ type: 'spring', damping: 20, stiffness: 280 }}
+          className="bg-white border-2 border-sky-300 rounded-3xl max-w-lg w-full shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
         >
-          {hasilUji.semuaLulus ? (
-            <div className="w-12 h-12 rounded-2xl bg-white/25 flex items-center justify-center shrink-0 shadow-inner">
-              <Award className="w-7 h-7 text-yellow-200" />
-            </div>
-          ) : (
-            <div className="w-12 h-12 rounded-2xl bg-white/25 flex items-center justify-center shrink-0 shadow-inner">
-              <XCircle className="w-7 h-7 text-white" />
-            </div>
-          )}
-
-          <div>
-            <h3 className="text-lg md:text-xl font-black tracking-wide font-fredoka">
-              {hasilUji.semuaLulus ? 'SEMUA KASUS UJI LULUS! 🎉' : 'HASIL UJI KASUS: BELUM LENGKAP ⚠️'}
-            </h3>
-            <p className="text-xs md:text-sm text-white/95 leading-snug">
-              {hasilUji.semuaLulus
-                ? `Hebat! Logika program robot ALGO berhasil menyelesaikan ${level.nama}.`
-                : `${hasilUji.kasusLulus} dari ${hasilUji.totalKasus} kasus uji berhasil dilewati. Percobaan gagal: ${gagalBerturutTurut}x.`}
-            </p>
-          </div>
-        </div>
-
-        {/* Bintang Prestasi & Tombol Share Bukti Lulus WhatsApp */}
-        {hasilUji.semuaLulus && (
-          <div className="bg-amber-50/80 py-3 px-4 border-b-2 border-amber-200 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <div className="flex items-center gap-2">
-              <div className="flex items-center gap-1">
-                {[1, 2, 3].map((b) => (
-                  <Star
-                    key={b}
-                    className={`w-6 h-6 transition-transform ${
-                      b <= bintangDiperoleh
-                        ? 'fill-amber-400 text-amber-500 animate-bounce'
-                        : 'fill-slate-200 text-slate-300'
-                    }`}
-                    style={{ animationDelay: `${(b - 1) * 150}ms` }}
-                  />
-                ))}
+          {/* Header Modal Pastel Ceria */}
+          <div
+            className={`p-5 text-white flex items-center gap-3 border-b-2 ${
+              hasilUji.semuaLulus
+                ? 'bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 border-emerald-400'
+                : 'bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 border-amber-400'
+            }`}
+          >
+            {hasilUji.semuaLulus ? (
+              <motion.div
+                initial={{ rotate: -20, scale: 0 }}
+                animate={{ rotate: 0, scale: 1 }}
+                transition={{ type: 'spring', damping: 10, stiffness: 250 }}
+                className="w-12 h-12 rounded-2xl bg-white/25 flex items-center justify-center shrink-0 shadow-inner"
+              >
+                <Award className="w-7 h-7 text-yellow-200" />
+              </motion.div>
+            ) : (
+              <div className="w-12 h-12 rounded-2xl bg-white/25 flex items-center justify-center shrink-0 shadow-inner">
+                <XCircle className="w-7 h-7 text-white" />
               </div>
-              <span className="text-xs font-mono font-black text-amber-900 bg-amber-200/90 border border-amber-300 px-2.5 py-0.5 rounded-full ml-1 whitespace-nowrap">
-                {bintangDiperoleh} / 3 BINTANG
-              </span>
+            )}
+
+            <div>
+              <h3 className="text-lg md:text-xl font-black tracking-wide font-fredoka flex items-center gap-2">
+                <span>{hasilUji.semuaLulus ? 'SEMUA KASUS UJI LULUS! 🎉' : 'HASIL UJI KASUS: BELUM LENGKAP ⚠️'}</span>
+              </h3>
+              <p className="text-xs md:text-sm text-white/95 leading-snug">
+                {hasilUji.semuaLulus
+                  ? `Hebat! Logika program robot ALGO berhasil menyelesaikan ${level.nama}.`
+                  : `${hasilUji.kasusLulus} dari ${hasilUji.totalKasus} kasus uji berhasil dilewati. Percobaan gagal: ${gagalBerturutTurut}x.`}
+              </p>
             </div>
+          </div>
+
+          {/* Bintang Prestasi & Tombol Share Bukti Lulus WhatsApp */}
+          {hasilUji.semuaLulus && (
+            <div className="bg-amber-50/80 py-3 px-4 border-b-2 border-amber-200 flex flex-col sm:flex-row items-center justify-between gap-3">
+              <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1">
+                  {[1, 2, 3].map((b) => (
+                    <motion.div
+                      key={b}
+                      initial={{ scale: 0, rotate: -35 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      transition={{
+                        delay: 0.15 + (b - 1) * 0.12,
+                        type: 'spring',
+                        damping: 12,
+                        stiffness: 260
+                      }}
+                    >
+                      <Star
+                        className={`w-6 h-6 transition-transform ${
+                          b <= bintangDiperoleh
+                            ? 'fill-amber-400 text-amber-500 animate-bounce'
+                            : 'fill-slate-200 text-slate-300'
+                        }`}
+                        style={{ animationDelay: `${(b - 1) * 150}ms` }}
+                      />
+                    </motion.div>
+                  ))}
+                </div>
+                <span className="text-xs font-mono font-black text-amber-900 bg-amber-200/90 border border-amber-300 px-2.5 py-0.5 rounded-full ml-1 whitespace-nowrap">
+                  {bintangDiperoleh} / 3 BINTANG
+                </span>
+              </div>
 
             {/* Tombol Share Bukti Lulus (WhatsApp + Gambar) */}
             <div className="flex items-center gap-2 w-full sm:w-auto">
@@ -402,7 +434,8 @@ export const TestResultModal: React.FC<TestResultModalProps> = ({
             </div>
           )}
         </div>
+        </motion.div>
       </div>
-    </div>
+    </>
   );
 };
