@@ -120,20 +120,20 @@ export const InteractiveTutorial: React.FC<InteractiveTutorialProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 md:p-4 bg-sky-950/45 backdrop-blur-sm animate-in fade-in duration-200 select-none">
-      <div className="bg-white border-2 border-indigo-200 rounded-3xl max-w-2xl w-full shadow-2xl overflow-hidden flex flex-col max-h-[92vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 md:p-4 bg-sky-950/60 backdrop-blur-sm animate-in fade-in duration-200 select-none">
+      <div className="bg-white dark:bg-slate-900 border-2 border-indigo-200 dark:border-indigo-800 rounded-3xl max-w-2xl w-full shadow-2xl overflow-hidden flex flex-col max-h-[92vh] text-slate-800 dark:text-slate-100 transition-colors">
         {/* Header Modal Tutorial Pastel */}
-        <div className="bg-gradient-to-r from-indigo-500 via-blue-500 to-indigo-600 p-4 text-white flex items-center justify-between border-b-2 border-indigo-300">
+        <div className="bg-gradient-to-r from-indigo-500 via-blue-500 to-indigo-600 dark:from-indigo-900 dark:via-blue-900 dark:to-indigo-950 p-4 text-white flex items-center justify-between border-b-2 border-indigo-300 dark:border-indigo-700">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-white/30 flex items-center justify-center shrink-0 shadow-inner">
+            <div className="w-10 h-10 rounded-2xl bg-white/30 dark:bg-white/10 flex items-center justify-center shrink-0 shadow-inner">
               <BookOpen className="w-5 h-5 text-yellow-200" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-mono uppercase bg-amber-300 text-slate-950 font-black px-2 py-0.5 rounded-full">
+                <span className="text-[10px] font-mono uppercase bg-amber-300 dark:bg-amber-400 text-slate-950 font-black px-2 py-0.5 rounded-full">
                   Modul Interaktif
                 </span>
-                <span className="text-xs text-indigo-100 font-bold font-mono">Kelas X • Koding &amp; KA</span>
+                <span className="text-xs text-indigo-100 dark:text-indigo-200 font-bold font-mono">Kelas X • Koding &amp; KA</span>
               </div>
               <h2 className="text-base md:text-lg font-black tracking-wide font-fredoka">
                 Akademi Logika: Percabangan JIKA-MAKA
@@ -152,7 +152,7 @@ export const InteractiveTutorial: React.FC<InteractiveTutorialProps> = ({
         </div>
 
         {/* Stepper Indikator Langkah */}
-        <div className="bg-indigo-50/70 px-4 py-2.5 border-b-2 border-indigo-100 flex items-center justify-between text-xs">
+        <div className="bg-indigo-50/70 dark:bg-slate-800/80 px-4 py-2.5 border-b-2 border-indigo-100 dark:border-slate-700 flex items-center justify-between text-xs">
           {[
             { no: 1, label: 'Konsep' },
             { no: 2, label: 'JIKA-MAKA' },
@@ -167,11 +167,11 @@ export const InteractiveTutorial: React.FC<InteractiveTutorialProps> = ({
                 langkahAktif === step.no
                   ? 'bg-amber-400 text-slate-950 shadow-xs border border-amber-500 ring-2 ring-amber-300'
                   : langkahAktif > step.no
-                  ? 'bg-emerald-100 text-emerald-900 border border-emerald-300'
-                  : 'bg-white text-slate-500 hover:text-slate-800 border border-slate-200'
+                  ? 'bg-emerald-100 dark:bg-emerald-950/60 text-emerald-900 dark:text-emerald-200 border border-emerald-300 dark:border-emerald-700'
+                  : 'bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 border border-slate-200 dark:border-slate-700'
               }`}
             >
-              <span className="w-5 h-5 rounded-full bg-black/10 flex items-center justify-center text-[10px] font-mono">
+              <span className="w-5 h-5 rounded-full bg-black/10 dark:bg-white/10 flex items-center justify-center text-[10px] font-mono">
                 {langkahAktif > step.no ? '✓' : step.no}
               </span>
               <span className="hidden sm:inline">{step.label}</span>
@@ -547,12 +547,12 @@ export const InteractiveTutorial: React.FC<InteractiveTutorialProps> = ({
         </div>
 
         {/* Footer Navigasi Bawah */}
-        <div className="p-4 bg-sky-50 border-t-2 border-sky-100 flex items-center justify-between gap-3">
+        <div className="p-4 bg-sky-50 dark:bg-slate-800/80 border-t-2 border-sky-100 dark:border-slate-700 flex items-center justify-between gap-3">
           {langkahAktif > 1 ? (
             <button
               type="button"
               onClick={() => setLangkahAktif((prev) => prev - 1)}
-              className="min-h-[44px] px-4 py-2 bg-white hover:bg-slate-100 text-slate-700 font-bold text-xs rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer border border-slate-300"
+              className="min-h-[44px] px-4 py-2 bg-white hover:bg-slate-100 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 font-bold text-xs rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer border border-slate-300 dark:border-slate-600"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Kembali</span>

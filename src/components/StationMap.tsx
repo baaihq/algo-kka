@@ -15,6 +15,7 @@ import { ambilStatusBadgeTim } from '../data/badges';
 import { BadgeListModal } from './BadgeListModal';
 import { InteractiveTutorial } from './InteractiveTutorial';
 import { LeaderboardModal } from './LeaderboardModal';
+import { ThemeMenu } from './ThemeMenu';
 import {
   Star,
   Lock,
@@ -110,17 +111,17 @@ export const StationMap: React.FC<StationMapProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-sky-100 via-sky-50 to-amber-50/40 text-slate-800 flex flex-col p-4 md:p-6 max-w-4xl mx-auto select-none">
+    <div className="min-h-screen bg-gradient-to-b from-sky-100 via-sky-50 to-amber-50/40 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 text-slate-800 dark:text-slate-100 flex flex-col p-4 md:p-6 max-w-4xl mx-auto select-none transition-colors">
       {/* Header Bar Stasiun Pastel */}
-      <header className="bg-white/95 border-2 border-sky-200 rounded-3xl p-4 shadow-sm mb-6 flex flex-col sm:flex-row items-center justify-between gap-4 backdrop-blur-md">
+      <header className="bg-white/95 dark:bg-slate-900/95 border-2 border-sky-200 dark:border-slate-800 rounded-3xl p-4 shadow-sm mb-6 flex flex-col sm:flex-row items-center justify-between gap-4 backdrop-blur-md transition-colors">
         <div className="flex items-center gap-3 w-full sm:w-auto min-w-0">
-          <div className="w-12 h-12 rounded-2xl bg-amber-100 border-2 border-amber-300 flex items-center justify-center shrink-0 shadow-2xs">
-            <Users className="w-6 h-6 text-amber-700" />
+          <div className="w-12 h-12 rounded-2xl bg-amber-100 dark:bg-amber-950/60 border-2 border-amber-300 dark:border-amber-700 flex items-center justify-center shrink-0 shadow-2xs">
+            <Users className="w-6 h-6 text-amber-700 dark:text-amber-400" />
           </div>
           <div className="min-w-0">
-            <div className="text-[11px] font-mono font-bold uppercase text-slate-500">Tim Penjelajah</div>
+            <div className="text-[11px] font-mono font-bold uppercase text-slate-500 dark:text-slate-400">Tim Penjelajah</div>
             <h2
-              className="text-base md:text-lg font-black text-slate-900 truncate max-w-[200px] sm:max-w-[280px]"
+              className="text-base md:text-lg font-black text-slate-900 dark:text-slate-100 truncate max-w-[200px] sm:max-w-[280px]"
               title={tim.namaTim}
             >
               {tim.namaTim}
@@ -128,12 +129,12 @@ export const StationMap: React.FC<StationMapProps> = ({
           </div>
         </div>
 
-        {/* Bintang, Badge, Leaderboard & Tombol Header Chunky */}
+        {/* Bintang, Badge, Leaderboard, Tema & Tombol Header Chunky */}
         <div className="flex items-center justify-between sm:justify-end gap-2 w-full sm:w-auto flex-wrap">
           {/* Badge Total Bintang */}
-          <div className="flex items-center gap-1.5 bg-amber-100 px-3 py-2 rounded-2xl border-2 border-amber-300 border-b-4 border-b-amber-400">
-            <Star className="w-4 h-4 fill-amber-500 text-amber-600" />
-            <span className="font-mono font-black text-amber-950 text-xs md:text-sm">
+          <div className="flex items-center gap-1.5 bg-amber-100 dark:bg-amber-950/60 px-3 py-2 rounded-2xl border-2 border-amber-300 dark:border-amber-700 border-b-4 border-b-amber-400 dark:border-b-amber-800">
+            <Star className="w-4 h-4 fill-amber-500 text-amber-600 dark:text-amber-400" />
+            <span className="font-mono font-black text-amber-950 dark:text-amber-200 text-xs md:text-sm">
               {totalBintang} / 18 ⭐
             </span>
           </div>
@@ -142,10 +143,10 @@ export const StationMap: React.FC<StationMapProps> = ({
           <button
             type="button"
             onClick={() => setIsBadgeModalOpen(true)}
-            className="flex items-center gap-1.5 bg-yellow-100 hover:bg-yellow-200 border-2 border-yellow-300 border-b-4 border-b-yellow-400 active:border-b-0 active:translate-y-1 px-3 py-2 rounded-2xl text-xs font-black text-yellow-950 transition-all cursor-pointer shadow-xs"
+            className="flex items-center gap-1.5 bg-yellow-100 hover:bg-yellow-200 dark:bg-yellow-950/50 dark:hover:bg-yellow-900/50 border-2 border-yellow-300 dark:border-yellow-700 border-b-4 border-b-yellow-400 dark:border-b-yellow-800 active:border-b-0 active:translate-y-1 px-3 py-2 rounded-2xl text-xs font-black text-yellow-950 dark:text-yellow-200 transition-all cursor-pointer shadow-xs"
             title="Lihat koleksi badge pencapaian tim"
           >
-            <Award className="w-4 h-4 text-amber-600" />
+            <Award className="w-4 h-4 text-amber-600 dark:text-amber-400" />
             <span>Badge ({badgeTerbukaCount}/{badgesTim.length})</span>
           </button>
 
@@ -153,17 +154,20 @@ export const StationMap: React.FC<StationMapProps> = ({
           <button
             type="button"
             onClick={() => setIsLeaderboardOpen(true)}
-            className="flex items-center gap-1.5 bg-sky-100 hover:bg-sky-200 border-2 border-sky-300 border-b-4 border-b-sky-400 active:border-b-0 active:translate-y-1 px-3 py-2 rounded-2xl text-xs font-black text-sky-950 transition-all cursor-pointer shadow-xs"
+            className="flex items-center gap-1.5 bg-sky-100 hover:bg-sky-200 dark:bg-sky-950/50 dark:hover:bg-sky-900/50 border-2 border-sky-300 dark:border-sky-700 border-b-4 border-b-sky-400 dark:border-b-sky-800 active:border-b-0 active:translate-y-1 px-3 py-2 rounded-2xl text-xs font-black text-sky-950 dark:text-sky-200 transition-all cursor-pointer shadow-xs"
             title="Lihat Papan Peringkat Tim"
           >
-            <Trophy className="w-4 h-4 text-sky-700" />
+            <Trophy className="w-4 h-4 text-sky-700 dark:text-sky-400" />
             <span>Top Tim</span>
           </button>
+
+          {/* Menu Pilihan Tema (Dark Mode / Light Mode / Auto) */}
+          <ThemeMenu tampilkanLabel={true} />
 
           <button
             type="button"
             onClick={handleBukaGantiTim}
-            className="min-h-[42px] px-3 py-2 bg-slate-100 hover:bg-slate-200 border-2 border-slate-300 rounded-2xl text-xs font-black text-slate-700 transition-colors cursor-pointer"
+            className="min-h-[42px] px-3 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 border-2 border-slate-300 dark:border-slate-700 rounded-2xl text-xs font-black text-slate-700 dark:text-slate-200 transition-colors cursor-pointer"
             title="Ganti tim"
           >
             Ganti Tim
@@ -172,7 +176,7 @@ export const StationMap: React.FC<StationMapProps> = ({
           <button
             type="button"
             onClick={() => setIsResetConfirmOpen(true)}
-            className="min-h-[42px] px-3 py-2 bg-rose-100 hover:bg-rose-200 border-2 border-rose-300 rounded-2xl text-xs font-black text-rose-800 flex items-center gap-1 transition-colors cursor-pointer"
+            className="min-h-[42px] px-3 py-2 bg-rose-100 hover:bg-rose-200 dark:bg-rose-950/50 dark:hover:bg-rose-900/50 border-2 border-rose-300 dark:border-rose-700 rounded-2xl text-xs font-black text-rose-800 dark:text-rose-200 flex items-center gap-1 transition-colors cursor-pointer"
             title="Reset progres level"
           >
             <RotateCcw className="w-3.5 h-3.5" />
@@ -183,23 +187,23 @@ export const StationMap: React.FC<StationMapProps> = ({
 
       {/* Hero Peta Stasiun Menara Bug */}
       <div className="mb-6 text-center sm:text-left">
-        <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-sky-100 border-2 border-sky-300 text-sky-900 text-xs font-mono font-black uppercase mb-2">
-          <Sparkles className="w-3.5 h-3.5 text-sky-600" />
+        <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-sky-100 dark:bg-sky-950/60 border-2 border-sky-300 dark:border-sky-700 text-sky-900 dark:text-sky-200 text-xs font-mono font-black uppercase mb-2">
+          <Sparkles className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400" />
           <span>Peta Ekspedisi: Sektor Stasiun Logika ALGO</span>
         </div>
-        <h1 className="text-2xl md:text-3xl font-black text-slate-900 font-fredoka">
+        <h1 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-slate-100 font-fredoka">
           Peta Misi Pembelajaran
         </h1>
-        <p className="text-xs md:text-sm text-slate-600 mt-1 max-w-xl leading-relaxed">
+        <p className="text-xs md:text-sm text-slate-600 dark:text-slate-400 mt-1 max-w-xl leading-relaxed">
           Selesaikan setiap stasiun secara berurutan. Robot ALGO membutuhkan logika percabanganmu untuk membuka pintu gerbang stasiun berikutnya!
         </p>
       </div>
 
       {/* Modul Tutorial Interaktif Pastel */}
-      <div className="mb-6 p-4 md:p-5 rounded-3xl bg-indigo-50 border-2 border-indigo-200 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="mb-6 p-4 md:p-5 rounded-3xl bg-indigo-50 dark:bg-indigo-950/40 border-2 border-indigo-200 dark:border-indigo-800 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="flex items-start gap-3 w-full sm:w-auto min-w-0 flex-1">
-          <div className="w-12 h-12 rounded-2xl bg-indigo-100 border-2 border-indigo-300 flex items-center justify-center text-indigo-700 shrink-0 shadow-2xs">
-            <BookOpen className="w-6 h-6 text-indigo-700" />
+          <div className="w-12 h-12 rounded-2xl bg-indigo-100 dark:bg-indigo-900/60 border-2 border-indigo-300 dark:border-indigo-700 flex items-center justify-center text-indigo-700 dark:text-indigo-300 shrink-0 shadow-2xs">
+            <BookOpen className="w-6 h-6 text-indigo-700 dark:text-indigo-300" />
           </div>
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-center gap-2 mb-1">
@@ -207,19 +211,19 @@ export const StationMap: React.FC<StationMapProps> = ({
                 Pelatihan Awal
               </span>
               {tutorialSelesai ? (
-                <span className="text-[10px] font-mono text-emerald-700 flex items-center gap-1 font-black whitespace-nowrap bg-emerald-100 px-2 py-0.5 rounded-full border border-emerald-300">
+                <span className="text-[10px] font-mono text-emerald-700 dark:text-emerald-300 flex items-center gap-1 font-black whitespace-nowrap bg-emerald-100 dark:bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-300 dark:border-emerald-700">
                   ✓ Telah Dipelajari
                 </span>
               ) : (
-                <span className="text-[10px] font-mono text-amber-800 font-black whitespace-nowrap bg-amber-100 px-2 py-0.5 rounded-full border border-amber-300">
+                <span className="text-[10px] font-mono text-amber-800 dark:text-amber-300 font-black whitespace-nowrap bg-amber-100 dark:bg-amber-950/60 px-2 py-0.5 rounded-full border border-amber-300 dark:border-amber-700">
                   ★ Disarankan Sebelum Misi 1
                 </span>
               )}
             </div>
-            <h3 className="text-base md:text-lg font-black text-slate-900 leading-snug">
+            <h3 className="text-base md:text-lg font-black text-slate-900 dark:text-slate-100 leading-snug">
               Tutorial Interaktif: Cara Kerja JIKA–MAKA–SELAIN ITU
             </h3>
-            <p className="text-xs md:text-sm text-slate-600 leading-relaxed max-w-xl mt-1">
+            <p className="text-xs md:text-sm text-slate-600 dark:text-slate-400 leading-relaxed max-w-xl mt-1">
               Pelajari alur keputusan logika robot ALGO melalui simulasi visual 1-arah dan 2-arah sebelum memulai ekspedisi stasiun.
             </p>
           </div>
@@ -260,30 +264,30 @@ export const StationMap: React.FC<StationMapProps> = ({
               className={`relative rounded-3xl p-5 md:p-6 border-2 transition-all flex flex-col justify-between overflow-hidden ${
                 terbuka
                   ? sudahSelesai
-                    ? 'bg-white/95 border-emerald-300 shadow-sm'
-                    : 'bg-white/95 border-amber-300 shadow-sm'
-                  : 'bg-slate-100/80 border-slate-300 opacity-75'
+                    ? 'bg-white/95 dark:bg-slate-900/95 border-emerald-300 dark:border-emerald-600/80 shadow-sm'
+                    : 'bg-white/95 dark:bg-slate-900/95 border-amber-300 dark:border-amber-600/80 shadow-sm'
+                  : 'bg-slate-100/80 dark:bg-slate-900/40 border-slate-300 dark:border-slate-800 opacity-75'
               }`}
             >
               {/* Badge Status Pojok Kanan Atas */}
               <div className="flex items-center justify-between mb-3">
-                <span className="text-xs font-mono font-black uppercase tracking-wider text-slate-500">
+                <span className="text-xs font-mono font-black uppercase tracking-wider text-slate-500 dark:text-slate-400">
                   MISI #{idx + 1}
                 </span>
 
                 {terbuka ? (
                   sudahSelesai ? (
-                    <div className="flex items-center gap-1 bg-emerald-100 border border-emerald-300 px-3 py-1 rounded-full text-emerald-900 font-black text-xs shadow-2xs">
+                    <div className="flex items-center gap-1 bg-emerald-100 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-700 px-3 py-1 rounded-full text-emerald-900 dark:text-emerald-200 font-black text-xs shadow-2xs">
                       <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-500" />
                       <span>{bintangDiperoleh} ⭐ Selesai</span>
                     </div>
                   ) : (
-                    <span className="bg-amber-100 border border-amber-300 text-amber-900 font-black text-xs px-3 py-1 rounded-full shadow-2xs">
+                    <span className="bg-amber-100 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-700 text-amber-900 dark:text-amber-200 font-black text-xs px-3 py-1 rounded-full shadow-2xs">
                       Tersedia
                     </span>
                   )
                 ) : (
-                  <div className="flex items-center gap-1 bg-slate-200 border border-slate-300 px-3 py-1 rounded-full text-slate-600 font-bold text-xs">
+                  <div className="flex items-center gap-1 bg-slate-200 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 px-3 py-1 rounded-full text-slate-600 dark:text-slate-400 font-bold text-xs">
                     <Lock className="w-3.5 h-3.5" />
                     <span>Terkunci</span>
                   </div>
@@ -297,61 +301,61 @@ export const StationMap: React.FC<StationMapProps> = ({
                     className={`w-11 h-11 rounded-2xl flex items-center justify-center shrink-0 border-2 shadow-2xs ${
                       terbuka
                         ? lvl.palet.includes('jika_maka_selain_itu')
-                          ? 'bg-purple-100 border-purple-300 text-purple-700'
-                          : 'bg-sky-100 border-sky-300 text-sky-700'
-                        : 'bg-slate-200 border-slate-300 text-slate-500'
+                          ? 'bg-purple-100 dark:bg-purple-950/60 border-purple-300 dark:border-purple-700 text-purple-700 dark:text-purple-300'
+                          : 'bg-sky-100 dark:bg-sky-950/60 border-sky-300 dark:border-sky-700 text-sky-700 dark:text-sky-300'
+                        : 'bg-slate-200 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-500 dark:text-slate-400'
                     }`}
                   >
                     {lvl.ikon === 'Cpu' ? <Cpu className="w-5 h-5" /> : <ShieldCheck className="w-5 h-5" />}
                   </div>
                   <div>
-                    <h3 className="text-lg md:text-xl font-black text-slate-900 leading-tight">
+                    <h3 className="text-lg md:text-xl font-black text-slate-900 dark:text-slate-100 leading-tight">
                       {lvl.nama}
                     </h3>
                     {varianAktif.ringkasan && (
-                      <span className="inline-block mt-0.5 text-[11px] font-black bg-sky-100 text-sky-900 border border-sky-300 px-2.5 py-0.5 rounded-full">
+                      <span className="inline-block mt-0.5 text-[11px] font-black bg-sky-100 dark:bg-sky-950/70 text-sky-900 dark:text-sky-200 border border-sky-300 dark:border-sky-700 px-2.5 py-0.5 rounded-full">
                         Skenario: {varianAktif.ringkasan}
                       </span>
                     )}
-                    <p className="text-[11px] font-mono text-slate-500 font-bold mt-0.5">
+                    <p className="text-[11px] font-mono text-slate-500 dark:text-slate-400 font-bold mt-0.5">
                       {lvl.palet.includes('jika_maka_selain_itu') ? 'Percabangan 2-Arah (JIKA-MAKA-SELAIN ITU)' : 'Percabangan 1-Arah (JIKA-MAKA)'}
                     </p>
                   </div>
                 </div>
 
-                <p className="text-xs md:text-sm text-slate-600 leading-relaxed">
+                <p className="text-xs md:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                   {lvl.cerita}
                 </p>
 
                 {/* Skenario Varian Soal Tim */}
-                <div className="bg-sky-50/70 rounded-2xl p-3 border border-sky-200 text-xs">
-                  <div className="flex items-center justify-between text-[11px] text-slate-500 mb-1">
+                <div className="bg-sky-50/70 dark:bg-slate-800/60 rounded-2xl p-3 border border-sky-200 dark:border-slate-700 text-xs">
+                  <div className="flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 mb-1">
                     <span className="font-mono font-bold">Varian Tim #{varianAktif.id}:</span>
-                    <span className="text-amber-800 font-black">{varianAktif.dataUji.length} Kasus Uji</span>
+                    <span className="text-amber-800 dark:text-amber-300 font-black">{varianAktif.dataUji.length} Kasus Uji</span>
                   </div>
                   {varianAktif.aturan && varianAktif.aturan.length > 0 ? (
                     <div className="space-y-1">
                       {varianAktif.aturan.map((at, aIdx) => (
                         <div key={aIdx} className="flex flex-wrap items-center gap-1 text-[11px]">
                           <span className="text-slate-400 font-mono font-bold text-[10px]">{aIdx + 1}.</span>
-                          <span className="text-amber-800 font-black uppercase text-[10px] bg-amber-100 px-1 py-0.5 rounded border border-amber-300">
+                          <span className="text-amber-800 dark:text-amber-300 font-black uppercase text-[10px] bg-amber-100 dark:bg-amber-950/60 px-1 py-0.5 rounded border border-amber-300 dark:border-amber-700">
                             JIKA
                           </span>
-                          <span className="font-mono bg-white border border-emerald-300 text-emerald-800 font-bold px-1.5 py-0.5 rounded text-[10px]">
+                          <span className="font-mono bg-white dark:bg-slate-900 border border-emerald-300 dark:border-emerald-700 text-emerald-800 dark:text-emerald-300 font-bold px-1.5 py-0.5 rounded text-[10px]">
                             {tampilkanOperatorCard ? at.jika : samarkanOperator(at.jika)}
                           </span>
                           <span className="text-slate-400 text-[10px]">→</span>
-                          <span className="font-mono bg-sky-100 border border-sky-300 text-sky-900 font-bold px-1.5 py-0.5 rounded text-[10px]">
+                          <span className="font-mono bg-sky-100 dark:bg-sky-950/60 border border-sky-300 dark:border-sky-700 text-sky-900 dark:text-sky-200 font-bold px-1.5 py-0.5 rounded text-[10px]">
                             {at.maka}
                           </span>
                           {at.selainItu && (
                             <>
                               <span className="text-slate-400 text-[10px]">·</span>
-                              <span className="text-rose-800 font-black uppercase text-[10px] bg-rose-100 px-1 py-0.5 rounded border border-rose-300">
+                              <span className="text-rose-800 dark:text-rose-300 font-black uppercase text-[10px] bg-rose-100 dark:bg-rose-950/60 px-1 py-0.5 rounded border border-rose-300 dark:border-rose-700">
                                 SELAIN ITU
                               </span>
                               <span className="text-slate-400 text-[10px]">→</span>
-                              <span className="font-mono bg-rose-100 border border-rose-300 text-rose-900 font-bold px-1.5 py-0.5 rounded text-[10px]">
+                              <span className="font-mono bg-rose-100 dark:bg-rose-950/60 border border-rose-300 dark:border-rose-700 text-rose-900 dark:text-rose-200 font-bold px-1.5 py-0.5 rounded text-[10px]">
                                 {at.selainItu}
                               </span>
                             </>
@@ -360,7 +364,7 @@ export const StationMap: React.FC<StationMapProps> = ({
                       ))}
                     </div>
                   ) : (
-                    <p className="text-slate-600 italic text-[11px] leading-snug">
+                    <p className="text-slate-600 dark:text-slate-400 italic text-[11px] leading-snug">
                       {varianAktif.konteks}
                     </p>
                   )}
@@ -374,7 +378,7 @@ export const StationMap: React.FC<StationMapProps> = ({
                   onClick={() => onPilihLevel(lvl.id)}
                   className={`w-full min-h-[46px] rounded-2xl font-black text-sm flex items-center justify-center gap-2 transition-all cursor-pointer border-2 ${
                     sudahSelesai
-                      ? 'bg-sky-100 hover:bg-sky-200 active:border-b-0 active:translate-y-1 text-sky-950 border-sky-300 border-b-4 border-b-sky-400 shadow-xs'
+                      ? 'bg-sky-100 hover:bg-sky-200 dark:bg-slate-800 dark:hover:bg-slate-700 active:border-b-0 active:translate-y-1 text-sky-950 dark:text-sky-200 border-sky-300 dark:border-slate-700 border-b-4 border-b-sky-400 dark:border-b-slate-900 shadow-xs'
                       : 'bg-amber-400 hover:bg-amber-300 active:border-b-0 active:translate-y-1 text-slate-950 border-amber-500 border-b-4 border-b-amber-600 shadow-md'
                   }`}
                 >
@@ -382,7 +386,7 @@ export const StationMap: React.FC<StationMapProps> = ({
                   <span>{sudahSelesai ? 'Buka Kembali & Latihan' : 'Mulai Memprogram ALGO'}</span>
                 </button>
               ) : (
-                <div className="w-full min-h-[46px] rounded-2xl bg-slate-200 border-2 border-slate-300 text-slate-500 font-bold text-xs flex items-center justify-center gap-2 cursor-not-allowed">
+                <div className="w-full min-h-[46px] rounded-2xl bg-slate-200 dark:bg-slate-800 border-2 border-slate-300 dark:border-slate-700 text-slate-500 dark:text-slate-400 font-bold text-xs flex items-center justify-center gap-2 cursor-not-allowed">
                   <Lock className="w-4 h-4" />
                   <span>Selesaikan {levelSebelumnya ? levelSebelumnya.nama : 'stasiun sebelumnya'} terlebih dahulu</span>
                 </div>
@@ -418,10 +422,10 @@ export const StationMap: React.FC<StationMapProps> = ({
 
       {/* Modal Ganti Tim Pastel */}
       {isGantiTimModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-sky-950/40 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="bg-white border-2 border-sky-300 rounded-3xl max-w-md w-full shadow-2xl p-6 text-slate-800">
-            <h3 className="text-lg font-black text-slate-900 mb-1 font-fredoka">Ganti Nama Tim</h3>
-            <p className="text-xs text-slate-600 mb-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-sky-950/60 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="bg-white dark:bg-slate-900 border-2 border-sky-300 dark:border-slate-700 rounded-3xl max-w-md w-full shadow-2xl p-6 text-slate-800 dark:text-slate-100">
+            <h3 className="text-lg font-black text-slate-900 dark:text-slate-100 mb-1 font-fredoka">Ganti Nama Tim</h3>
+            <p className="text-xs text-slate-600 dark:text-slate-400 mb-4">
               Progres bintang tetap tersimpan. Masukkan nama tim baru:
             </p>
             <form onSubmit={handleSimpanNamaTimBaru} className="space-y-3">
@@ -435,11 +439,11 @@ export const StationMap: React.FC<StationMapProps> = ({
                     if (errorGantiTim) setErrorGantiTim('');
                   }}
                   placeholder="Nama tim baru (maks. 30 karakter)..."
-                  className="w-full min-h-[46px] px-3.5 py-2 bg-sky-50 border-2 border-sky-300 focus:border-amber-400 focus:bg-white rounded-2xl text-slate-900 font-bold text-sm outline-none placeholder:text-slate-400"
+                  className="w-full min-h-[46px] px-3.5 py-2 bg-sky-50 dark:bg-slate-800 border-2 border-sky-300 dark:border-slate-700 focus:border-amber-400 focus:bg-white dark:focus:bg-slate-800 rounded-2xl text-slate-900 dark:text-slate-100 font-bold text-sm outline-none placeholder:text-slate-400"
                 />
-                <div className="flex justify-between items-center mt-1 text-[11px] text-slate-500">
+                <div className="flex justify-between items-center mt-1 text-[11px] text-slate-500 dark:text-slate-400">
                   {errorGantiTim ? (
-                    <span className="text-rose-600 font-bold">{errorGantiTim}</span>
+                    <span className="text-rose-600 dark:text-rose-400 font-bold">{errorGantiTim}</span>
                   ) : (
                     <span>Maksimal 30 karakter</span>
                   )}
@@ -451,7 +455,7 @@ export const StationMap: React.FC<StationMapProps> = ({
                 <button
                   type="button"
                   onClick={() => setIsGantiTimModalOpen(false)}
-                  className="min-h-[44px] px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl border border-slate-300 transition-colors cursor-pointer"
+                  className="min-h-[44px] px-4 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold text-xs rounded-xl border border-slate-300 dark:border-slate-700 transition-colors cursor-pointer"
                 >
                   Batal
                 </button>
@@ -469,17 +473,17 @@ export const StationMap: React.FC<StationMapProps> = ({
 
       {/* Modal Konfirmasi Reset Progres Pastel */}
       {isResetConfirmOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-sky-950/40 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="bg-white border-2 border-rose-300 rounded-3xl max-w-md w-full shadow-2xl p-6 text-slate-800">
-            <h3 className="text-lg font-black text-rose-700 mb-1 font-fredoka">Konfirmasi Reset Progres</h3>
-            <p className="text-xs md:text-sm text-slate-600 leading-relaxed mb-5">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-sky-950/60 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="bg-white dark:bg-slate-900 border-2 border-rose-300 dark:border-rose-900 rounded-3xl max-w-md w-full shadow-2xl p-6 text-slate-800 dark:text-slate-100">
+            <h3 className="text-lg font-black text-rose-700 dark:text-rose-400 mb-1 font-fredoka">Konfirmasi Reset Progres</h3>
+            <p className="text-xs md:text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-5">
               Hapus seluruh progres dan bintang ekspedisi? Tindakan ini tidak dapat dibatalkan.
             </p>
             <div className="flex justify-end gap-2">
               <button
                 type="button"
                 onClick={() => setIsResetConfirmOpen(false)}
-                className="min-h-[44px] px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl border border-slate-300 transition-colors cursor-pointer"
+                className="min-h-[44px] px-4 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold text-xs rounded-xl border border-slate-300 dark:border-slate-700 transition-colors cursor-pointer"
               >
                 Batal
               </button>

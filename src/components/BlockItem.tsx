@@ -71,8 +71,8 @@ export const BlockItem: React.FC<BlockItemProps> = ({
             onChange={(e) => onUpdateTipeAksi && onUpdateTipeAksi(block.id, e.target.value as BlokAksi['tipeAksi'])}
             className={`min-h-[40px] px-3 py-1 font-mono font-black text-xs md:text-sm rounded-xl cursor-pointer shadow-xs transition-all ${
               aksiBelumDipilih
-                ? 'bg-amber-100 border-2 border-dashed border-amber-600 text-amber-950 ring-2 ring-amber-400 animate-pulse'
-                : 'bg-white/95 border-2 border-slate-300 text-slate-900'
+                ? 'bg-amber-100 dark:bg-amber-950/80 border-2 border-dashed border-amber-600 text-amber-950 dark:text-amber-200 ring-2 ring-amber-400 animate-pulse'
+                : 'bg-white/95 dark:bg-slate-800 border-2 border-slate-300 dark:border-slate-600 text-slate-900 dark:text-slate-100'
             }`}
             title="Pilih jenis aksi perintah"
           >
@@ -86,14 +86,14 @@ export const BlockItem: React.FC<BlockItemProps> = ({
           {/* Jika aksi adalah pesan, tampilkan pemilih pesan (default kosong jika belum dipilih) */}
           {block.tipeAksi === 'pesan' && (
             <div className="flex items-center gap-1.5 ml-1">
-              <span className="text-xs text-purple-700 font-bold">:</span>
+              <span className="text-xs text-purple-700 dark:text-purple-400 font-bold">:</span>
               <select
                 value={block.nilai || ''}
                 onChange={(e) => onUpdatePesanNilai && onUpdatePesanNilai(block.id, e.target.value)}
                 className={`min-h-[40px] px-3 py-1 font-mono font-black text-xs md:text-sm rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-400 cursor-pointer shadow-xs transition-all ${
                   pesanBelumDipilih
-                    ? 'bg-purple-100 border-2 border-dashed border-purple-500 text-purple-900 ring-2 ring-purple-300 animate-pulse'
-                    : 'bg-white border-2 border-purple-300 text-purple-900'
+                    ? 'bg-purple-100 dark:bg-purple-950/80 border-2 border-dashed border-purple-500 text-purple-900 dark:text-purple-200 ring-2 ring-purple-300 animate-pulse'
+                    : 'bg-white dark:bg-slate-800 border-2 border-purple-300 dark:border-purple-600 text-purple-900 dark:text-purple-200'
                 }`}
                 title="Pilih teks pesan"
               >
@@ -288,8 +288,8 @@ export const BlockItem: React.FC<BlockItemProps> = ({
                       }
                       className={`min-h-[38px] px-2.5 py-1 font-mono font-black text-xs md:text-sm rounded-xl cursor-pointer shadow-xs transition-all ${
                         !aksi.tipeAksi
-                          ? 'bg-amber-100 border-2 border-dashed border-amber-600 text-amber-950 ring-2 ring-amber-400 animate-pulse'
-                          : 'bg-white border-2 border-slate-300 text-slate-900'
+                          ? 'bg-amber-100 dark:bg-amber-950/80 border-2 border-dashed border-amber-600 text-amber-950 dark:text-amber-200 ring-2 ring-amber-400 animate-pulse'
+                          : 'bg-white dark:bg-slate-800 border-2 border-slate-300 dark:border-slate-600 text-slate-900 dark:text-slate-100'
                       }`}
                       title="Pilih jenis aksi perintah stasiun"
                     >
@@ -309,8 +309,8 @@ export const BlockItem: React.FC<BlockItemProps> = ({
                         }
                         className={`min-h-[38px] px-2.5 py-1 font-mono font-bold text-xs rounded-xl transition-all cursor-pointer shadow-xs ${
                           pesanBelumDipilih
-                            ? 'bg-purple-100 border-2 border-dashed border-purple-500 text-purple-900 ring-2 ring-purple-300 animate-pulse'
-                            : 'bg-white border-2 border-purple-300 text-purple-900'
+                            ? 'bg-purple-100 dark:bg-purple-950/80 border-2 border-dashed border-purple-500 text-purple-900 dark:text-purple-200 ring-2 ring-purple-300 animate-pulse'
+                            : 'bg-white dark:bg-slate-800 border-2 border-purple-300 dark:border-purple-600 text-purple-900 dark:text-purple-200'
                         }`}
                         title="Pilih teks pesan aksi"
                       >
@@ -397,8 +397,8 @@ export const BlockItem: React.FC<BlockItemProps> = ({
                           }
                           className={`min-h-[38px] px-2.5 py-1 font-mono font-black text-xs md:text-sm rounded-xl cursor-pointer shadow-xs transition-all ${
                             !aksi.tipeAksi
-                              ? 'bg-amber-100 border-2 border-dashed border-amber-600 text-amber-950 ring-2 ring-amber-400 animate-pulse'
-                              : 'bg-white border-2 border-slate-300 text-slate-900'
+                              ? 'bg-amber-100 dark:bg-amber-950/80 border-2 border-dashed border-amber-600 text-amber-950 dark:text-amber-200 ring-2 ring-amber-400 animate-pulse'
+                              : 'bg-white dark:bg-slate-800 border-2 border-slate-300 dark:border-slate-600 text-slate-900 dark:text-slate-100'
                           }`}
                           title="Pilih jenis aksi perintah stasiun"
                         >
@@ -418,8 +418,8 @@ export const BlockItem: React.FC<BlockItemProps> = ({
                             }
                             className={`min-h-[38px] px-2.5 py-1 font-mono font-bold text-xs rounded-lg transition-all cursor-pointer shadow-xs ${
                               pesanBelumDipilih
-                                ? 'bg-purple-100 border-2 border-dashed border-purple-500 text-purple-900 ring-2 ring-purple-300 animate-pulse'
-                                : 'bg-white border-2 border-purple-300 text-purple-900'
+                                ? 'bg-purple-100 dark:bg-purple-950/80 border-2 border-dashed border-purple-500 text-purple-900 dark:text-purple-200 ring-2 ring-purple-300 animate-pulse'
+                                : 'bg-white dark:bg-slate-800 border-2 border-purple-300 dark:border-purple-600 text-purple-900 dark:text-purple-200'
                             }`}
                             title="Pilih teks pesan aksi"
                           >

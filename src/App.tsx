@@ -188,7 +188,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-sky-100 via-sky-50 to-amber-50/40 text-slate-800 overflow-x-hidden">
+    <div className="min-h-screen bg-gradient-to-b from-sky-100 via-sky-50 to-amber-50/40 text-slate-800 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-slate-100 overflow-x-hidden transition-colors duration-200">
       <AnimatePresence mode="wait" initial={false} custom={arahTransisi}>
         {renderLayar()}
       </AnimatePresence>

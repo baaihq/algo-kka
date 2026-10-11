@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { RobotAlgo } from './RobotAlgo';
+import { ThemeMenu } from './ThemeMenu';
 import { Sparkles, Users, ArrowRight, ShieldCheck, Cpu } from 'lucide-react';
 
 interface TeamScreenProps {
@@ -34,7 +35,11 @@ export const TeamScreen: React.FC<TeamScreenProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-sky-200 via-sky-100 to-amber-50/60 flex flex-col items-center justify-center p-4 relative overflow-hidden select-none">
+    <div className="min-h-screen bg-gradient-to-b from-sky-200 via-sky-100 to-amber-50/60 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 text-slate-800 dark:text-slate-100 flex flex-col items-center justify-center p-4 relative overflow-hidden select-none transition-colors">
+      {/* Tombol Pilihan Tema di Pojok Kanan Atas */}
+      <div className="absolute top-4 right-4 z-20">
+        <ThemeMenu tampilkanLabel={true} />
+      </div>
       {/* Dekorasi Awan Pastel Melayang di Latar Belakang */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-8 left-12 anim-cloud-slow opacity-80">
@@ -64,10 +69,10 @@ export const TeamScreen: React.FC<TeamScreenProps> = ({
       </div>
 
       {/* Kartu Masuk Utama Pastel MENARA BUG */}
-      <div className="relative z-10 max-w-md w-full bg-white/95 border-2 border-sky-200 rounded-3xl shadow-xl p-6 md:p-8 backdrop-blur-md flex flex-col items-center text-center">
+      <div className="relative z-10 max-w-md w-full bg-white/95 dark:bg-slate-900/95 border-2 border-sky-200 dark:border-slate-800 rounded-3xl shadow-xl p-6 md:p-8 backdrop-blur-md flex flex-col items-center text-center transition-colors">
         {/* Badge Kurikulum */}
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 border border-amber-300 text-amber-900 text-xs font-mono font-black uppercase tracking-wider mb-3">
-          <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-700 text-amber-900 dark:text-amber-200 text-xs font-mono font-black uppercase tracking-wider mb-3">
+          <Sparkles className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
           <span>Koding &amp; Kecerdasan Artifisial • SMA Kelas X</span>
         </div>
 
@@ -77,14 +82,14 @@ export const TeamScreen: React.FC<TeamScreenProps> = ({
         </div>
 
         {/* Judul & Pengantar */}
-        <h1 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight mt-2 mb-0.5 font-fredoka">
+        <h1 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-slate-100 tracking-tight mt-2 mb-0.5 font-fredoka">
           Ekspedisi Kode
         </h1>
-        <h2 className="text-sm md:text-base font-black text-sky-700 tracking-wider mb-2">
+        <h2 className="text-sm md:text-base font-black text-sky-700 dark:text-sky-400 tracking-wider mb-2">
           Stasiun Logika ALGO
         </h2>
-        <p className="text-xs md:text-sm text-slate-600 leading-relaxed mb-6">
-          Selamat datang di pulau stasiun logika! Pelajari percabangan algoritma <span className="text-amber-800 font-black bg-amber-100 px-1.5 py-0.5 rounded border border-amber-300">JIKA</span>–<span className="text-emerald-800 font-black bg-emerald-100 px-1.5 py-0.5 rounded border border-emerald-300">MAKA</span>–<span className="text-rose-800 font-black bg-rose-100 px-1.5 py-0.5 rounded border border-rose-300">SELAIN ITU</span> bersama robot ALGO.
+        <p className="text-xs md:text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-6">
+          Selamat datang di pulau stasiun logika! Pelajari percabangan algoritma <span className="text-amber-800 dark:text-amber-300 font-black bg-amber-100 dark:bg-amber-950/80 px-1.5 py-0.5 rounded border border-amber-300 dark:border-amber-700">JIKA</span>–<span className="text-emerald-800 dark:text-emerald-300 font-black bg-emerald-100 dark:bg-emerald-950/80 px-1.5 py-0.5 rounded border border-emerald-300 dark:border-emerald-700">MAKA</span>–<span className="text-rose-800 dark:text-rose-300 font-black bg-rose-100 dark:bg-rose-950/80 px-1.5 py-0.5 rounded border border-rose-300 dark:border-rose-700">SELAIN ITU</span> bersama robot ALGO.
         </p>
 
         {/* Form Masuk Tim */}
@@ -92,9 +97,9 @@ export const TeamScreen: React.FC<TeamScreenProps> = ({
           <div className="text-left space-y-1.5">
             <label
               htmlFor="inputNamaTim"
-              className="text-xs font-black text-slate-700 uppercase tracking-wider flex items-center gap-1.5"
+              className="text-xs font-black text-slate-700 dark:text-slate-300 uppercase tracking-wider flex items-center gap-1.5"
             >
-              <Users className="w-4 h-4 text-sky-600" />
+              <Users className="w-4 h-4 text-sky-600 dark:text-sky-400" />
               <span>Nama Tim / Peserta Didik</span>
             </label>
             <input
@@ -107,10 +112,10 @@ export const TeamScreen: React.FC<TeamScreenProps> = ({
               }}
               placeholder="Contoh: Tim Alfa 10-A, Tim Orion..."
               maxLength={30}
-              className="w-full min-h-[48px] px-4 py-2.5 bg-sky-50/70 border-2 border-sky-300 focus:border-amber-400 focus:bg-white rounded-2xl text-slate-900 font-bold text-sm md:text-base outline-none transition-all placeholder:text-slate-400 shadow-2xs"
+              className="w-full min-h-[48px] px-4 py-2.5 bg-sky-50/70 dark:bg-slate-800/80 border-2 border-sky-300 dark:border-slate-700 focus:border-amber-400 focus:bg-white dark:focus:bg-slate-800 rounded-2xl text-slate-900 dark:text-slate-100 font-bold text-sm md:text-base outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-slate-500 shadow-2xs"
             />
             {errorPesan && (
-              <p className="text-xs text-rose-600 font-bold pl-1 animate-in fade-in">
+              <p className="text-xs text-rose-600 dark:text-rose-400 font-bold pl-1 animate-in fade-in">
                 {errorPesan}
               </p>
             )}
@@ -126,13 +131,13 @@ export const TeamScreen: React.FC<TeamScreenProps> = ({
         </form>
 
         {/* Feature Badges */}
-        <div className="grid grid-cols-2 gap-2 w-full mt-6 pt-5 border-t-2 border-sky-100 text-[11px] text-slate-600 font-bold">
-          <div className="flex items-center gap-1.5 bg-emerald-50 p-2 rounded-xl border border-emerald-200">
-            <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
+        <div className="grid grid-cols-2 gap-2 w-full mt-6 pt-5 border-t-2 border-sky-100 dark:border-slate-800 text-[11px] text-slate-600 dark:text-slate-400 font-bold">
+          <div className="flex items-center gap-1.5 bg-emerald-50 dark:bg-emerald-950/40 p-2 rounded-xl border border-emerald-200 dark:border-emerald-800 text-emerald-950 dark:text-emerald-300">
+            <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
             <span className="text-left">Percabangan 1-Arah &amp; 2-Arah</span>
           </div>
-          <div className="flex items-center gap-1.5 bg-sky-50 p-2 rounded-xl border border-sky-200">
-            <Cpu className="w-4 h-4 text-sky-600 shrink-0" />
+          <div className="flex items-center gap-1.5 bg-sky-50 dark:bg-sky-950/40 p-2 rounded-xl border border-sky-200 dark:border-sky-800 text-sky-950 dark:text-sky-300">
+            <Cpu className="w-4 h-4 text-sky-600 dark:text-sky-400 shrink-0" />
             <span className="text-left">Evaluasi Kasus Otomatis</span>
           </div>
         </div>

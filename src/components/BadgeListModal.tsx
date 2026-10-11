@@ -88,10 +88,10 @@ export const BadgeListModal: React.FC<BadgeListModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-sky-950/45 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="bg-white border-2 border-yellow-300 rounded-3xl max-w-lg w-full shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-sky-950/60 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="bg-white dark:bg-slate-900 border-2 border-yellow-300 dark:border-amber-600 rounded-3xl max-w-lg w-full shadow-2xl overflow-hidden flex flex-col max-h-[90vh] transition-colors">
         {/* Header Modal */}
-        <div className="bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 p-4 text-slate-950 flex items-center justify-between border-b-2 border-amber-300">
+        <div className="bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 dark:from-amber-600 dark:via-amber-500 dark:to-yellow-600 p-4 text-slate-950 dark:text-slate-950 flex items-center justify-between border-b-2 border-amber-300 dark:border-amber-700">
           <div className="flex items-center gap-2.5">
             <div className="w-10 h-10 rounded-2xl bg-white/40 flex items-center justify-center shrink-0 shadow-inner">
               <Award className="w-6 h-6 text-amber-950" />
@@ -114,14 +114,14 @@ export const BadgeListModal: React.FC<BadgeListModalProps> = ({
         </div>
 
         {/* Subheader: Tombol Share Bukti Badge (Gambar) */}
-        <div className="bg-amber-50/70 py-3 px-4 border-b-2 border-amber-200 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="bg-amber-50/70 dark:bg-slate-800/80 py-3 px-4 border-b-2 border-amber-200 dark:border-slate-700 flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1.5 text-xs font-mono font-black text-amber-950 bg-amber-200/90 border border-amber-300 px-2.5 py-1 rounded-xl">
-              <Award className="w-3.5 h-3.5 text-amber-700" />
+            <div className="flex items-center gap-1.5 text-xs font-mono font-black text-amber-950 dark:text-amber-200 bg-amber-200/90 dark:bg-amber-950/70 border border-amber-300 dark:border-amber-700 px-2.5 py-1 rounded-xl">
+              <Award className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400" />
               <span>{jumlahTerbuka}/{badges.length} BADGE</span>
             </div>
-            <div className="flex items-center gap-1 text-xs font-mono font-black text-yellow-950 bg-yellow-200/90 border border-yellow-300 px-2.5 py-1 rounded-xl">
-              <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-600" />
+            <div className="flex items-center gap-1 text-xs font-mono font-black text-yellow-950 dark:text-amber-200 bg-yellow-200/90 dark:bg-amber-950/70 border border-yellow-300 dark:border-amber-700 px-2.5 py-1 rounded-xl">
+              <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-600 dark:text-amber-400" />
               <span>{totalBintang}/18 BINTANG</span>
             </div>
           </div>
@@ -172,16 +172,16 @@ export const BadgeListModal: React.FC<BadgeListModalProps> = ({
               key={badge.id}
               className={`rounded-2xl p-4 border-2 transition-all flex items-start gap-3.5 ${
                 badge.terbuka
-                  ? 'bg-amber-50/70 border-amber-300 shadow-xs text-slate-800'
-                  : 'bg-slate-100 border-slate-200 text-slate-400 opacity-75'
+                  ? 'bg-amber-50/70 dark:bg-amber-950/30 border-amber-300 dark:border-amber-700/80 shadow-xs text-slate-800 dark:text-slate-200'
+                  : 'bg-slate-100 dark:bg-slate-800/40 border-slate-200 dark:border-slate-700/60 text-slate-400 dark:text-slate-500 opacity-75'
               }`}
             >
               {/* Icon Badge */}
               <div
                 className={`w-12 h-12 rounded-2xl flex items-center justify-center text-2xl shrink-0 shadow-inner ${
                   badge.terbuka
-                    ? 'bg-amber-200/80 border-2 border-amber-300 text-amber-900'
-                    : 'bg-slate-200 border border-slate-300 text-slate-500'
+                    ? 'bg-amber-200/80 dark:bg-amber-900/60 border-2 border-amber-300 dark:border-amber-600 text-amber-900 dark:text-amber-200'
+                    : 'bg-slate-200 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 text-slate-500 dark:text-slate-400'
                 }`}
               >
                 {badge.terbuka ? badge.ikon : <Lock className="w-5 h-5" />}
@@ -193,12 +193,12 @@ export const BadgeListModal: React.FC<BadgeListModalProps> = ({
                   <div className="flex items-center gap-2 min-w-0 flex-wrap">
                     <span
                       className={`font-black text-sm md:text-base break-words ${
-                        badge.terbuka ? 'text-slate-900' : 'text-slate-500'
+                        badge.terbuka ? 'text-slate-900 dark:text-slate-100' : 'text-slate-500 dark:text-slate-400'
                       }`}
                     >
                       {badge.nama}
                     </span>
-                    <span className="text-[10px] font-mono bg-sky-100 text-sky-900 px-2 py-0.5 rounded-md border border-sky-300 shrink-0 whitespace-nowrap font-bold">
+                    <span className="text-[10px] font-mono bg-sky-100 dark:bg-sky-950/70 text-sky-900 dark:text-sky-300 px-2 py-0.5 rounded-md border border-sky-300 dark:border-sky-700 shrink-0 whitespace-nowrap font-bold">
                       {badge.kategori}
                     </span>
                   </div>
@@ -206,8 +206,8 @@ export const BadgeListModal: React.FC<BadgeListModalProps> = ({
                   <div className="flex items-center gap-2 shrink-0">
                     {badge.terbuka ? (
                       <>
-                        <span className="flex items-center gap-1 text-[11px] font-black text-emerald-800 bg-emerald-100 border border-emerald-300 px-2.5 py-0.5 rounded-full shrink-0 whitespace-nowrap">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                        <span className="flex items-center gap-1 text-[11px] font-black text-emerald-800 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-700 px-2.5 py-0.5 rounded-full shrink-0 whitespace-nowrap">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                           <span>Terbuka</span>
                         </span>
 
@@ -230,14 +230,14 @@ export const BadgeListModal: React.FC<BadgeListModalProps> = ({
                         </button>
                       </>
                     ) : (
-                      <span className="text-[11px] font-bold text-slate-500 bg-slate-200 px-2 py-0.5 rounded-full border border-slate-300 shrink-0 whitespace-nowrap">
+                      <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400 bg-slate-200 dark:bg-slate-700 px-2 py-0.5 rounded-full border border-slate-300 dark:border-slate-600 shrink-0 whitespace-nowrap">
                         Terkunci
                       </span>
                     )}
                   </div>
                 </div>
 
-                <p className="text-xs text-slate-600 leading-relaxed font-sans break-words font-medium">
+                <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans break-words font-medium">
                   {badge.deskripsi}
                 </p>
               </div>
@@ -246,14 +246,14 @@ export const BadgeListModal: React.FC<BadgeListModalProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="p-4 bg-sky-50 border-t-2 border-sky-100 flex items-center justify-between gap-3">
-          <p className="text-xs text-slate-500 font-medium hidden sm:block">
+        <div className="p-4 bg-sky-50 dark:bg-slate-800/80 border-t-2 border-sky-100 dark:border-slate-700 flex items-center justify-between gap-3">
+          <p className="text-xs text-slate-500 dark:text-slate-400 font-medium hidden sm:block">
             Bukti lencana dapat dibagikan langsung sebagai gambar sertifikat.
           </p>
           <button
             type="button"
             onClick={onClose}
-            className="w-full sm:w-auto min-h-[44px] px-5 py-2 bg-slate-200 hover:bg-slate-300 text-slate-800 font-black text-sm rounded-2xl transition-colors cursor-pointer border border-slate-300"
+            className="w-full sm:w-auto min-h-[44px] px-5 py-2 bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-200 font-black text-sm rounded-2xl transition-colors cursor-pointer border border-slate-300 dark:border-slate-600"
           >
             Tutup
           </button>

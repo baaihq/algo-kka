@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* ===================================================
    ANIMASI CSS KEYFRAMES - MENARA BUG / STASIUN LOGIKA
    =================================================== */

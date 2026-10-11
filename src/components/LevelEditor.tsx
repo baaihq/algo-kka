@@ -6,6 +6,7 @@ import { ProgramArea } from './ProgramArea';
 import { BlockPalette } from './BlockPalette';
 import { TestResultModal } from './TestResultModal';
 import { HintModal } from './HintModal';
+import { ThemeMenu } from './ThemeMenu';
 import { StatusAlgo } from './RobotAlgo';
 import { jalankanProgram } from '../services/interpreter';
 import { ujiSemuaKasusLevel } from '../services/evaluator';
@@ -524,37 +525,37 @@ export const LevelEditor: React.FC<LevelEditorProps> = ({
     Boolean(ambilProgresLevel(level.id)?.selesai);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-sky-100 via-sky-50 to-amber-50/40 text-slate-800 flex flex-col justify-between select-none">
+    <div className="min-h-screen bg-gradient-to-b from-sky-100 via-sky-50 to-amber-50/40 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 text-slate-800 dark:text-slate-100 flex flex-col justify-between select-none transition-colors">
       {/* 1. Bar Navigasi Atas — Gaya Misi MENARA BUG */}
-      <header className="bg-white/95 border-b-2 border-sky-200 px-3 py-2.5 md:px-6 md:py-3 sticky top-0 z-30 backdrop-blur-md shadow-xs">
+      <header className="bg-white/95 dark:bg-slate-900/95 border-b-2 border-sky-200 dark:border-slate-800 px-3 py-2.5 md:px-6 md:py-3 sticky top-0 z-30 backdrop-blur-md shadow-xs transition-colors">
         <div className="max-w-5xl mx-auto flex items-center justify-between gap-2">
           {/* Tombol Chunky Kembali ke Peta */}
           <button
             type="button"
             onClick={onKembaliKePeta}
-            className="min-h-[44px] px-3.5 py-1.5 rounded-2xl bg-sky-100 hover:bg-sky-200 text-sky-900 border-2 border-sky-300 border-b-4 border-b-sky-400 active:border-b-0 active:translate-y-1 font-black text-xs md:text-sm flex items-center gap-1.5 transition-all cursor-pointer shadow-xs"
+            className="min-h-[44px] px-3.5 py-1.5 rounded-2xl bg-sky-100 hover:bg-sky-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-sky-900 dark:text-sky-300 border-2 border-sky-300 dark:border-slate-700 border-b-4 border-b-sky-400 dark:border-b-slate-900 active:border-b-0 active:translate-y-1 font-black text-xs md:text-sm flex items-center gap-1.5 transition-all cursor-pointer shadow-xs"
             title="Kembali ke Peta Stasiun"
           >
-            <ArrowLeft className="w-4 h-4 text-sky-700" />
+            <ArrowLeft className="w-4 h-4 text-sky-700 dark:text-sky-400" />
             <span className="hidden sm:inline">Peta</span>
           </button>
 
           {/* Top Bar Judul: Nama Game, Label Misi, Indikator Bintang */}
           <div className="text-center flex flex-col items-center">
             {/* Nama Game */}
-            <div className="flex items-center gap-1 text-[11px] font-black text-sky-700 tracking-wider uppercase font-fredoka">
+            <div className="flex items-center gap-1 text-[11px] font-black text-sky-700 dark:text-sky-400 tracking-wider uppercase font-fredoka">
               <Sparkles className="w-3 h-3 text-amber-500" />
               <span>Ekspedisi Kode: Stasiun Logika</span>
             </div>
 
             {/* Label Misi & Level */}
-            <h1 className="text-sm md:text-base font-black text-slate-900 flex flex-wrap items-center justify-center gap-1.5">
+            <h1 className="text-sm md:text-base font-black text-slate-900 dark:text-slate-100 flex flex-wrap items-center justify-center gap-1.5">
               <span className="bg-amber-400 text-slate-950 px-2 py-0.5 rounded-xl font-black text-xs shadow-xs">
                 MISI {nomorMisi}
               </span>
               <span>{level.nama}</span>
               {varian.ringkasan && (
-                <span className="text-[10px] bg-sky-100 text-sky-800 border border-sky-300 px-2.5 py-0.5 rounded-full font-bold hidden md:inline">
+                <span className="text-[10px] bg-sky-100 dark:bg-sky-950/60 text-sky-800 dark:text-sky-300 border border-sky-300 dark:border-sky-700 px-2.5 py-0.5 rounded-full font-bold hidden md:inline">
                   {varian.ringkasan}
                 </span>
               )}
@@ -568,17 +569,17 @@ export const LevelEditor: React.FC<LevelEditorProps> = ({
                   className={`w-3.5 h-3.5 transition-colors ${
                     b <= bintangTersimpan
                       ? 'fill-amber-400 text-amber-500'
-                      : 'fill-slate-200 text-slate-300'
+                      : 'fill-slate-200 dark:fill-slate-700 text-slate-300 dark:text-slate-600'
                   }`}
                 />
               ))}
-              <span className="text-[10px] text-slate-500 font-bold ml-1">
-                Tim: <span className="text-amber-700 font-black">{tim.namaTim}</span>
+              <span className="text-[10px] text-slate-500 dark:text-slate-400 font-bold ml-1">
+                Tim: <span className="text-amber-700 dark:text-amber-400 font-black">{tim.namaTim}</span>
               </span>
             </div>
           </div>
 
-          {/* Tombol Audio & Petunjuk */}
+          {/* Tombol Audio, Tema & Petunjuk */}
           <div className="flex items-center gap-1.5">
             {/* Tombol Mute / Suara */}
             <button
@@ -588,16 +589,19 @@ export const LevelEditor: React.FC<LevelEditorProps> = ({
                 setAudioMuted(nextMuted);
                 setAudioMuteState(nextMuted);
               }}
-              className="min-h-[44px] min-w-[44px] p-2 rounded-2xl bg-sky-50 hover:bg-sky-100 text-sky-800 border-2 border-sky-200 border-b-4 border-b-sky-300 active:border-b-0 active:translate-y-1 flex items-center justify-center transition-all cursor-pointer shadow-xs"
+              className="min-h-[44px] min-w-[44px] p-2 rounded-2xl bg-sky-50 hover:bg-sky-100 dark:bg-slate-800 dark:hover:bg-slate-700 text-sky-800 dark:text-slate-200 border-2 border-sky-200 dark:border-slate-700 border-b-4 border-b-sky-300 dark:border-b-slate-900 active:border-b-0 active:translate-y-1 flex items-center justify-center transition-all cursor-pointer shadow-xs"
               title={audioMuteState ? 'Aktifkan Efek Suara' : 'Bisukan Efek Suara'}
               aria-label={audioMuteState ? 'Aktifkan Efek Suara' : 'Bisukan Efek Suara'}
             >
               {audioMuteState ? (
                 <VolumeX className="w-4 h-4 text-rose-500" />
               ) : (
-                <Volume2 className="w-4 h-4 text-sky-600" />
+                <Volume2 className="w-4 h-4 text-sky-600 dark:text-sky-400" />
               )}
             </button>
+
+            {/* Menu Pilihan Tema (Terang / Gelap / Sistem) */}
+            <ThemeMenu />
 
             {/* Tombol Petunjuk Chunky */}
             <button
@@ -606,13 +610,13 @@ export const LevelEditor: React.FC<LevelEditorProps> = ({
               className={`min-h-[44px] px-3.5 py-1.5 rounded-2xl font-black text-xs md:text-sm flex items-center gap-1.5 transition-all cursor-pointer relative border-2 ${
                 gagalBerturutTurut >= 3
                   ? 'bg-amber-400 text-slate-950 border-amber-500 border-b-4 border-b-amber-600 active:border-b-0 active:translate-y-1 shadow-md animate-pulse'
-                  : 'bg-amber-100 hover:bg-amber-200 text-amber-950 border-amber-300 border-b-4 border-b-amber-400 active:border-b-0 active:translate-y-1 shadow-xs'
+                  : 'bg-amber-100 hover:bg-amber-200 dark:bg-amber-950/60 dark:hover:bg-amber-900/60 text-amber-950 dark:text-amber-200 border-amber-300 dark:border-amber-700 border-b-4 border-b-amber-400 dark:border-b-amber-800 active:border-b-0 active:translate-y-1 shadow-xs'
               }`}
               title="Buka petunjuk level"
             >
               <Lightbulb
                 className={`w-4 h-4 ${
-                  gagalBerturutTurut >= 3 ? 'fill-slate-950 text-slate-950' : 'text-amber-600'
+                  gagalBerturutTurut >= 3 ? 'fill-slate-950 text-slate-950' : 'text-amber-600 dark:text-amber-400'
                 }`}
               />
               <span className="hidden sm:inline">Petunjuk</span>
@@ -692,7 +696,7 @@ export const LevelEditor: React.FC<LevelEditorProps> = ({
         )}
 
         {/* Baris Tombol Aksi Utama Chunky (▶ Jalankan, 🧪 Uji, Reset Program) */}
-        <section className="bg-white/95 border-2 border-sky-200 rounded-3xl p-2.5 shadow-sm flex items-center justify-between gap-2 flex-wrap">
+        <section className="bg-white/95 dark:bg-slate-900/95 border-2 border-sky-200 dark:border-slate-800 rounded-3xl p-2.5 shadow-sm flex items-center justify-between gap-2 flex-wrap transition-colors">
           <div className="flex items-center gap-2">
             {/* Tombol ▶ Jalankan (Chunky Cyan) */}
             <button
@@ -722,7 +726,7 @@ export const LevelEditor: React.FC<LevelEditorProps> = ({
           <button
             type="button"
             onClick={handleBukaResetProgram}
-            className="min-h-[46px] px-3.5 py-2 bg-slate-100 hover:bg-slate-200 active:border-b-0 active:translate-y-1 text-slate-700 hover:text-rose-600 rounded-2xl text-xs font-black border-2 border-slate-300 border-b-4 border-b-slate-400 flex items-center gap-1.5 transition-all cursor-pointer"
+            className="min-h-[46px] px-3.5 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 active:border-b-0 active:translate-y-1 text-slate-700 dark:text-slate-300 hover:text-rose-600 dark:hover:text-rose-400 rounded-2xl text-xs font-black border-2 border-slate-300 dark:border-slate-700 border-b-4 border-b-slate-400 dark:border-b-slate-900 flex items-center gap-1.5 transition-all cursor-pointer"
             title="Reset susunan blok program"
           >
             <RotateCcw className="w-3.5 h-3.5" />
@@ -732,22 +736,22 @@ export const LevelEditor: React.FC<LevelEditorProps> = ({
 
         {/* Bagian Sensor Input Stasiun: Ditempatkan Tepat di Atas Area Program Sebelum Memasukkan Logika */}
         {kasusAktif && (
-          <section className="bg-gradient-to-r from-amber-300 via-amber-200 to-amber-300 border-3 border-amber-600 rounded-3xl p-3 md:p-3.5 shadow-md ring-3 ring-amber-400/60 animate-in fade-in select-none">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b-2 border-amber-400/80 pb-2">
+          <section className="bg-gradient-to-r from-amber-300 via-amber-200 to-amber-300 dark:from-amber-950/80 dark:via-amber-900/50 dark:to-amber-950/80 border-3 border-amber-600 dark:border-amber-500 rounded-3xl p-3 md:p-3.5 shadow-md ring-3 ring-amber-400/60 dark:ring-amber-500/30 animate-in fade-in select-none transition-colors">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b-2 border-amber-400/80 dark:border-amber-600/80 pb-2">
               <div className="flex items-center gap-2">
                 <span className="flex h-3 w-3 relative">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-600 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-3 w-3 bg-amber-700"></span>
                 </span>
-                <span className="text-xs md:text-sm font-black uppercase tracking-wider text-amber-950 font-mono">
+                <span className="text-xs md:text-sm font-black uppercase tracking-wider text-amber-950 dark:text-amber-200 font-mono">
                   📡 SENSOR INPUT STASIUN: KASUS #{kasusAktifIndex + 1}
                 </span>
-                <span className="text-[10px] font-mono font-black bg-amber-400 text-slate-950 px-2 py-0.5 rounded-full border border-amber-600 shadow-2xs">
+                <span className="text-[10px] font-mono font-black bg-amber-400 dark:bg-amber-600 text-slate-950 dark:text-amber-100 px-2 py-0.5 rounded-full border border-amber-600 dark:border-amber-400 shadow-2xs">
                   {kasusAktifIndex + 1}/{varian.dataUji.length}
                 </span>
               </div>
               <div className="flex items-center gap-1.5">
-                <span className="text-[11px] font-black text-amber-950 uppercase">Pilih Kasus:</span>
+                <span className="text-[11px] font-black text-amber-950 dark:text-amber-300 uppercase">Pilih Kasus:</span>
                 {varian.dataUji.map((_, idx) => (
                   <button
                     key={idx}
@@ -755,8 +759,8 @@ export const LevelEditor: React.FC<LevelEditorProps> = ({
                     onClick={() => setKasusAktifIndex(idx)}
                     className={`min-h-[34px] px-3 py-1 rounded-xl text-xs font-mono font-black transition-all cursor-pointer shadow-xs ${
                       kasusAktifIndex === idx
-                        ? 'bg-amber-600 text-white border-2 border-amber-800 scale-105'
-                        : 'bg-white text-slate-800 hover:bg-amber-100 border border-amber-400'
+                        ? 'bg-amber-600 text-white border-2 border-amber-800 dark:border-amber-400 scale-105'
+                        : 'bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 hover:bg-amber-100 dark:hover:bg-slate-800 border border-amber-400 dark:border-amber-700'
                     }`}
                   >
                     #{idx + 1}
@@ -767,22 +771,22 @@ export const LevelEditor: React.FC<LevelEditorProps> = ({
 
             <div className="mt-2.5 flex flex-wrap items-center justify-between gap-2.5">
               <div className="flex flex-wrap items-center gap-2">
-                <span className="text-xs font-black uppercase text-amber-950 tracking-wide">
+                <span className="text-xs font-black uppercase text-amber-950 dark:text-amber-200 tracking-wide">
                   NILAI SENSOR SAAT INI:
                 </span>
                 {Object.entries(kasusAktif.data).map(([k, v]) => (
                   <div
                     key={k}
-                    className="flex items-center gap-2 bg-white px-3.5 py-1.5 rounded-xl border-2 border-amber-600 shadow-2xs font-mono"
+                    className="flex items-center gap-2 bg-white dark:bg-slate-900 px-3.5 py-1.5 rounded-xl border-2 border-amber-600 dark:border-amber-500 shadow-2xs font-mono"
                   >
-                    <span className="text-slate-800 font-extrabold text-xs md:text-sm">{k} =</span>
-                    <span className="text-amber-950 font-black text-base md:text-xl bg-amber-200 border-2 border-amber-400 px-3 py-0.5 rounded-lg shadow-inner">
+                    <span className="text-slate-800 dark:text-slate-200 font-extrabold text-xs md:text-sm">{k} =</span>
+                    <span className="text-amber-950 dark:text-amber-200 font-black text-base md:text-xl bg-amber-200 dark:bg-amber-950/80 border-2 border-amber-400 dark:border-amber-600 px-3 py-0.5 rounded-lg shadow-inner">
                       &quot;{v}&quot;
                     </span>
                   </div>
                 ))}
               </div>
-              <span className="text-xs font-bold text-amber-950 bg-amber-100/90 px-3 py-1.5 rounded-xl border border-amber-400/80 leading-snug">
+              <span className="text-xs font-bold text-amber-950 dark:text-amber-200 bg-amber-100/90 dark:bg-amber-950/70 px-3 py-1.5 rounded-xl border border-amber-400/80 dark:border-amber-700/80 leading-snug">
                 💡 {kasusAktif.keterangan}
               </span>
             </div>
@@ -871,20 +875,20 @@ export const LevelEditor: React.FC<LevelEditorProps> = ({
 
       {/* Modal Konfirmasi Reset Program Pastel */}
       {isResetConfirmOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-sky-950/40 backdrop-blur-sm animate-in fade-in duration-200 select-none">
-          <div className="bg-white border-2 border-sky-300 rounded-3xl max-w-md w-full shadow-2xl p-6 text-slate-800">
-            <h3 className="text-lg font-black text-slate-900 mb-2 flex items-center gap-2">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-sky-950/60 backdrop-blur-sm animate-in fade-in duration-200 select-none">
+          <div className="bg-white dark:bg-slate-900 border-2 border-sky-300 dark:border-slate-700 rounded-3xl max-w-md w-full shadow-2xl p-6 text-slate-800 dark:text-slate-100">
+            <h3 className="text-lg font-black text-slate-900 dark:text-slate-100 mb-2 flex items-center gap-2">
               <RotateCcw className="w-5 h-5 text-amber-500" />
               <span>Reset Susunan Program</span>
             </h3>
-            <p className="text-sm text-slate-600 leading-relaxed mb-6">
+            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-6">
               Kembalikan susunan blok ke keadaan awal level ini? Blok yang telah kamu pasang akan dikosongkan kembali.
             </p>
             <div className="flex justify-end gap-2.5">
               <button
                 type="button"
                 onClick={() => setIsResetConfirmOpen(false)}
-                className="min-h-[44px] px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl border border-slate-300 transition-colors cursor-pointer"
+                className="min-h-[44px] px-4 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold text-xs rounded-xl border border-slate-300 dark:border-slate-700 transition-colors cursor-pointer"
               >
                 Batal
               </button>

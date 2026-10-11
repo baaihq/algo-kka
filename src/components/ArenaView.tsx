@@ -2,7 +2,7 @@ import React from 'react';
 import { Level, Varian, KasusUji, Kejadian } from '../types/game';
 import { RobotAlgo, StatusAlgo } from './RobotAlgo';
 import { ArenaAnimationOverlay } from './ArenaAnimationOverlay';
-import { Info, Gauge, Sparkles, Terminal, Trash2, DoorOpen } from 'lucide-react';
+import { Info, Gauge, Sparkles, Terminal, Trash2, DoorOpen, Zap, Target, FileText } from 'lucide-react';
 import { samarkanOperator } from '../utils/format';
 
 interface ArenaViewProps {
@@ -41,27 +41,27 @@ export const ArenaView: React.FC<ArenaViewProps> = ({
     daftarKejadian.some((k) => k.tipe === 'izinkan' || k.tipe === 'buka');
 
   return (
-    <div className="bg-white/95 border-2 border-sky-200/90 rounded-3xl shadow-lg p-3 md:p-4 flex flex-col gap-3 backdrop-blur-sm">
+    <div className="bg-white/95 dark:bg-slate-900/95 border-2 border-sky-200/90 dark:border-slate-800 rounded-3xl shadow-lg p-3 md:p-4 flex flex-col gap-3 backdrop-blur-sm transition-colors">
       {/* 1. SENSOR INPUT STASIUN — POSISI PALING ATAS, SANGAT MENCOLOK, KONTRAS TINGGI & BESAR */}
-      <div className="bg-gradient-to-r from-amber-300 via-amber-200 to-amber-300 border-4 border-amber-600 rounded-3xl p-4 md:p-5 shadow-lg ring-4 ring-amber-400/80 animate-in fade-in select-none">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b-2 border-amber-500/80 pb-3">
+      <div className="bg-gradient-to-r from-amber-300 via-amber-200 to-amber-300 dark:from-amber-950/80 dark:via-amber-900/50 dark:to-amber-950/80 border-4 border-amber-600 dark:border-amber-500 rounded-3xl p-4 md:p-5 shadow-lg ring-4 ring-amber-400/80 dark:ring-amber-500/30 animate-in fade-in select-none transition-colors">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b-2 border-amber-500/80 dark:border-amber-600/80 pb-3">
           <div className="flex items-center gap-2.5">
             <span className="flex h-3.5 w-3.5 relative">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-600 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-amber-700"></span>
             </span>
-            <div className="flex items-center gap-2 text-sm md:text-base font-black uppercase text-amber-950 tracking-wide font-mono">
-              <Sparkles className="w-5 h-5 text-amber-800 animate-pulse" />
+            <div className="flex items-center gap-2 text-sm md:text-base font-black uppercase text-amber-950 dark:text-amber-200 tracking-wide font-mono">
+              <Sparkles className="w-5 h-5 text-amber-800 dark:text-amber-400 animate-pulse" />
               <span>SENSOR INPUT STASIUN</span>
             </div>
-            <span className="bg-amber-500 text-slate-950 text-xs md:text-sm font-mono font-black px-3 py-1 rounded-full border-2 border-amber-700 shadow-xs">
+            <span className="bg-amber-500 dark:bg-amber-600 text-slate-950 dark:text-amber-100 text-xs md:text-sm font-mono font-black px-3 py-1 rounded-full border-2 border-amber-700 dark:border-amber-500 shadow-xs">
               KASUS #{kasusTerpilihIndex + 1} DARI {varian.dataUji.length}
             </span>
           </div>
 
           {/* Pemilih Kasus Uji Chunky Berukuran Besar (#1, #2, dst.) */}
           <div className="flex items-center gap-2">
-            <span className="text-xs md:text-sm font-black text-amber-950 uppercase tracking-wide">PILIH KASUS:</span>
+            <span className="text-xs md:text-sm font-black text-amber-950 dark:text-amber-300 uppercase tracking-wide">PILIH KASUS:</span>
             <div className="flex items-center gap-1.5">
               {varian.dataUji.map((kasus, idx) => (
                 <button
@@ -70,8 +70,8 @@ export const ArenaView: React.FC<ArenaViewProps> = ({
                   onClick={() => onPilihKasusIndex(idx)}
                   className={`min-h-[42px] min-w-[42px] px-3.5 py-1 rounded-2xl text-xs md:text-sm font-mono font-black transition-all cursor-pointer shadow-sm ${
                     kasusTerpilihIndex === idx
-                      ? 'bg-amber-600 text-white ring-3 ring-amber-300 border-2 border-amber-800 scale-105 shadow-md'
-                      : 'bg-white text-slate-800 hover:bg-amber-100 border-2 border-amber-400'
+                      ? 'bg-amber-600 text-white ring-3 ring-amber-300 dark:ring-amber-500/40 border-2 border-amber-800 dark:border-amber-400 scale-105 shadow-md'
+                      : 'bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 hover:bg-amber-100 dark:hover:bg-slate-800 border-2 border-amber-400 dark:border-amber-700'
                   }`}
                   title={`Periksa data sensor kasus ke-${idx + 1}`}
                 >
@@ -85,18 +85,18 @@ export const ArenaView: React.FC<ArenaViewProps> = ({
         {/* Nilai Sensor Input Ditampilkan Ekstra Besar & Kontras Tinggi */}
         {kasusAktif && (
           <div className="mt-3.5 flex flex-wrap items-center gap-3 md:gap-4">
-            <div className="flex items-center gap-1.5 text-xs md:text-sm font-black uppercase text-amber-950 tracking-wider">
+            <div className="flex items-center gap-1.5 text-xs md:text-sm font-black uppercase text-amber-950 dark:text-amber-200 tracking-wider">
               <span>DATA INPUT SENSOR:</span>
             </div>
             {Object.entries(kasusAktif.data).map(([k, v]) => (
               <div
                 key={k}
-                className="flex items-center gap-2.5 bg-white px-4 py-2 rounded-2xl border-3 border-amber-600 shadow-md animate-in fade-in"
+                className="flex items-center gap-2.5 bg-white dark:bg-slate-900 px-4 py-2 rounded-2xl border-3 border-amber-600 dark:border-amber-500 shadow-md animate-in fade-in"
               >
-                <span className="text-slate-800 font-black text-sm md:text-base font-mono uppercase tracking-wide">
+                <span className="text-slate-800 dark:text-slate-200 font-black text-sm md:text-base font-mono uppercase tracking-wide">
                   {k} =
                 </span>
-                <span className="text-amber-950 font-black text-xl md:text-3xl font-mono bg-amber-200 border-2 border-amber-400 px-4 py-0.5 rounded-xl shadow-inner tracking-wider">
+                <span className="text-amber-950 dark:text-amber-200 font-black text-xl md:text-3xl font-mono bg-amber-200 dark:bg-amber-950/80 border-2 border-amber-400 dark:border-amber-600 px-4 py-0.5 rounded-xl shadow-inner tracking-wider">
                   &quot;{v}&quot;
                 </span>
               </div>
@@ -105,82 +105,126 @@ export const ArenaView: React.FC<ArenaViewProps> = ({
         )}
 
         {/* Keterangan & Penjelasan Kasus Uji */}
-        <div className="text-xs md:text-sm text-amber-950 font-extrabold mt-3 bg-amber-100/95 p-3 rounded-2xl border-2 border-amber-400 leading-snug flex items-center justify-between gap-2 flex-wrap">
+        <div className="text-xs md:text-sm text-amber-950 dark:text-amber-200 font-extrabold mt-3 bg-amber-100/95 dark:bg-amber-950/70 p-3 rounded-2xl border-2 border-amber-400 dark:border-amber-700 leading-snug flex items-center justify-between gap-2 flex-wrap">
           <div className="flex items-center gap-2">
             <span className="text-lg shrink-0">💡</span>
             <span>{kasusAktif?.keterangan}</span>
           </div>
-          <span className="text-[11px] font-sans font-black bg-amber-300/80 px-2.5 py-0.5 rounded-lg text-amber-950 border border-amber-500">
+          <span className="text-[11px] font-sans font-black bg-amber-300/80 dark:bg-amber-900/80 px-2.5 py-0.5 rounded-lg text-amber-950 dark:text-amber-200 border border-amber-500 dark:border-amber-700">
             Periksa kecocokan data ini pada aturan logika di bawah ⬇
           </span>
         </div>
       </div>
 
-      {/* 2. Baris Informasi: Situasi, Ringkasan & Aturan Level (Menara Bug Pastel Card) */}
-      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 border-b-2 border-sky-100 pb-3">
-        <div className="min-w-0 flex-1">
-          <div className="flex items-center gap-1.5 text-xs font-black text-amber-700 uppercase tracking-wide">
-            <Info className="w-3.5 h-3.5 text-amber-500 shrink-0" />
-            <span>Misi Stasiun: {level.nama}</span>
+      {/* 2. KARTU HIGHLIGHT UTAMA: KETERANGAN SKENARIO & KONDISI WAJIB YANG HARUS DIPENUHI MURID */}
+      <div className="bg-gradient-to-r from-sky-50 via-indigo-50/70 to-amber-50/70 dark:from-slate-900/90 dark:via-slate-800/80 dark:to-slate-900/90 border-2 border-sky-300 dark:border-sky-600/80 rounded-3xl p-3.5 md:p-4 shadow-sm ring-2 ring-sky-200/60 dark:ring-sky-500/20 transition-all select-none">
+        {/* Header Badge & Judul Misi */}
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b-2 border-sky-200/80 dark:border-slate-700/80 pb-2.5">
+          <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-100 dark:bg-sky-950/80 border border-sky-300 dark:border-sky-600 text-sky-900 dark:text-sky-300 font-mono font-black text-xs uppercase tracking-wide">
+              <Info className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400 shrink-0" />
+              <span>MISI STASIUN: {level.nama}</span>
+            </div>
+            {/* Attention Pill */}
+            <span className="flex items-center gap-1 bg-amber-400 dark:bg-amber-500 text-slate-950 font-black text-[11px] px-2.5 py-0.5 rounded-full border border-amber-500 shadow-2xs">
+              <Zap className="w-3 h-3 fill-slate-950 text-slate-950" />
+              <span>KONDISI WAJIB</span>
+            </span>
           </div>
 
-          {/* Ringkasan Level (WAJIB DIPERTAHANKAN) */}
+          <span className="text-[11px] font-mono font-bold text-slate-500 dark:text-slate-400 hidden sm:inline">
+            Baca dan terapkan logika ini pada Area Koding Robot ALGO
+          </span>
+        </div>
+
+        {/* Ringkasan Level & Skenario Konteks dengan Box Highlight Terpisah */}
+        <div className="mt-2.5 space-y-2">
           {varian.ringkasan && (
-            <div className="text-sky-800 font-extrabold text-sm md:text-base mt-0.5">
-              {varian.ringkasan}
-            </div>
+            <h2 className="text-slate-900 dark:text-slate-100 font-black text-base md:text-lg tracking-tight font-fredoka flex items-center gap-2">
+              <Target className="w-4 h-4 text-sky-600 dark:text-sky-400 shrink-0" />
+              <span>{varian.ringkasan}</span>
+            </h2>
           )}
 
-          {/* Kalimat skenario (konteks) */}
+          {/* Kalimat skenario (konteks) dengan latar highlight kontras */}
           {varian.konteks && (
-            <p className="text-xs md:text-sm text-slate-600 mt-1 leading-snug">
-              {varian.konteks}
-            </p>
-          )}
-
-          {/* Aturan Level (WAJIB DIPERTAHANKAN) disajikan dalam chip pastel rapi */}
-          {varian.aturan && varian.aturan.length > 0 && (
-            <div className="mt-2 space-y-1.5">
-              {varian.aturan.map((at, idx) => (
-                <div key={idx} className="flex flex-wrap items-center gap-1.5 text-xs">
-                  <span className="text-slate-500 font-mono font-bold text-xs">{idx + 1}.</span>
-                  <span className="text-amber-800 font-black uppercase tracking-wider text-[11px] bg-amber-100 px-1.5 py-0.5 rounded border border-amber-300">
-                    JIKA
-                  </span>
-                  <span className="font-mono bg-emerald-50 border border-emerald-300 text-emerald-800 font-bold px-2 py-0.5 rounded text-xs shadow-xs">
-                    {tampilkanOperator ? at.jika : samarkanOperator(at.jika)}
-                  </span>
-                  <span className="text-slate-400 text-xs font-bold">→</span>
-                  <span className="font-mono bg-sky-50 border border-sky-300 text-sky-800 font-bold px-2 py-0.5 rounded text-xs shadow-xs">
-                    {at.maka}
-                  </span>
-                  {at.selainItu && (
-                    <>
-                      <span className="text-slate-400 text-xs mx-0.5">·</span>
-                      <span className="text-rose-800 font-black uppercase tracking-wider text-[11px] bg-rose-100 px-1.5 py-0.5 rounded border border-rose-300">
-                        SELAIN ITU
-                      </span>
-                      <span className="text-slate-400 text-xs font-bold">→</span>
-                      <span className="font-mono bg-rose-50 border border-rose-300 text-rose-800 font-bold px-2 py-0.5 rounded text-xs shadow-xs">
-                        {at.selainItu}
-                      </span>
-                    </>
-                  )}
-                </div>
-              ))}
+            <div className="bg-white/90 dark:bg-slate-950/70 p-2.5 md:p-3 rounded-2xl border-2 border-sky-200 dark:border-slate-700 text-xs md:text-sm text-slate-700 dark:text-slate-300 font-medium leading-relaxed shadow-2xs flex items-start gap-2.5">
+              <div className="w-6 h-6 rounded-lg bg-sky-100 dark:bg-slate-800 flex items-center justify-center shrink-0 mt-0.5 border border-sky-300 dark:border-slate-600">
+                <FileText className="w-3.5 h-3.5 text-sky-700 dark:text-sky-400" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <span className="font-bold text-slate-900 dark:text-slate-100">{varian.konteks}</span>
+              </div>
             </div>
           )}
 
-          {!tampilkanOperator && (
-            <p className="text-[11px] text-amber-700 font-semibold italic mt-1.5">
-              🔎 Operator disembunyikan — buka Petunjuk atau coba 3× untuk melihatnya.
-            </p>
+          {/* KOTAK SOROTAN UTAMA: ATURAN PERCABANGAN & KONDISI YANG HARUS DIPENUHI */}
+          {varian.aturan && varian.aturan.length > 0 && (
+            <div className="bg-amber-100/90 dark:bg-amber-950/70 border-3 border-amber-500 dark:border-amber-500/80 rounded-2xl p-3 md:p-3.5 shadow-sm space-y-2">
+              <div className="flex items-center justify-between gap-2 flex-wrap border-b border-amber-300/90 dark:border-amber-700/80 pb-1.5">
+                <div className="flex items-center gap-1.5 font-black text-xs md:text-sm text-amber-950 dark:text-amber-200 uppercase tracking-wide">
+                  <span className="w-2.5 h-2.5 rounded-full bg-amber-600 dark:bg-amber-400 animate-ping"></span>
+                  <span>ATURAN LOGIKA YANG HARUS DIPENUHI OLEH PROGRAM:</span>
+                </div>
+                <span className="text-[11px] font-mono font-bold text-amber-800 dark:text-amber-300 bg-amber-200/80 dark:bg-amber-900/60 px-2 py-0.5 rounded-lg border border-amber-400 dark:border-amber-700">
+                  Target Evaluasi Robot ALGO
+                </span>
+              </div>
+
+              <div className="space-y-2">
+                {varian.aturan.map((at, idx) => (
+                  <div
+                    key={idx}
+                    className="bg-white dark:bg-slate-900 border-2 border-amber-400 dark:border-amber-600 rounded-xl p-2 md:p-2.5 flex flex-wrap items-center gap-2 text-xs md:text-sm shadow-xs transition-colors"
+                  >
+                    <span className="w-6 h-6 rounded-lg bg-amber-400 text-slate-950 font-black font-mono flex items-center justify-center text-xs shadow-2xs shrink-0">
+                      {idx + 1}
+                    </span>
+
+                    <span className="text-slate-950 font-black uppercase tracking-wider text-xs bg-amber-400 px-2.5 py-1 rounded-lg shadow-xs shrink-0">
+                      JIKA
+                    </span>
+
+                    <span className="font-mono bg-emerald-100 dark:bg-emerald-950 border-2 border-emerald-400 dark:border-emerald-600 text-emerald-950 dark:text-emerald-200 font-black px-3 py-1 rounded-lg text-xs md:text-sm shadow-inner">
+                      {tampilkanOperator ? at.jika : samarkanOperator(at.jika)}
+                    </span>
+
+                    <span className="text-amber-700 dark:text-amber-400 font-black text-sm">→</span>
+
+                    <span className="text-sky-950 dark:text-sky-200 font-bold text-xs">MAKA:</span>
+                    <span className="font-mono bg-sky-100 dark:bg-sky-950 border-2 border-sky-400 dark:border-sky-600 text-sky-950 dark:text-sky-200 font-black px-3 py-1 rounded-lg text-xs md:text-sm shadow-inner">
+                      {at.maka}
+                    </span>
+
+                    {at.selainItu && (
+                      <>
+                        <span className="text-slate-300 dark:text-slate-600 mx-1 hidden sm:inline">|</span>
+                        <span className="text-white font-black uppercase tracking-wider text-xs bg-rose-500 px-2.5 py-1 rounded-lg shadow-xs shrink-0">
+                          SELAIN ITU
+                        </span>
+                        <span className="text-rose-700 dark:text-rose-400 font-black text-sm">→</span>
+                        <span className="font-mono bg-rose-100 dark:bg-rose-950 border-2 border-rose-400 dark:border-rose-600 text-rose-950 dark:text-rose-200 font-black px-3 py-1 rounded-lg text-xs md:text-sm shadow-inner">
+                          {at.selainItu}
+                        </span>
+                      </>
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              {!tampilkanOperator && (
+                <p className="text-[11px] text-amber-900 dark:text-amber-300 font-bold italic pt-0.5 flex items-center gap-1.5">
+                  <span>🔎</span>
+                  <span>Operator perbandingan sengaja disamarkan — siswa diminta memilih operator yang tepat atau membuka Petunjuk jika perlu bantuan.</span>
+                </p>
+              )}
+            </div>
           )}
         </div>
       </div>
 
       {/* 2. Panggung Diorama Isometrik 2.5D ala MENARA BUG */}
-      <div className="relative rounded-2xl border-2 border-sky-200 overflow-hidden min-h-[250px] md:min-h-[300px] bg-gradient-to-b from-sky-200 via-sky-100 to-amber-50/60 p-3 md:p-4 flex flex-col justify-between select-none">
+      <div className="relative rounded-2xl border-2 border-sky-200 dark:border-slate-800 overflow-hidden min-h-[250px] md:min-h-[300px] bg-gradient-to-b from-sky-200 via-sky-100 to-amber-50/60 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950/80 p-3 md:p-4 flex flex-col justify-between select-none transition-colors">
         {/* Dekorasi Langit & Awan Berawan Melayang (Pastel Clouds) */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           {/* Awan Kiri Atas */}
@@ -401,26 +445,26 @@ export const ArenaView: React.FC<ArenaViewProps> = ({
         {/* Konten Panggung 3 Kolom Responsif dengan Headroom Cukup agar ALGO & PESAN Sama-sama Terlihat Jelas */}
         <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-3 md:gap-4 my-auto pt-14 md:pt-16 pb-2">
           {/* Sisi Kiri: Status Dermaga & Gerbang Stasiun */}
-          <div className="bg-white/95 border-2 border-sky-300 rounded-2xl p-2.5 shadow-sm text-xs w-full md:w-52 shrink-0 backdrop-blur-xs">
-            <div className="text-[10px] font-black uppercase text-sky-800 tracking-wide mb-1.5 flex items-center gap-1.5 border-b border-sky-100 pb-1">
-              <DoorOpen className="w-3.5 h-3.5 text-sky-600" />
+          <div className="bg-white/95 dark:bg-slate-900/95 border-2 border-sky-300 dark:border-slate-700 rounded-2xl p-2.5 shadow-sm text-xs w-full md:w-52 shrink-0 backdrop-blur-xs transition-colors">
+            <div className="text-[10px] font-black uppercase text-sky-800 dark:text-sky-300 tracking-wide mb-1.5 flex items-center gap-1.5 border-b border-sky-100 dark:border-slate-800 pb-1">
+              <DoorOpen className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400" />
               <span>Gerbang Stasiun</span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-bold text-slate-600">Status Akses:</span>
+              <span className="text-[11px] font-bold text-slate-600 dark:text-slate-300">Status Akses:</span>
               <span
                 className={`text-[11px] font-mono font-black px-2 py-0.5 rounded-lg border ${
                   isGerbangTerbuka
-                    ? 'bg-emerald-100 text-emerald-800 border-emerald-300 animate-pulse'
+                    ? 'bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border-emerald-300 dark:border-emerald-700 animate-pulse'
                     : statusAlgo === 'tolak'
-                    ? 'bg-rose-100 text-rose-800 border-rose-300'
-                    : 'bg-sky-100 text-sky-800 border-sky-200'
+                    ? 'bg-rose-100 dark:bg-rose-950/60 text-rose-800 dark:text-rose-300 border-rose-300 dark:border-rose-700'
+                    : 'bg-sky-100 dark:bg-slate-800 text-sky-800 dark:text-sky-300 border-sky-200 dark:border-slate-700'
                 }`}
               >
                 {isGerbangTerbuka ? 'TERBUKA' : statusAlgo === 'tolak' ? 'DITOLAK' : 'SIAGA'}
               </span>
             </div>
-            <div className="text-[10px] text-slate-500 font-semibold mt-1">
+            <div className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold mt-1">
               {isGerbangTerbuka
                 ? '✅ Robot ALGO melangkah masuk.'
                 : statusAlgo === 'tolak'
@@ -443,17 +487,17 @@ export const ArenaView: React.FC<ArenaViewProps> = ({
           </div>
 
           {/* Sisi Kanan: Mini Monitor Log Eksekusi */}
-          <div className="bg-white/95 border-2 border-sky-300 rounded-2xl p-2.5 md:p-3 shadow-md w-full md:w-56 max-h-36 md:max-h-44 overflow-y-auto font-mono text-[11px] shrink-0 backdrop-blur-xs">
-            <div className="text-[10px] text-slate-600 uppercase font-black flex items-center justify-between gap-1 mb-1 border-b border-sky-100 pb-1">
-              <div className="flex items-center gap-1 text-sky-800">
-                <Terminal className="w-3 h-3 text-sky-600" />
+          <div className="bg-white/95 dark:bg-slate-900/95 border-2 border-sky-300 dark:border-slate-700 rounded-2xl p-2.5 md:p-3 shadow-md w-full md:w-56 max-h-36 md:max-h-44 overflow-y-auto font-mono text-[11px] shrink-0 backdrop-blur-xs transition-colors">
+            <div className="text-[10px] text-slate-600 dark:text-slate-400 uppercase font-black flex items-center justify-between gap-1 mb-1 border-b border-sky-100 dark:border-slate-800 pb-1">
+              <div className="flex items-center gap-1 text-sky-800 dark:text-sky-300">
+                <Terminal className="w-3 h-3 text-sky-600 dark:text-sky-400" />
                 <span>Monitor ALGO</span>
               </div>
               {onBersihkanMonitor && (
                 <button
                   type="button"
                   onClick={onBersihkanMonitor}
-                  className="text-[10px] text-slate-500 hover:text-rose-600 flex items-center gap-0.5 px-1 py-0.5 rounded hover:bg-slate-100 transition-colors cursor-pointer"
+                  className="text-[10px] text-slate-500 hover:text-rose-600 dark:hover:text-rose-400 flex items-center gap-0.5 px-1 py-0.5 rounded hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
                   title="Hapus riwayat monitor"
                 >
                   <Trash2 className="w-3 h-3" />

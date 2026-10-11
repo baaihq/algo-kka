@@ -67,15 +67,15 @@ export const BlockPalette: React.FC<BlockPaletteProps> = ({
   };
 
   return (
-    <div className="bg-white/95 border-t-2 border-sky-200 p-3 md:p-4 rounded-t-3xl shadow-xl backdrop-blur-md">
+    <div className="bg-white/95 dark:bg-slate-900/95 border-t-2 border-sky-200 dark:border-slate-800 p-3 md:p-4 rounded-t-3xl shadow-xl backdrop-blur-md transition-colors">
       <div className="flex items-center justify-between mb-2.5">
         <div className="flex items-center gap-2">
           <div className="w-3 h-3 rounded-full bg-amber-400 animate-pulse"></div>
-          <span className="text-xs md:text-sm font-black uppercase tracking-wider text-slate-700">
+          <span className="text-xs md:text-sm font-black uppercase tracking-wider text-slate-700 dark:text-slate-200">
             Palet Blok Perintah (Tap untuk Memasang)
           </span>
         </div>
-        <span className="text-[11px] text-slate-500 font-medium hidden sm:inline">
+        <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium hidden sm:inline">
           Ketuk blok chunky untuk menyusun logika robot ALGO
         </span>
       </div>
@@ -169,11 +169,11 @@ export const BlockPalette: React.FC<BlockPaletteProps> = ({
 
       {/* Popover Chunky Pastel Penempatan Aksi (Multi-JIKA Selector) */}
       {pendingAction && (
-        <div className="mt-3 p-3 bg-sky-50 border-2 border-sky-300 rounded-2xl shadow-md animate-in fade-in slide-in-from-bottom duration-200">
+        <div className="mt-3 p-3 bg-sky-50 dark:bg-slate-800/90 border-2 border-sky-300 dark:border-slate-700 rounded-2xl shadow-md animate-in fade-in slide-in-from-bottom duration-200 transition-colors">
           {!pendingBranch ? (
             <>
               <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-black text-slate-800">
+                <span className="text-xs font-black text-slate-800 dark:text-slate-200">
                   Pilih posisi penempatan untuk blok &quot;{pendingAction}&quot;:
                 </span>
                 <button
@@ -182,7 +182,7 @@ export const BlockPalette: React.FC<BlockPaletteProps> = ({
                     setPendingAction(null);
                     setPendingBranch(null);
                   }}
-                  className="text-xs text-slate-500 hover:text-slate-800 font-bold px-2 py-1 cursor-pointer"
+                  className="text-xs text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 font-bold px-2 py-1 cursor-pointer"
                 >
                   Batal
                 </button>
@@ -215,19 +215,19 @@ export const BlockPalette: React.FC<BlockPaletteProps> = ({
                     setPendingAction(null);
                     setPendingBranch(null);
                   }}
-                  className="min-h-[44px] p-2 bg-white hover:bg-slate-100 border-2 border-slate-300 border-b-4 border-b-slate-400 text-slate-800 rounded-xl text-xs font-black flex items-center justify-center gap-1.5 cursor-pointer"
+                  className="min-h-[44px] p-2 bg-white hover:bg-slate-100 dark:bg-slate-700 dark:hover:bg-slate-600 border-2 border-slate-300 dark:border-slate-600 border-b-4 border-b-slate-400 dark:border-b-slate-800 text-slate-800 dark:text-slate-200 rounded-xl text-xs font-black flex items-center justify-center gap-1.5 cursor-pointer"
                 >
                   <span>Di Luar (Program Utama)</span>
-                  <ChevronRight className="w-3.5 h-3.5 text-slate-600" />
+                  <ChevronRight className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
                 </button>
               </div>
             </>
           ) : (
             <>
               <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-black text-slate-800">
+                <span className="text-xs font-black text-slate-800 dark:text-slate-200">
                   Pilih blok keputusan tujuan di dalam{' '}
-                  <span className={pendingBranch === 'maka' ? 'text-emerald-700 font-extrabold' : 'text-rose-700 font-extrabold'}>
+                  <span className={pendingBranch === 'maka' ? 'text-emerald-700 dark:text-emerald-400 font-extrabold' : 'text-rose-700 dark:text-rose-400 font-extrabold'}>
                     {pendingBranch === 'maka' ? 'MAKA' : 'SELAIN ITU'}
                   </span>{' '}
                   untuk &quot;{pendingAction}&quot;:
@@ -236,7 +236,7 @@ export const BlockPalette: React.FC<BlockPaletteProps> = ({
                   <button
                     type="button"
                     onClick={() => setPendingBranch(null)}
-                    className="text-xs text-sky-700 hover:text-sky-900 px-2 py-1 cursor-pointer font-bold"
+                    className="text-xs text-sky-700 hover:text-sky-900 dark:text-sky-400 dark:hover:text-sky-300 px-2 py-1 cursor-pointer font-bold"
                   >
                     ← Kembali
                   </button>
@@ -246,7 +246,7 @@ export const BlockPalette: React.FC<BlockPaletteProps> = ({
                       setPendingAction(null);
                       setPendingBranch(null);
                     }}
-                    className="text-xs text-slate-500 hover:text-slate-800 font-bold px-2 py-1 cursor-pointer"
+                    className="text-xs text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 font-bold px-2 py-1 cursor-pointer"
                   >
                     Batal
                   </button>
