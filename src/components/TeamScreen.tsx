@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { RobotAlgo } from './RobotAlgo';
 import { ThemeMenu } from './ThemeMenu';
-import { Sparkles, Users, ArrowRight, ShieldCheck, Cpu } from 'lucide-react';
+import { Sparkles, Users, ArrowRight, ShieldCheck } from 'lucide-react';
 
 interface TeamScreenProps {
   onMulaiEkspedisi: (namaTim: string) => void;
@@ -19,15 +19,15 @@ export const TeamScreen: React.FC<TeamScreenProps> = ({
     e.preventDefault();
     const bersih = namaTim.trim();
     if (!bersih) {
-      setErrorPesan('Masukkan nama tim atau nama siswa terlebih dahulu!');
+      setErrorPesan('Masukkan nama kelompok terlebih dahulu!');
       return;
     }
     if (bersih.length < 2) {
-      setErrorPesan('Nama tim minimal 2 karakter.');
+      setErrorPesan('Nama kelompok minimal 2 karakter.');
       return;
     }
     if (bersih.length > 30) {
-      setErrorPesan('Nama tim maksimal 30 karakter.');
+      setErrorPesan('Nama kelompok maksimal 30 karakter.');
       return;
     }
     setErrorPesan('');
@@ -70,9 +70,9 @@ export const TeamScreen: React.FC<TeamScreenProps> = ({
 
       {/* Kartu Masuk Utama Pastel MENARA BUG */}
       <div className="relative z-10 max-w-md w-full bg-white/95 dark:bg-slate-900/95 border-2 border-sky-200 dark:border-slate-800 rounded-3xl shadow-xl p-6 md:p-8 backdrop-blur-md flex flex-col items-center text-center transition-colors">
-        {/* Badge Kurikulum */}
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-700 text-amber-900 dark:text-amber-200 text-xs font-mono font-black uppercase tracking-wider mb-3">
-          <Sparkles className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
+        {/* Badge Kurikulum (1 Baris Rapi) */}
+        <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-amber-100 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-700 text-amber-900 dark:text-amber-200 text-[10.5px] sm:text-xs font-black uppercase tracking-tight whitespace-nowrap mb-3 shadow-2xs">
+          <Sparkles className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
           <span>Koding &amp; Kecerdasan Artifisial • SMA/MA Kelas X</span>
         </div>
 
@@ -89,7 +89,21 @@ export const TeamScreen: React.FC<TeamScreenProps> = ({
           Stasiun Logika ALGO
         </h2>
         <p className="text-xs md:text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-6">
-          Selamat datang di pulau stasiun logika! Pelajari percabangan algoritma <span className="text-amber-800 dark:text-amber-300 font-black bg-amber-100 dark:bg-amber-950/80 px-1.5 py-0.5 rounded border border-amber-300 dark:border-amber-700">JIKA</span>–<span className="text-emerald-800 dark:text-emerald-300 font-black bg-emerald-100 dark:bg-emerald-950/80 px-1.5 py-0.5 rounded border border-emerald-300 dark:border-emerald-700">MAKA</span>–<span className="text-rose-800 dark:text-rose-300 font-black bg-rose-100 dark:bg-rose-950/80 px-1.5 py-0.5 rounded border border-rose-300 dark:border-rose-700">SELAIN ITU</span> bersama robot ALGO.
+          Selamat datang di pulau stasiun logika!
+          <br />
+          Pelajari percabangan algoritma{' '}
+          <span className="text-amber-800 dark:text-amber-300 font-black bg-amber-100 dark:bg-amber-950/80 px-1.5 py-0.5 rounded border border-amber-300 dark:border-amber-700">
+            JIKA
+          </span>
+          –
+          <span className="text-emerald-800 dark:text-emerald-300 font-black bg-emerald-100 dark:bg-emerald-950/80 px-1.5 py-0.5 rounded border border-emerald-300 dark:border-emerald-700">
+            MAKA
+          </span>
+          –
+          <span className="text-rose-800 dark:text-rose-300 font-black bg-rose-100 dark:bg-rose-950/80 px-1.5 py-0.5 rounded border border-rose-300 dark:border-rose-700">
+            SELAIN ITU
+          </span>{' '}
+          bersama robot ALGO.
         </p>
 
         {/* Form Masuk Tim */}
@@ -100,7 +114,7 @@ export const TeamScreen: React.FC<TeamScreenProps> = ({
               className="text-xs font-black text-slate-700 dark:text-slate-300 uppercase tracking-wider flex items-center gap-1.5"
             >
               <Users className="w-4 h-4 text-sky-600 dark:text-sky-400" />
-              <span>Nama Tim / Peserta Didik</span>
+              <span>Nama Kelompok</span>
             </label>
             <input
               id="inputNamaTim"
@@ -110,7 +124,7 @@ export const TeamScreen: React.FC<TeamScreenProps> = ({
                 setNamaTim(e.target.value);
                 if (errorPesan) setErrorPesan('');
               }}
-              placeholder="Contoh: Tim Alfa 10-A, Tim Orion..."
+              placeholder="Isi Nama Kelompok Kamu"
               maxLength={30}
               className="w-full min-h-[48px] px-4 py-2.5 bg-sky-50/70 dark:bg-slate-800/80 border-2 border-sky-300 dark:border-slate-700 focus:border-amber-400 focus:bg-white dark:focus:bg-slate-800 rounded-2xl text-slate-900 dark:text-slate-100 font-bold text-sm md:text-base outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-slate-500 shadow-2xs"
             />
@@ -130,15 +144,11 @@ export const TeamScreen: React.FC<TeamScreenProps> = ({
           </button>
         </form>
 
-        {/* Feature Badges */}
-        <div className="grid grid-cols-2 gap-2 w-full mt-6 pt-5 border-t-2 border-sky-100 dark:border-slate-800 text-[11px] text-slate-600 dark:text-slate-400 font-bold">
-          <div className="flex items-center gap-1.5 bg-emerald-50 dark:bg-emerald-950/40 p-2 rounded-xl border border-emerald-200 dark:border-emerald-800 text-emerald-950 dark:text-emerald-300">
+        {/* Feature Badges (1 Baris Rapi) */}
+        <div className="w-full mt-6 pt-5 border-t-2 border-sky-100 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-400 font-bold">
+          <div className="flex items-center justify-center gap-2 bg-emerald-50 dark:bg-emerald-950/40 p-2.5 rounded-2xl border border-emerald-200 dark:border-emerald-800 text-emerald-950 dark:text-emerald-300 shadow-2xs">
             <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
-            <span className="text-left">Percabangan 1-Arah &amp; 2-Arah</span>
-          </div>
-          <div className="flex items-center gap-1.5 bg-sky-50 dark:bg-sky-950/40 p-2 rounded-xl border border-sky-200 dark:border-sky-800 text-sky-950 dark:text-sky-300">
-            <Cpu className="w-4 h-4 text-sky-600 dark:text-sky-400 shrink-0" />
-            <span className="text-left">Evaluasi Kasus Otomatis</span>
+            <span className="font-extrabold tracking-wide">Percabangan 1-Arah &amp; 2-Arah</span>
           </div>
         </div>
       </div>
