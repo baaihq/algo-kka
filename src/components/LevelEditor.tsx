@@ -412,6 +412,21 @@ export const LevelEditor: React.FC<LevelEditorProps> = ({
     playSoundBlokDihapus();
   };
 
+  // Reset percobaan bersih saat menekan "Ulangi" pada modal hasil uji
+  // Mengosongkan penalti sesi (petunjuk manual & kegagalan level ini) agar siswa bisa mengejar 3 bintang
+  const mulaiUlangPercobaanBersih = () => {
+    perbaruiProgramDanSimpan(inisialisasiProgramAwal(level, varian));
+    setManualPetunjukTerbuka(0);
+    setGagalBerturutTurut(0);
+    resetKegagalanLevel(level.id);
+    bersihkanSemuaTimeout();
+    setStatusAlgo('idle');
+    setPesanAlgo(undefined);
+    setPesanList([]);
+    setDaftarKejadian([]);
+    setJejakLangkah([]);
+  };
+
   // --- EKSEKUSI ▶ JALANKAN ---
   const handleJalankan = () => {
     if (sedangJalan) return;
@@ -791,13 +806,7 @@ export const LevelEditor: React.FC<LevelEditorProps> = ({
           skenarioRingkasan={varian.ringkasan}
           varianId={varian.id}
           totalPetunjukTerbuka={totalPetunjukTerbuka}
-          onUlangiLevel={() => {
-            const template = inisialisasiProgramAwal(level, varian);
-            perbaruiProgramDanSimpan(template);
-            setStatusAlgo('idle');
-            setPesanAlgo(undefined);
-            setJejakLangkah([]);
-          }}
+          onUlangiLevel={mulaiUlangPercobaanBersih}
         />
       )}
 
