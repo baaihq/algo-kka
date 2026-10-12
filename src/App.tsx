@@ -13,13 +13,17 @@ import { pilihVarianUntukTim } from './utils/hash';
 import { TeamScreen } from './components/TeamScreen';
 import { StationMap } from './components/StationMap';
 import { LevelEditor } from './components/LevelEditor';
+import { TeacherLoginModal } from './components/TeacherLoginModal';
+import { TeacherDashboard } from './components/TeacherDashboard';
+import { getSesi } from './services/teacher';
 
-type LayarAktif = 'login' | 'peta' | 'editor';
+type LayarAktif = 'login' | 'peta' | 'editor' | 'guru_dashboard';
 type ArahTransisi = 'maju' | 'mundur';
 
 export default function App() {
   const [tim, setTim] = useState<TimProfil | null>(() => ambilProfilTim());
   const [layar, setLayar] = useState<LayarAktif>(() => (ambilProfilTim() ? 'peta' : 'login'));
+  const [isTeacherLoginOpen, setIsTeacherLoginOpen] = useState(false);
   const [progresMap, setProgresMap] = useState<Record<string, ProgresLevel>>(() => ambilSemuaProgres());
   const [levelAktifId, setLevelAktifId] = useState<string>('gerbang-tamu');
   const [arahTransisi, setArahTransisi] = useState<ArahTransisi>('maju');
@@ -113,7 +117,45 @@ export default function App() {
     }
   };
 
+  const handleBukaDashboardGuru = async () => {
+    const sesi = await getSesi();
+    if (sesi?.user) {
+      setArahTransisi('maju');
+      setLayar('guru_dashboard');
+    } else {
+      setIsTeacherLoginOpen(true);
+    }
+  };
+
+  const handleLoginGuruSukses = () => {
+    setIsTeacherLoginOpen(false);
+    setArahTransisi('maju');
+    setLayar('guru_dashboard');
+  };
+
+  const handleKeluarDashboardGuru = () => {
+    setArahTransisi('mundur');
+    setLayar(tim ? 'peta' : 'login');
+  };
+
   const renderLayar = () => {
+    // 0. Layar Dashboard Guru
+    if (layar === 'guru_dashboard') {
+      return (
+        <motion.div
+          key="layar-guru-dashboard"
+          custom={arahTransisi}
+          variants={transisiLayarVariants}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          className="w-full min-h-screen overflow-x-hidden"
+        >
+          <TeacherDashboard onKeluarDashboard={handleKeluarDashboardGuru} />
+        </motion.div>
+      );
+    }
+
     // 1. Layar Masuk Tim
     if (layar === 'login' || !tim) {
       return (
@@ -129,6 +171,7 @@ export default function App() {
           <TeamScreen
             onMulaiEkspedisi={handleMulaiEkspedisi}
             namaTimAwal={tim?.namaTim || ''}
+            onBukaDashboardGuru={handleBukaDashboardGuru}
           />
         </motion.div>
       );
@@ -192,6 +235,13 @@ export default function App() {
       <AnimatePresence mode="wait" initial={false} custom={arahTransisi}>
         {renderLayar()}
       </AnimatePresence>
+
+      {/* Modal Login Guru */}
+      <TeacherLoginModal
+        isOpen={isTeacherLoginOpen}
+        onClose={() => setIsTeacherLoginOpen(false)}
+        onLoginSukses={handleLoginGuruSukses}
+      />
     </div>
   );
 }

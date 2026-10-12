@@ -14,10 +14,13 @@ import {
   simpanProgramSaja,
   simpanProgresLevel,
   ambilProgresLevel,
+  ambilSemuaProgres,
   ambilGagalLevel,
   catatKegagalanLevel,
   resetKegagalanLevel
 } from '../services/storage';
+import { ambilStatusBadgeTim } from '../data/badges';
+import { kirimPercobaan, kirimProgres } from '../services/sync';
 import { ArrowLeft, Play, FlaskConical, RotateCcw, Lightbulb, CheckCircle2, Volume2, VolumeX, Star, Sparkles } from 'lucide-react';
 import {
   playSoundBlokDipasang,
@@ -504,8 +507,11 @@ export const LevelEditor: React.FC<LevelEditorProps> = ({
     setHasilUji(hasil);
     setIsTestModalOpen(true);
 
+    const gagalSebelumnya = gagalBerturutTurut;
+    let bintang = 0;
+
     if (hasil.semuaLulus) {
-      let bintang = 3;
+      bintang = 3;
       if (totalPetunjukTerbuka > 0) {
         bintang = 1;
       } else if (gagalBerturutTurut > 0) {
@@ -517,11 +523,39 @@ export const LevelEditor: React.FC<LevelEditorProps> = ({
       setGagalBerturutTurut(0);
       resetKegagalanLevel(level.id);
       simpanProgresLevel(level.id, true, bintang, varian.id, program);
+
+      // Hitung badges yang terbuka dan sinkronkan progres ke Supabase
+      const semuaProgres = ambilSemuaProgres();
+      const badgesTerbuka = ambilStatusBadgeTim(semuaProgres)
+        .filter((b) => b.terbuka)
+        .map((b) => b.id);
+
+      kirimProgres({
+        namaTim: tim.namaTim,
+        levelId: level.id,
+        selesai: true,
+        bintang,
+        varianId: varian.id,
+        badges: badgesTerbuka,
+      });
     } else {
       const updated = catatKegagalanLevel(level.id);
       setGagalBerturutTurut(updated[level.id] || (gagalBerturutTurut + 1));
       playSoundKesalahanLogika();
     }
+
+    // Catat percobaan ke Supabase setiap kali tombol Uji ditekan (best-effort)
+    kirimPercobaan({
+      namaTim: tim.namaTim,
+      levelId: level.id,
+      varianId: varian.id,
+      semuaLulus: hasil.semuaLulus,
+      kasusLulus: hasil.kasusLulus,
+      totalKasus: hasil.totalKasus,
+      petunjukTerbuka: totalPetunjukTerbuka,
+      gagalBerturut: gagalSebelumnya,
+      bintangDiperoleh: bintang,
+    });
   };
 
   const handleBukaPetunjukManual = () => {
