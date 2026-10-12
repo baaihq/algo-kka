@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import type { Variants } from 'motion/react';
 import { DAFTAR_LEVEL } from './data/levels';
@@ -13,9 +13,13 @@ import { pilihVarianUntukTim } from './utils/hash';
 import { TeamScreen } from './components/TeamScreen';
 import { StationMap } from './components/StationMap';
 import { LevelEditor } from './components/LevelEditor';
-import { TeacherLoginModal } from './components/TeacherLoginModal';
-import { TeacherDashboard } from './components/TeacherDashboard';
-import { getSesi } from './services/teacher';
+
+const TeacherDashboard = lazy(() =>
+  import('./components/TeacherDashboard').then((m) => ({ default: m.TeacherDashboard }))
+);
+const TeacherLoginModal = lazy(() =>
+  import('./components/TeacherLoginModal').then((m) => ({ default: m.TeacherLoginModal }))
+);
 
 type LayarAktif = 'login' | 'peta' | 'editor' | 'guru_dashboard';
 type ArahTransisi = 'maju' | 'mundur';
@@ -118,6 +122,7 @@ export default function App() {
   };
 
   const handleBukaDashboardGuru = async () => {
+    const { getSesi } = await import('./services/teacher');
     const sesi = await getSesi();
     if (sesi?.user) {
       setArahTransisi('maju');
@@ -151,7 +156,15 @@ export default function App() {
           exit="exit"
           className="w-full min-h-screen overflow-x-hidden"
         >
-          <TeacherDashboard onKeluarDashboard={handleKeluarDashboardGuru} />
+          <Suspense
+            fallback={
+              <div className="min-h-screen flex items-center justify-center text-slate-500 font-bold">
+                Memuat Dashboard Guru...
+              </div>
+            }
+          >
+            <TeacherDashboard onKeluarDashboard={handleKeluarDashboardGuru} />
+          </Suspense>
         </motion.div>
       );
     }
@@ -237,11 +250,15 @@ export default function App() {
       </AnimatePresence>
 
       {/* Modal Login Guru */}
-      <TeacherLoginModal
-        isOpen={isTeacherLoginOpen}
-        onClose={() => setIsTeacherLoginOpen(false)}
-        onLoginSukses={handleLoginGuruSukses}
-      />
+      {isTeacherLoginOpen && (
+        <Suspense fallback={null}>
+          <TeacherLoginModal
+            isOpen={isTeacherLoginOpen}
+            onClose={() => setIsTeacherLoginOpen(false)}
+            onLoginSukses={handleLoginGuruSukses}
+          />
+        </Suspense>
+      )}
     </div>
   );
 }
