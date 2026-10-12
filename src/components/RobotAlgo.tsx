@@ -49,6 +49,20 @@ export const RobotAlgo: React.FC<RobotAlgoProps> = ({
     { dx: '30px', dy: '-80px', delay: '0.22s', size: 'w-2.5 h-2.5', color: 'bg-amber-200' },
   ];
 
+  // Label status ramah bahasa Indonesia untuk tampilan murid
+  const ambilLabelStatus = (s: StatusAlgo): string => {
+    const map: Record<StatusAlgo, string> = {
+      idle: 'SIAGA',
+      berpikir: 'BERPIKIR',
+      izinkan: 'IZINKAN',
+      tolak: 'DITOLAK',
+      buka: 'BUKA',
+      pesan: 'PESAN',
+      sukses: 'BERHASIL'
+    };
+    return map[s] || s.toUpperCase();
+  };
+
   return (
     <div className={`relative flex flex-col items-center justify-center ${className}`}>
       {/* Balon Kata Pesan Melayang (Mendukung 1 atau 2 Pesan Multikondisi Tanpa Menutupi ALGO) */}
@@ -283,7 +297,7 @@ export const RobotAlgo: React.FC<RobotAlgoProps> = ({
             color: warnaAksen === '#eab308' ? '#b45309' : warnaAksen
           }}
         >
-          ALGO: {status}
+          ALGO: {ambilLabelStatus(status)}
         </div>
       </div>
     </div>

@@ -76,7 +76,7 @@ export const LevelEditor: React.FC<LevelEditorProps> = ({
   // 3. Modal Uji & Petunjuk State
   const [hasilUji, setHasilUji] = useState<HasilUjiLevel | null>(null);
   const [bintangDiperoleh, setBintangDiperoleh] = useState<number>(() => {
-    return ambilProgresLevel(level.id)?.bintang || 3;
+    return ambilProgresLevel(level.id)?.bintang || 0;
   });
   const [isTestModalOpen, setIsTestModalOpen] = useState<boolean>(false);
   const [isHintModalOpen, setIsHintModalOpen] = useState<boolean>(false);
@@ -87,8 +87,6 @@ export const LevelEditor: React.FC<LevelEditorProps> = ({
   // Nomor Misi
   const indexLevel = DAFTAR_LEVEL.findIndex((l) => l.id === level.id);
   const nomorMisi = indexLevel !== -1 ? indexLevel + 1 : 1;
-
-  const kasusAktif = varian.dataUji[kasusAktifIndex] || varian.dataUji[0];
 
   // Bintang yang tersimpan sebelumnya untuk level ini
   const progresTersimpan = ambilProgresLevel(level.id);
@@ -733,66 +731,6 @@ export const LevelEditor: React.FC<LevelEditorProps> = ({
             <span className="hidden sm:inline">Reset Program</span>
           </button>
         </section>
-
-        {/* Bagian Sensor Input Stasiun: Ditempatkan Tepat di Atas Area Program Sebelum Memasukkan Logika */}
-        {kasusAktif && (
-          <section className="bg-gradient-to-r from-amber-300 via-amber-200 to-amber-300 dark:from-amber-950/80 dark:via-amber-900/50 dark:to-amber-950/80 border-3 border-amber-600 dark:border-amber-500 rounded-3xl p-3 md:p-3.5 shadow-md ring-3 ring-amber-400/60 dark:ring-amber-500/30 animate-in fade-in select-none transition-colors">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b-2 border-amber-400/80 dark:border-amber-600/80 pb-2">
-              <div className="flex items-center gap-2">
-                <span className="flex h-3 w-3 relative">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-600 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-3 w-3 bg-amber-700"></span>
-                </span>
-                <span className="text-xs md:text-sm font-black uppercase tracking-wider text-amber-950 dark:text-amber-200 font-mono">
-                  📡 SENSOR INPUT STASIUN: KASUS #{kasusAktifIndex + 1}
-                </span>
-                <span className="text-[10px] font-mono font-black bg-amber-400 dark:bg-amber-600 text-slate-950 dark:text-amber-100 px-2 py-0.5 rounded-full border border-amber-600 dark:border-amber-400 shadow-2xs">
-                  {kasusAktifIndex + 1}/{varian.dataUji.length}
-                </span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <span className="text-[11px] font-black text-amber-950 dark:text-amber-300 uppercase">Pilih Kasus:</span>
-                {varian.dataUji.map((_, idx) => (
-                  <button
-                    key={idx}
-                    type="button"
-                    onClick={() => setKasusAktifIndex(idx)}
-                    className={`min-h-[34px] px-3 py-1 rounded-xl text-xs font-mono font-black transition-all cursor-pointer shadow-xs ${
-                      kasusAktifIndex === idx
-                        ? 'bg-amber-600 text-white border-2 border-amber-800 dark:border-amber-400 scale-105'
-                        : 'bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 hover:bg-amber-100 dark:hover:bg-slate-800 border border-amber-400 dark:border-amber-700'
-                    }`}
-                  >
-                    #{idx + 1}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="mt-2.5 flex flex-wrap items-center justify-between gap-2.5">
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="text-xs font-black uppercase text-amber-950 dark:text-amber-200 tracking-wide">
-                  NILAI SENSOR SAAT INI:
-                </span>
-                {Object.entries(kasusAktif.data).map(([k, v]) => (
-                  <div
-                    key={k}
-                    className="flex items-center gap-2 bg-white dark:bg-slate-900 px-3.5 py-1.5 rounded-xl border-2 border-amber-600 dark:border-amber-500 shadow-2xs font-mono"
-                  >
-                    <span className="text-slate-800 dark:text-slate-200 font-extrabold text-xs md:text-sm">{k} =</span>
-                    <span className="text-amber-950 dark:text-amber-200 font-black text-base md:text-xl bg-amber-200 dark:bg-amber-950/80 border-2 border-amber-400 dark:border-amber-600 px-3 py-0.5 rounded-lg shadow-inner">
-                      &quot;{v}&quot;
-                    </span>
-                  </div>
-                ))}
-              </div>
-              <span className="text-xs font-bold text-amber-950 dark:text-amber-200 bg-amber-100/90 dark:bg-amber-950/70 px-3 py-1.5 rounded-xl border border-amber-400/80 dark:border-amber-700/80 leading-snug">
-                💡 {kasusAktif.keterangan}
-              </span>
-            </div>
-          </section>
-        )}
-
         {/* Bagian 2: Area Program (Bingkai MULAI ... SELESAI Pastel) */}
         <section className="flex-1 flex flex-col min-h-[300px]">
           <ProgramArea

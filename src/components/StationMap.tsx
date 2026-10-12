@@ -261,6 +261,7 @@ export const StationMap: React.FC<StationMapProps> = ({
 
           const gagalCount = ambilGagalPerLevel()[lvl.id] || 0;
           const tampilkanOperatorCard = sudahSelesai || gagalCount >= 3;
+          const isLevelSulit = lvl.id.endsWith('-sulit');
 
           return (
             <div
@@ -394,21 +395,29 @@ export const StationMap: React.FC<StationMapProps> = ({
                             <span className="font-mono bg-emerald-100 dark:bg-emerald-950/80 border border-emerald-400 dark:border-emerald-600 text-emerald-950 dark:text-emerald-200 font-black px-2 py-0.5 rounded-md text-[11px] shadow-2xs">
                               {tampilkanOperatorCard ? at.jika : samarkanOperator(at.jika)}
                             </span>
-                            <span className="text-amber-700 dark:text-amber-400 font-bold text-xs">→</span>
-                            <span className="text-slate-600 dark:text-slate-400 text-[11px] font-bold">MAKA:</span>
-                            <span className="font-mono bg-sky-100 dark:bg-sky-950/80 border border-sky-400 dark:border-sky-600 text-sky-950 dark:text-sky-200 font-black px-2 py-0.5 rounded-md text-[11px] shadow-2xs">
-                              {at.maka}
-                            </span>
-                            {at.selainItu && (
+                            {isLevelSulit ? (
+                              <span className="text-[11px] font-semibold text-amber-800 dark:text-amber-300 italic">
+                                → Aksi: [Tentukan sendiri dari cerita]
+                              </span>
+                            ) : (
                               <>
-                                <span className="text-slate-300 dark:text-slate-600 mx-0.5">|</span>
-                                <span className="text-white font-black uppercase text-[11px] bg-rose-500 px-2 py-0.5 rounded-md shadow-2xs shrink-0">
-                                  SELAIN ITU
+                                <span className="text-amber-700 dark:text-amber-400 font-bold text-xs">→</span>
+                                <span className="text-slate-600 dark:text-slate-400 text-[11px] font-bold">MAKA:</span>
+                                <span className="font-mono bg-sky-100 dark:bg-sky-950/80 border border-sky-400 dark:border-sky-600 text-sky-950 dark:text-sky-200 font-black px-2 py-0.5 rounded-md text-[11px] shadow-2xs">
+                                  {at.maka}
                                 </span>
-                                <span className="text-rose-700 dark:text-rose-400 font-bold text-xs">→</span>
-                                <span className="font-mono bg-rose-100 dark:bg-rose-950/80 border border-rose-400 dark:border-rose-600 text-rose-950 dark:text-rose-200 font-black px-2 py-0.5 rounded-md text-[11px] shadow-2xs">
-                                  {at.selainItu}
-                                </span>
+                                {at.selainItu && (
+                                  <>
+                                    <span className="text-slate-300 dark:text-slate-600 mx-0.5">|</span>
+                                    <span className="text-white font-black uppercase text-[11px] bg-rose-500 px-2 py-0.5 rounded-md shadow-2xs shrink-0">
+                                      SELAIN ITU
+                                    </span>
+                                    <span className="text-rose-700 dark:text-rose-400 font-bold text-xs">→</span>
+                                    <span className="font-mono bg-rose-100 dark:bg-rose-950/80 border border-rose-400 dark:border-rose-600 text-rose-950 dark:text-rose-200 font-black px-2 py-0.5 rounded-md text-[11px] shadow-2xs">
+                                      {at.selainItu}
+                                    </span>
+                                  </>
+                                )}
                               </>
                             )}
                           </div>
