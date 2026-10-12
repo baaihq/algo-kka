@@ -182,35 +182,36 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
               return (
                 <div
                   key={entry.id}
-                  className={`rounded-2xl p-3.5 border-2 transition-all flex items-center justify-between gap-3 ${
+                  className={`rounded-2xl p-3.5 border-2 transition-all flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2.5 sm:gap-3 min-w-0 ${
                     isMe
                       ? 'bg-amber-50 dark:bg-amber-950/40 border-amber-400 dark:border-amber-600 ring-2 ring-amber-300 dark:ring-amber-500/50 shadow-sm'
                       : 'bg-white dark:bg-slate-800/80 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200'
                   }`}
                 >
                   {/* Ranking Medal & Nama Tim */}
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 min-w-0 flex-1">
                     {renderMedal(rank)}
 
-                    <div>
-                      <div className="flex items-center gap-2">
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-2 min-w-0">
                         <h4
-                          className={`font-black text-sm md:text-base ${
+                          title={entry.namaTim}
+                          className={`truncate font-black text-sm md:text-base ${
                             isMe ? 'text-amber-950 dark:text-amber-200 font-extrabold' : 'text-slate-900 dark:text-slate-100'
                           }`}
                         >
                           {entry.namaTim}
                         </h4>
                         {isMe && (
-                          <span className="bg-amber-400 text-slate-950 text-[10px] font-mono font-black px-2 py-0.5 rounded-full shadow-2xs">
+                          <span className="shrink-0 bg-amber-400 text-slate-950 text-[10px] font-mono font-black px-2 py-0.5 rounded-full shadow-2xs">
                             Tim Anda
                           </span>
                         )}
                       </div>
-                      <div className="flex items-center gap-2 text-[11px] text-slate-500 dark:text-slate-400 font-mono font-bold mt-0.5">
-                        <span>Peringkat #{rank}</span>
-                        <span>•</span>
-                        <span className="flex items-center gap-0.5 text-purple-700 dark:text-purple-400">
+                      <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px] text-slate-500 dark:text-slate-400 font-mono font-bold mt-0.5">
+                        <span className="whitespace-nowrap">Peringkat #{rank}</span>
+                        <span className="whitespace-nowrap">•</span>
+                        <span className="flex items-center gap-0.5 text-purple-700 dark:text-purple-400 whitespace-nowrap">
                           <Award className="w-3 h-3" />
                           <span>{entry.badgeCount} Badge</span>
                         </span>
@@ -219,7 +220,7 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
                   </div>
 
                   {/* Skor Bintang & Tombol Share */}
-                  <div className="flex items-center gap-2 shrink-0">
+                  <div className="flex items-center gap-2 shrink-0 self-end sm:self-auto">
                     <div className="flex items-center gap-1.5 bg-amber-100 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-700 px-3 py-1.5 rounded-2xl shadow-2xs">
                       <Star className="w-4 h-4 fill-amber-500 text-amber-600 dark:text-amber-400" />
                       <span className="font-mono font-black text-amber-950 dark:text-amber-200 text-sm md:text-base">
@@ -227,7 +228,6 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
                       </span>
                     </div>
 
-                    {/* Tombol Share per Entry Papan Peringkat */}
                     <button
                       type="button"
                       onClick={handleShareLeaderboard}
