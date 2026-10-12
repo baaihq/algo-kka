@@ -34,7 +34,7 @@ export async function kirimProgres(params: KirimProgresParams): Promise<void> {
   if (typeof navigator !== 'undefined' && !navigator.onLine) return;
 
   try {
-    await supabase.rpc('simpan_progres', {
+    const { error } = await supabase.rpc('simpan_progres', {
       p_kode: kode,
       p_tim: params.namaTim,
       p_level: params.levelId,
@@ -43,6 +43,9 @@ export async function kirimProgres(params: KirimProgresParams): Promise<void> {
       p_varian: params.varianId,
       p_badges: params.badges,
     });
+    if (error) {
+      console.warn('Gagal menyimpan progres ke Supabase:', error.message);
+    }
   } catch (error) {
     console.warn('Gagal menyinkronkan progres ke Supabase (offline/best-effort):', error);
   }
@@ -67,7 +70,7 @@ export async function kirimPercobaan(params: KirimPercobaanParams): Promise<void
   if (typeof navigator !== 'undefined' && !navigator.onLine) return;
 
   try {
-    await supabase.rpc('catat_percobaan', {
+    const { error } = await supabase.rpc('catat_percobaan', {
       p_kode: kode,
       p_tim: params.namaTim,
       p_level: params.levelId,
@@ -79,6 +82,9 @@ export async function kirimPercobaan(params: KirimPercobaanParams): Promise<void
       p_gagal: params.gagalBerturut,
       p_bintang: params.bintangDiperoleh,
     });
+    if (error) {
+      console.warn('Gagal mencatat percobaan ke Supabase:', error.message);
+    }
   } catch (error) {
     console.warn('Gagal menyinkronkan data percobaan ke Supabase (offline/best-effort):', error);
   }
