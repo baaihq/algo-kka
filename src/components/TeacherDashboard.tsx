@@ -31,6 +31,12 @@ import {
 } from 'lucide-react';
 import { ThemeMenu } from './ThemeMenu';
 import { DAFTAR_LEVEL } from '../data/levels';
+import { DAFTAR_BADGE } from '../data/badges';
+
+const LABEL_BADGE = new Map<string, string>(
+  DAFTAR_BADGE.map((b) => [b.id, `${b.ikon} ${b.nama}`])
+);
+const labelBadge = (id: string): string => LABEL_BADGE.get(id) ?? `🏅 ${id}`;
 
 interface TeacherDashboardProps {
   onKeluarDashboard: () => void;
@@ -702,7 +708,7 @@ const DetailTimExpanded: React.FC<DetailTimExpandedProps> = ({ tim, formatWaktu 
                 key={b}
                 className="px-2.5 py-1 rounded-xl bg-purple-50 dark:bg-purple-950/50 border border-purple-200 dark:border-purple-800 text-purple-700 dark:text-purple-300 font-bold text-[11px]"
               >
-                🏅 {b}
+                {labelBadge(b)}
               </span>
             ))}
           </div>
