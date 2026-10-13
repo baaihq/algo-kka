@@ -119,7 +119,7 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
           <div className="flex items-center gap-2 w-full sm:w-auto">
             <div className="flex items-center gap-1.5 font-bold">
               <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-              <span>Tim: <span className="font-mono text-amber-950 dark:text-amber-300 font-black">{currentTeamName}</span></span>
+              <span>Kelompok: <span className="font-mono text-amber-950 dark:text-amber-300 font-black">{currentTeamName}</span></span>
             </div>
           </div>
 
@@ -169,7 +169,7 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
                 Belum Ada Data Peringkat
               </h4>
               <p className="text-xs text-slate-500 dark:text-slate-400 max-w-xs leading-relaxed">
-                Belum ada data peringkat. Selesaikan level untuk mencatatkan timmu!
+                Belum ada data peringkat. Selesaikan level untuk mencatatkan kelompokmu!
               </p>
             </div>
           ) : (
@@ -204,7 +204,7 @@ export const LeaderboardModal: React.FC<LeaderboardModalProps> = ({
                         </h4>
                         {isMe && (
                           <span className="shrink-0 bg-amber-400 text-slate-950 text-[10px] font-mono font-black px-2 py-0.5 rounded-full shadow-2xs">
-                            Tim Anda
+                            Kelompok Anda
                           </span>
                         )}
                       </div>

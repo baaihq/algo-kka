@@ -319,9 +319,9 @@ export async function salinAtauUnduhGambarSkor(
     }
 
     // 2. Fallback: Unduh file PNG & salin teks ringkasan ke clipboard
-    const namaCleanTim = (params.namaTim || 'Tim').replace(/[^a-zA-Z0-9_-]/g, '_');
+    const namaCleanKelompok = (params.namaTim || 'Kelompok').replace(/[^a-zA-Z0-9_-]/g, '_');
     const namaCleanLevel = (params.namaLevel || 'Level').replace(/[^a-zA-Z0-9_-]/g, '_');
-    const filename = `Skor_${namaCleanLevel}_${namaCleanTim}.png`;
+    const filename = `Skor_${namaCleanLevel}_${namaCleanKelompok}.png`;
 
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');

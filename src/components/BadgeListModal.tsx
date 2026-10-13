@@ -31,7 +31,7 @@ export const BadgeListModal: React.FC<BadgeListModalProps> = ({
   isOpen,
   onClose,
   badges,
-  namaTim = 'Tim Penjelajah',
+  namaTim = 'Kelompok Penjelajah',
   totalBintang = 0
 }) => {
   const [loadingId, setLoadingId] = useState<string | null>(null);
@@ -97,7 +97,7 @@ export const BadgeListModal: React.FC<BadgeListModalProps> = ({
               <Award className="w-6 h-6 text-amber-950" />
             </div>
             <div>
-              <h3 className="font-black text-base md:text-lg font-fredoka">Koleksi Badge Tim</h3>
+              <h3 className="font-black text-base md:text-lg font-fredoka">Koleksi Badge Kelompok</h3>
               <p className="text-xs text-amber-950 font-mono font-bold">
                 {jumlahTerbuka} dari {badges.length} Badge Terbuka • {namaTim}
               </p>
@@ -138,7 +138,7 @@ export const BadgeListModal: React.FC<BadgeListModalProps> = ({
             }`}
             title={
               jumlahTerbuka > 0
-                ? 'Bagikan sertifikat gambar bukti koleksi badge tim ke WhatsApp'
+                ? 'Bagikan sertifikat gambar bukti koleksi badge kelompok ke WhatsApp'
                 : 'Buka minimal 1 badge untuk membagikan bukti koleksi'
             }
           >

@@ -58,7 +58,7 @@ export const TestResultModal: React.FC<TestResultModalProps> = ({
   onLanjutLevelBerikutnya,
   onKembaliKePeta,
   bintangDiperoleh = 3,
-  namaTim = 'Tim Penjelajah',
+  namaTim = 'Kelompok Penjelajah',
   skenarioRingkasan,
   varianId,
   totalPetunjukTerbuka = 0,

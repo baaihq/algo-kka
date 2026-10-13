@@ -93,15 +93,15 @@ export const StationMap: React.FC<StationMapProps> = ({
     e.preventDefault();
     const bersih = namaTimBaruInput.trim();
     if (!bersih) {
-      setErrorGantiTim('Nama tim tidak boleh kosong.');
+      setErrorGantiTim('Nama kelompok tidak boleh kosong.');
       return;
     }
     if (bersih.length < 2) {
-      setErrorGantiTim('Nama tim minimal 2 karakter.');
+      setErrorGantiTim('Nama kelompok minimal 2 karakter.');
       return;
     }
     if (bersih.length > 30) {
-      setErrorGantiTim('Nama tim maksimal 30 karakter.');
+      setErrorGantiTim('Nama kelompok maksimal 30 karakter.');
       return;
     }
     onGantiTim(bersih);
@@ -123,7 +123,7 @@ export const StationMap: React.FC<StationMapProps> = ({
             <Users className="w-6 h-6 text-amber-700 dark:text-amber-400" />
           </div>
           <div className="min-w-0">
-            <div className="text-[11px] font-mono font-bold uppercase text-slate-500 dark:text-slate-400">Tim Penjelajah</div>
+            <div className="text-[11px] font-mono font-bold uppercase text-slate-500 dark:text-slate-400">Kelompok Penjelajah</div>
             <h2
               className="text-base md:text-lg font-black text-slate-900 dark:text-slate-100 truncate max-w-[200px] sm:max-w-[280px]"
               title={tim.namaTim}
@@ -148,7 +148,7 @@ export const StationMap: React.FC<StationMapProps> = ({
             type="button"
             onClick={() => setIsBadgeModalOpen(true)}
             className="flex items-center gap-1.5 bg-yellow-100 hover:bg-yellow-200 dark:bg-yellow-950/50 dark:hover:bg-yellow-900/50 border-2 border-yellow-300 dark:border-yellow-700 border-b-4 border-b-yellow-400 dark:border-b-yellow-800 active:border-b-0 active:translate-y-1 px-3 py-2 rounded-2xl text-xs font-black text-yellow-950 dark:text-yellow-200 transition-all cursor-pointer shadow-xs"
-            title="Lihat koleksi badge pencapaian tim"
+            title="Lihat koleksi badge pencapaian kelompok"
           >
             <Award className="w-4 h-4 text-amber-600 dark:text-amber-400" />
             <span>Badge ({badgeTerbukaCount}/{badgesTim.length})</span>
@@ -159,10 +159,10 @@ export const StationMap: React.FC<StationMapProps> = ({
             type="button"
             onClick={() => setIsLeaderboardOpen(true)}
             className="flex items-center gap-1.5 bg-sky-100 hover:bg-sky-200 dark:bg-sky-950/50 dark:hover:bg-sky-900/50 border-2 border-sky-300 dark:border-sky-700 border-b-4 border-b-sky-400 dark:border-b-sky-800 active:border-b-0 active:translate-y-1 px-3 py-2 rounded-2xl text-xs font-black text-sky-950 dark:text-sky-200 transition-all cursor-pointer shadow-xs"
-            title="Lihat Papan Peringkat Tim"
+            title="Lihat Papan Peringkat Kelompok"
           >
             <Trophy className="w-4 h-4 text-sky-700 dark:text-sky-400" />
-            <span>Top Tim</span>
+            <span>Top Kelompok</span>
           </button>
 
           {/* Menu Pilihan Tema (Dark Mode / Light Mode / Auto) */}
@@ -172,9 +172,9 @@ export const StationMap: React.FC<StationMapProps> = ({
             type="button"
             onClick={handleBukaGantiTim}
             className="min-h-[42px] px-3 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 border-2 border-slate-300 dark:border-slate-700 rounded-2xl text-xs font-black text-slate-700 dark:text-slate-200 transition-colors cursor-pointer"
-            title="Ganti tim"
+            title="Ganti kelompok"
           >
-            Ganti Tim
+            Ganti Kelompok
           </button>
 
           <button
@@ -487,9 +487,9 @@ export const StationMap: React.FC<StationMapProps> = ({
       {isGantiTimModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-sky-950/60 backdrop-blur-sm animate-in fade-in duration-200">
           <div className="bg-white dark:bg-slate-900 border-2 border-sky-300 dark:border-slate-700 rounded-3xl max-w-md w-full shadow-2xl p-6 text-slate-800 dark:text-slate-100">
-            <h3 className="text-lg font-black text-slate-900 dark:text-slate-100 mb-1 font-fredoka">Ganti Nama Tim</h3>
+            <h3 className="text-lg font-black text-slate-900 dark:text-slate-100 mb-1 font-fredoka">Ganti Nama Kelompok</h3>
             <p className="text-xs text-slate-600 dark:text-slate-400 mb-4">
-              Progres bintang tetap tersimpan. Masukkan nama tim baru:
+              Progres bintang tetap tersimpan. Masukkan nama kelompok baru:
             </p>
             <form onSubmit={handleSimpanNamaTimBaru} className="space-y-3">
               <div>
@@ -501,7 +501,7 @@ export const StationMap: React.FC<StationMapProps> = ({
                     setNamaTimBaruInput(e.target.value);
                     if (errorGantiTim) setErrorGantiTim('');
                   }}
-                  placeholder="Nama tim baru (maks. 30 karakter)..."
+                  placeholder="Nama kelompok baru (maks. 30 karakter)..."
                   className="w-full min-h-[46px] px-3.5 py-2 bg-sky-50 dark:bg-slate-800 border-2 border-sky-300 dark:border-slate-700 focus:border-amber-400 focus:bg-white dark:focus:bg-slate-800 rounded-2xl text-slate-900 dark:text-slate-100 font-bold text-sm outline-none placeholder:text-slate-400"
                 />
                 <div className="flex justify-between items-center mt-1 text-[11px] text-slate-500 dark:text-slate-400">

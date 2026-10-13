@@ -319,9 +319,9 @@ export const DAFTAR_LEVEL: Level[] = [
     palet: ['jika_maka', 'izinkan', 'buka', 'tolak'],
     petunjuk: [
       'Kerangka blok JIKA sudah tersedia, namun rongga kondisi dan aksinya perlu kamu lengkapi.',
-      'Perhatikan data numerik yang diuji dan gunakan operator perbandingan yang tepat (seperti >=).',
-      'Pasang blok aksi (Izinkan Masuk / Buka Gerbang) ke dalam rongga MAKA.',
-      'Bila data uji tidak memenuhi kriteria minimal, ALGO tidak boleh melakukan aksi apa pun.'
+      'Perhatikan data numerik yang diuji dan gunakan operator perbandingan yang tepat sesuai ATURAN di layar.',
+      'Pasang blok aksi yang tepat ke dalam rongga MAKA.',
+      'Jika data uji tidak memenuhi ketentuan, robot ALGO tidak boleh melakukan aksi apa pun.'
     ],
     varian: [
       {

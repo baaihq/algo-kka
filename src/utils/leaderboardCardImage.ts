@@ -217,7 +217,7 @@ export async function buatGambarLeaderboard(
     ctx.font = 'bold 18px sans-serif';
     ctx.fillStyle = '#cbd5e1';
     ctx.textAlign = 'center';
-    ctx.fillText('Belum ada data peringkat tim yang tersimpan.', width / 2, tableTop + 140);
+    ctx.fillText('Belum ada data peringkat kelompok yang tersimpan.', width / 2, tableTop + 140);
     ctx.textAlign = 'left';
   } else {
     topEntries.forEach((entry, idx) => {

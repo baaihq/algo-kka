@@ -621,7 +621,7 @@ export const LevelEditor: React.FC<LevelEditorProps> = ({
                 />
               ))}
               <span className="text-[10px] text-slate-500 dark:text-slate-400 font-bold ml-1">
-                Tim: <span className="text-amber-700 dark:text-amber-400 font-black">{tim.namaTim}</span>
+                Kelompok: <span className="text-amber-700 dark:text-amber-400 font-black">{tim.namaTim}</span>
               </span>
             </div>
           </div>

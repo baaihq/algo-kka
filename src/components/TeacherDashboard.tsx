@@ -623,7 +623,7 @@ const DetailTimExpanded: React.FC<DetailTimExpandedProps> = ({ tim, formatWaktu 
         </h4>
 
         {tim.attempts.length === 0 ? (
-          <p className="text-slate-400 italic py-2">Belum ada riwayat percobaan yang tercatat untuk tim ini.</p>
+          <p className="text-slate-400 italic py-2">Belum ada riwayat percobaan yang tercatat untuk kelompok ini.</p>
         ) : (
           <div className="overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
             <table className="w-full text-left text-xs">

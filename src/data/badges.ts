@@ -19,7 +19,7 @@ export const DAFTAR_BADGE: Badge[] = [
   {
     id: 'kadet_algo',
     nama: 'Kadet ALGO',
-    deskripsi: 'Memulai ekspedisi logika dan mendaftarkan tim ke stasiun.',
+    deskripsi: 'Memulai ekspedisi logika dan mendaftarkan kelompok ke stasiun.',
     ikon: '🤖',
     kategori: 'Dasar',
     syarat: (progresMap) => {
