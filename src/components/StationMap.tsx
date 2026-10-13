@@ -429,7 +429,7 @@ export const StationMap: React.FC<StationMapProps> = ({
                   {/* Keterangan Peringatan Murid */}
                   <div className="pt-1 flex items-center gap-1.5 text-[11px] font-bold text-amber-900 dark:text-amber-300 italic">
                     <AlertCircle className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
-                    <span>Catatan: Pastikan balok perintah yang disusun memenuhi kondisi di atas agar robot ALGO berhasil!</span>
+                    <span>Catatan: Pastikan blok perintah yang disusun memenuhi kondisi di atas agar robot ALGO berhasil!</span>
                   </div>
                 </div>
               </div>

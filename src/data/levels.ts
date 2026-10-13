@@ -7,15 +7,15 @@ export const DAFTAR_LEVEL: Level[] = [
   {
     id: 'gerbang-tamu',
     nama: 'Gerbang Tamu — Mudah',
-    cerita: 'ALGO ditugaskan sebagai penjaga gerbang pos stasiun luar angkasa. Bantu ALGO memeriksa kartu tamu yang hendak melintas!',
-    tujuan: 'Izinkan tamu masuk HANYA jika kartu tamu berstatus valid/sesuai ketentuan.',
+    cerita: 'ALGO ditugaskan sebagai penjaga gerbang pos stasiun luar angkasa. Bantu ALGO memeriksa data yang masuk sebelum menentukan akses!',
+    tujuan: 'Selesaikan misi sesuai ATURAN yang tampil di layar: hanya data yang memenuhi ketentuan yang diproses.',
     ikon: 'ShieldCheck',
     palet: ['jika_maka', 'izinkan', 'buka', 'tolak'],
     petunjuk: [
-      'Gunakan struktur JIKA [kartu = ...] MAKA untuk membuat keputusan satu arah.',
-      'Tambahkan blok aksi yang tepat (misal: "Izinkan Masuk" atau "Buka Gerbang") ke dalam rongga MAKA.',
-      'Gunakan operator = untuk mencocokkan teks kartu dengan nilai pembanding stasiun.',
-      'Jika kartu tidak sesuai ketentuan, robot ALGO tidak boleh melakukan aksi apa pun.'
+      'Gunakan struktur JIKA [data …] MAKA untuk membuat keputusan satu arah.',
+      'Nama data dan nilai pembanding mengikuti varian misi yang kamu dapatkan — perhatikan ATURAN di layar.',
+      'Pilih operator perbandingan yang sesuai ATURAN varian (waspadai jebakan = vs !=).',
+      'Pasang blok aksi yang tepat ke dalam rongga MAKA. Jika data tidak memenuhi ketentuan, robot ALGO tidak boleh melakukan aksi apa pun.'
     ],
     varian: [
       {

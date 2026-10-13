@@ -25,12 +25,8 @@ export const TeamScreen: React.FC<TeamScreenProps> = ({
     const bersihKode = kodeKelas.trim();
     const bersihNama = namaTim.trim();
 
-    if (!bersihKode) {
-      setErrorPesan('Masukkan kode kelas terlebih dahulu!');
-      return;
-    }
-    if (bersihKode.length < 4) {
-      setErrorPesan('Kode kelas minimal 4 karakter.');
+    if (bersihKode && bersihKode.length < 4) {
+      setErrorPesan('Kode kelas minimal 4 karakter (kosongkan jika tidak ada).');
       return;
     }
     if (!bersihNama) {
@@ -156,10 +152,15 @@ export const TeamScreen: React.FC<TeamScreenProps> = ({
             <div className="space-y-1.5">
               <label
                 htmlFor="inputKodeKelas"
-                className="text-xs font-black text-slate-700 dark:text-slate-300 uppercase tracking-wider flex items-center gap-1.5"
+                className="text-xs font-black text-slate-700 dark:text-slate-300 uppercase tracking-wider flex items-center justify-between"
               >
-                <KeyRound className="w-4 h-4 text-sky-600 dark:text-sky-400" />
-                <span>Kode Kelas</span>
+                <span className="flex items-center gap-1.5">
+                  <KeyRound className="w-4 h-4 text-sky-600 dark:text-sky-400" />
+                  <span>Kode Kelas</span>
+                </span>
+                <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 lowercase font-sans">
+                  (opsional)
+                </span>
               </label>
               <input
                 id="inputKodeKelas"
@@ -169,10 +170,13 @@ export const TeamScreen: React.FC<TeamScreenProps> = ({
                   setKodeKelasInput(e.target.value.toUpperCase());
                   if (errorPesan) setErrorPesan('');
                 }}
-                placeholder="Mis. KELAS-10A"
+                placeholder="Mis. KELAS-10A (opsional)"
                 maxLength={20}
                 className="w-full min-h-[48px] px-3.5 py-2.5 bg-sky-50/70 dark:bg-slate-800/80 border-2 border-sky-300 dark:border-slate-700 focus:border-amber-400 focus:bg-white dark:focus:bg-slate-800 rounded-2xl text-slate-900 dark:text-slate-100 font-mono font-bold text-sm md:text-base outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-slate-500 shadow-2xs tracking-wide uppercase"
               />
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-tight">
+                Opsional — isi jika gurumu memberikan kode kelas.
+              </p>
             </div>
 
             {/* Input Nama Kelompok */}

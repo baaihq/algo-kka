@@ -206,10 +206,10 @@ export async function buatGambarKoleksiBadge(params: ParameterKoleksiBadge): Pro
   ctx.fill();
   ctx.stroke();
 
-  // Baris Info Tim & Skor
+  // Baris Info Kelompok & Skor
   ctx.font = 'bold 13px sans-serif';
   ctx.fillStyle = '#fbbf24';
-  ctx.fillText('NAMA TIM / KELOMPOK:', 75, 198);
+  ctx.fillText('NAMA KELOMPOK:', 75, 198);
 
   ctx.font = 'bold 26px sans-serif';
   ctx.fillStyle = '#ffffff';
@@ -511,10 +511,10 @@ export async function buatGambarSatuBadge(params: ParameterSatuBadge): Promise<B
   ctx.lineTo(width - 80, 238);
   ctx.stroke();
 
-  // Diberikan Kepada Tim
+  // Diberikan Kepada Kelompok
   ctx.font = 'bold 12px sans-serif';
   ctx.fillStyle = '#94a3b8';
-  ctx.fillText('DIANUGERAHKAN KEPADA TIM:', rightX, 266);
+  ctx.fillText('DIANUGERAHKAN KEPADA KELOMPOK:', rightX, 266);
 
   ctx.font = 'bold 26px sans-serif';
   ctx.fillStyle = '#ffffff';
@@ -574,8 +574,8 @@ export async function bagikanKoleksiBadgeKeWhatsApp(
 ): Promise<{ sukses: boolean; mode: 'webshare' | 'whatsapp' | 'canceled'; pesan: string }> {
   try {
     const blob = await buatGambarKoleksiBadge(params);
-    const namaCleanTim = (params.namaTim || 'Tim').replace(/[^a-zA-Z0-9_-]/g, '_');
-    const filename = `Badge_Koleksi_${namaCleanTim}.png`;
+    const namaCleanKelompok = (params.namaTim || 'Kelompok').replace(/[^a-zA-Z0-9_-]/g, '_');
+    const filename = `Badge_Koleksi_${namaCleanKelompok}.png`;
     const file = new File([blob], filename, { type: 'image/png' });
 
     const jumlahTerbuka = params.badges.filter((b) => b.terbuka).length;
@@ -587,7 +587,7 @@ export async function bagikanKoleksiBadgeKeWhatsApp(
     const textCaption =
       `🚀 *EKSPEDISI KODE: STASIUN LOGIKA* 🚀\n` +
       `🎖️ *BUKTI PENCAPAIAN KOLEKSI BADGE*\n` +
-      `👥 *Tim:* ${params.namaTim}\n` +
+      `👥 *Kelompok:* ${params.namaTim}\n` +
       `⭐ *Total Bintang:* ${params.totalBintang}/18 Bintang\n` +
       `🏆 *Badge Terbuka:* ${jumlahTerbuka}/${params.badges.length} Badge\n\n` +
       (badgeListText ? `*Daftar Badge Terbuka:*\n${badgeListText}\n\n` : '') +
@@ -667,19 +667,19 @@ export async function bagikanSatuBadgeKeWhatsApp(
 ): Promise<{ sukses: boolean; mode: 'webshare' | 'whatsapp' | 'canceled'; pesan: string }> {
   try {
     const blob = await buatGambarSatuBadge(params);
-    const namaCleanTim = (params.namaTim || 'Tim').replace(/[^a-zA-Z0-9_-]/g, '_');
+    const namaCleanKelompok = (params.namaTim || 'Kelompok').replace(/[^a-zA-Z0-9_-]/g, '_');
     const namaCleanBadge = (params.badge.nama || 'Badge').replace(/[^a-zA-Z0-9_-]/g, '_');
-    const filename = `Badge_${namaCleanBadge}_${namaCleanTim}.png`;
+    const filename = `Badge_${namaCleanBadge}_${namaCleanKelompok}.png`;
     const file = new File([blob], filename, { type: 'image/png' });
 
     const textCaption =
       `🚀 *EKSPEDISI KODE: STASIUN LOGIKA* 🚀\n` +
       `🎖️ *BUKTI PEROLEHAN BADGE LOGIKA*\n` +
-      `👥 *Tim:* ${params.namaTim}\n` +
+      `👥 *Kelompok:* ${params.namaTim}\n` +
       `🏅 *Badge:* ${params.badge.ikon} *${params.badge.nama}* (${params.badge.kategori})\n` +
       `📝 *Tantangan:* ${params.badge.deskripsi}\n` +
       `⭐ *Total Bintang:* ${params.totalBintang ?? 0} Bintang\n\n` +
-      `Berhasil dituntaskan oleh Tim ${params.namaTim} sebagai bukti penyelesaian stasiun logika! 🎉`;
+      `Berhasil dituntaskan oleh Kelompok ${params.namaTim} sebagai bukti penyelesaian stasiun logika! 🎉`;
 
     // 1. Coba Web Share API
     if (

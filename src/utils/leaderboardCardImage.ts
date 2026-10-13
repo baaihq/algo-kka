@@ -174,7 +174,7 @@ export async function buatGambarLeaderboard(
 
   ctx.font = 'bold 11px sans-serif';
   ctx.fillStyle = '#fde047';
-  ctx.fillText('TIM PENJELAJAH ANDA:', width - 344, 82);
+  ctx.fillText('KELOMPOK PENJELAJAH ANDA:', width - 344, 82);
 
   ctx.font = '900 17px sans-serif';
   ctx.fillStyle = '#ffffff';
@@ -202,7 +202,7 @@ export async function buatGambarLeaderboard(
   ctx.font = 'bold 11px sans-serif';
   ctx.fillStyle = '#64748b';
   ctx.fillText('PERINGKAT', tableLeft + 20, tableTop + 20);
-  ctx.fillText('NAMA TIM / PESERTA DIDIK', tableLeft + 140, tableTop + 20);
+  ctx.fillText('NAMA KELOMPOK / PESERTA DIDIK', tableLeft + 140, tableTop + 20);
   ctx.fillText('LENCANA BADGE', tableLeft + 520, tableTop + 20);
   ctx.fillText('TOTAL SKOR BINTANG', tableLeft + 720, tableTop + 20);
 
@@ -271,7 +271,7 @@ export async function buatGambarLeaderboard(
       ctx.font = 'bold 11px sans-serif';
       ctx.fillStyle = isMe ? '#fbbf24' : '#94a3b8';
       ctx.fillText(
-        isMe ? '⭐ Tim Anda • Penjelajah Stasiun Logika' : `Peringkat #${rankNum} Ekspedisi`,
+        isMe ? '⭐ Kelompok Anda • Penjelajah Stasiun Logika' : `Peringkat #${rankNum} Ekspedisi`,
         tableLeft + 140,
         rowY + 54
       );
@@ -338,8 +338,8 @@ export async function bagikanLeaderboardKeWhatsApp(
 ): Promise<{ sukses: boolean; mode: 'webshare' | 'whatsapp' | 'canceled'; pesan: string }> {
   try {
     const blob = await buatGambarLeaderboard(params);
-    const cleanTim = (params.currentTeamName || 'Tim').replace(/[^a-zA-Z0-9_-]/g, '_');
-    const filename = `Leaderboard_StasiunLogika_${cleanTim}.png`;
+    const cleanKelompok = (params.currentTeamName || 'Kelompok').replace(/[^a-zA-Z0-9_-]/g, '_');
+    const filename = `Leaderboard_StasiunLogika_${cleanKelompok}.png`;
     const file = new File([blob], filename, { type: 'image/png' });
 
     const currentEntryIndex = params.entries.findIndex(
@@ -361,10 +361,10 @@ export async function bagikanLeaderboardKeWhatsApp(
     const textCaption =
       `🏆 *PAPAN PERINGKAT RESMI (LEADERBOARD)* 🏆\n` +
       `🚀 *EKSPEDISI KODE: STASIUN LOGIKA ALGO*\n\n` +
-      `👥 *Tim Kami:* ${params.currentTeamName}\n` +
+      `👥 *Kelompok Kami:* ${params.currentTeamName}\n` +
       `📊 *Peringkat:* #${rank} (${stars} ⭐ • ${badges} Badge Terbuka)\n\n` +
       `🏅 *TOP 5 KELAS X:*${topListText}\n\n` +
-      `Yuk selesaikan misi stasiun logika robot ALGO bersama timmu! 🎉`;
+      `Yuk selesaikan misi stasiun logika robot ALGO bersama kelompokmu! 🎉`;
 
     // 1. Coba Web Share API (native share dialog di Android / iOS / Desktop)
     if (

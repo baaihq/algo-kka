@@ -74,7 +74,7 @@ export function buatTeksRingkasanSkorLevel(params: ParameterRingkasanSkorLevel):
     return [
       `🚀 *EKSPEDISI KODE: STASIUN LOGIKA*`,
       garis,
-      `👥 Tim: *${namaTim}*`,
+      `👥 Kelompok: *${namaTim}*`,
       `🛰️ Stasiun: *${namaLevel}*`,
       skenario ? `🏷️ Skenario: ${skenario}${varianId ? ` (Varian #${varianId})` : ''}` : '',
       `🏆 Status: *LULUS 100%* ✅`,
@@ -93,7 +93,7 @@ export function buatTeksRingkasanSkorLevel(params: ParameterRingkasanSkorLevel):
   return [
     `🚀 *EKSPEDISI KODE: STASIUN LOGIKA*`,
     garis,
-    `👥 Tim: *${namaTim}*`,
+    `👥 Kelompok: *${namaTim}*`,
     `🛰️ Stasiun: *${namaLevel}*`,
     skenario ? `🏷️ Skenario: ${skenario}${varianId ? ` (Varian #${varianId})` : ''}` : '',
     `⚠️ Status: Masih Menganalisis (${kasusLulus}/${totalKasus} Kasus Lulus)`,
@@ -133,7 +133,7 @@ export function buatTeksRingkasanProgresTim(params: ParameterRingkasanProgresTim
   return [
     `🚀 *EKSPEDISI KODE: STASIUN LOGIKA*`,
     garis,
-    `👥 Tim: *${namaTim}*`,
+    `👥 Kelompok: *${namaTim}*`,
     `⭐ Total Bintang: *${totalBintang} / ${maksimalBintang} Bintang*`,
     `🎖️ Koleksi Badge: *${badgeCount} / ${totalBadge} Badge*`,
     `🛰️ Stasiun Selesai: *${levelSelesaiCount} / ${totalLevel} Stasiun*`,

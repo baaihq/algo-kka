@@ -98,7 +98,7 @@ function eksekusiAksi(blok: BlokAksi, daftarKejadian: Kejadian[], jejak: string[
       break;
     case 'buka':
       daftarKejadian.push({ tipe: 'buka' });
-      jejak.push('Robot ALGO menjalankan: "Buka Gerbang" (Dermaga kargo terbuka).');
+      jejak.push('Robot ALGO menjalankan: "Buka Gerbang" (Gerbang terbuka).');
       break;
     case 'pesan':
       daftarKejadian.push({ tipe: 'pesan', nilai: blok.nilai || '' });

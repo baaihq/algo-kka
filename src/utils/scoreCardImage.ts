@@ -173,10 +173,10 @@ export async function buatGambarSkorLevel(params: ParameterRingkasanSkorLevel): 
   ctx.stroke();
 
   // Left Section: Team Name & Station Info
-  // Nama Tim Box
+  // Nama Kelompok Box
   ctx.font = 'bold 13px sans-serif';
   ctx.fillStyle = '#38bdf8';
-  ctx.fillText('NAMA TIM / KELOMPOK:', 80, 225);
+  ctx.fillText('NAMA KELOMPOK:', 80, 225);
 
   ctx.font = 'bold 28px sans-serif';
   ctx.fillStyle = '#f8fafc';
@@ -355,13 +355,13 @@ export async function bagikanSkorKeWhatsApp(
   try {
     const blob = await buatGambarSkorLevel(params);
     const namaCleanLevel = (params.namaLevel || 'Level').replace(/[^a-zA-Z0-9_-]/g, '_');
-    const namaCleanTim = (params.namaTim || 'Tim').replace(/[^a-zA-Z0-9_-]/g, '_');
-    const filename = `Skor_${namaCleanLevel}_${namaCleanTim}.png`;
+    const namaCleanKelompok = (params.namaTim || 'Kelompok').replace(/[^a-zA-Z0-9_-]/g, '_');
+    const filename = `Skor_${namaCleanLevel}_${namaCleanKelompok}.png`;
     const file = new File([blob], filename, { type: 'image/png' });
 
     const bintangStr = '⭐'.repeat(params.bintang || 3);
     const textCaption = `🚀 *EKSPEDISI KODE: STASIUN LOGIKA* 🚀\n` +
-      `👥 *Tim:* ${params.namaTim}\n` +
+      `👥 *Kelompok:* ${params.namaTim}\n` +
       `🛰️ *Stasiun:* ${params.namaLevel}\n` +
       `🏆 *Bintang:* ${bintangStr} (${params.bintang || 3}/3)\n\n` +
       `Program ALGO berhasil menyelesaikan stasiun logika ini! 🎉`;
