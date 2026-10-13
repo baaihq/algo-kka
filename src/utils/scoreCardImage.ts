@@ -258,7 +258,7 @@ export async function buatGambarSkorLevel(params: ParameterRingkasanSkorLevel): 
   // Star Text Rating
   ctx.font = 'black 22px sans-serif';
   ctx.fillStyle = '#fef08a';
-  ctx.fillText(`${bintangCount} / 3 BINTANG`, rightX + 170, 382);
+  ctx.fillText(`${bintangCount}/3 BINTANG`, rightX + 170, 382);
 
   const ratingLabel =
     bintangCount === 3

@@ -139,7 +139,7 @@ export const StationMap: React.FC<StationMapProps> = ({
           <div className="flex items-center gap-1.5 bg-amber-100 dark:bg-amber-950/60 px-3 py-2 rounded-2xl border-2 border-amber-300 dark:border-amber-700 border-b-4 border-b-amber-400 dark:border-b-amber-800">
             <Star className="w-4 h-4 fill-amber-500 text-amber-600 dark:text-amber-400" />
             <span className="font-mono font-black text-amber-950 dark:text-amber-200 text-xs md:text-sm">
-              {totalBintang} / 18 ⭐
+              {totalBintang}/18 ⭐
             </span>
           </div>
 

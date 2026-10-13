@@ -897,7 +897,7 @@ export function inisialisasiProgramAwal(level: Level, varian: Varian): BlokProgr
         tipe: 'jika',
         kondisi: {
           namaData: varian.namaData,
-          operator: '>=',
+          operator: varian.operatorBenar,
           pembanding: varian.pembandingDefault
         },
         punyaSelainItu: true,

@@ -134,9 +134,9 @@ export function buatTeksRingkasanProgresTim(params: ParameterRingkasanProgresTim
     `🚀 *EKSPEDISI KODE: STASIUN LOGIKA*`,
     garis,
     `👥 Kelompok: *${namaTim}*`,
-    `⭐ Total Bintang: *${totalBintang} / ${maksimalBintang} Bintang*`,
-    `🎖️ Koleksi Badge: *${badgeCount} / ${totalBadge} Badge*`,
-    `🛰️ Stasiun Selesai: *${levelSelesaiCount} / ${totalLevel} Stasiun*`,
+    `⭐ Total Bintang: *${totalBintang}/${maksimalBintang} Bintang*`,
+    `🎖️ Koleksi Badge: *${badgeCount}/${totalBadge} Badge*`,
+    `🛰️ Stasiun Selesai: *${levelSelesaiCount}/${totalLevel} Stasiun*`,
     garis,
     `Robot ALGO siap menaklukkan seluruh stasiun luar angkasa! 🌌`
   ].join('\n');

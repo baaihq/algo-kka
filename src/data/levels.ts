@@ -318,7 +318,7 @@ export const DAFTAR_LEVEL: Level[] = [
     ikon: 'ShieldCheck',
     palet: ['jika_maka', 'izinkan', 'buka', 'tolak'],
     petunjuk: [
-      'Kerangka blok JIKA sudah tersedia, namun rongga kondisi dan aksinya perlu kamu lengkapi.',
+      'Tambahkan blok "JIKA ... MAKA" dari palet, lalu lengkapi operator dan isi rongga MAKA dengan aksi yang sesuai.',
       'Perhatikan data numerik yang diuji dan gunakan operator perbandingan yang tepat sesuai ATURAN di layar.',
       'Pasang blok aksi yang tepat ke dalam rongga MAKA.',
       'Jika data uji tidak memenuhi ketentuan, robot ALGO tidak boleh melakukan aksi apa pun.'

@@ -247,7 +247,7 @@ export const TestResultModal: React.FC<TestResultModalProps> = ({
                   ))}
                 </div>
                 <span className="text-xs font-mono font-black text-amber-900 bg-amber-200/90 border border-amber-300 px-2.5 py-0.5 rounded-full ml-1 whitespace-nowrap">
-                  {bintangDiperoleh} / 3 BINTANG
+                  {bintangDiperoleh}/3 BINTANG
                 </span>
               </div>
 
